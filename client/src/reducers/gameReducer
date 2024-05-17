@@ -1,0 +1,34 @@
+import { SET_TRIVIA_API_INPUTS, FETCH_TRIVIA_API_SUCCESS, FETCH_TRIVIA_API_ERROR } from '../actions/actionTypes';
+
+const initialState = {
+  apiInputs: {
+    amount: 10,
+    category: 'any',
+    difficulty: 'any',
+  },
+  triviaData: null,
+  currentQuestion: 0,
+};
+
+const triviaReducer = (state = initialState, action) => {
+  switch (action.type) {
+
+    case SET_TRIVIA_API_INPUTS:
+      return { ...state, apiInputs: action.payload };
+
+    case FETCH_TRIVIA_API_SUCCESS:
+      return { ...state, triviaData: action.payload };
+
+    case FETCH_TRIVIA_API_ERROR:
+      //see error codes: https://opentdb.com/api_config.php
+      const triviaDataError = {
+        response_code: 6
+      }
+      return { ...state, triviaData: triviaDataError };
+
+    default:
+      return state;
+  }
+};
+
+export default triviaReducer;
