@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import QuizSettings from '../components/quizSettings';
+import QuizSettings from '../components/QuizSettings';
 
 const Home = () => {
   return (
