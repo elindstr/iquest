@@ -4,7 +4,6 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
-    orders: [Order]
   }
   type Auth {
     token: ID
