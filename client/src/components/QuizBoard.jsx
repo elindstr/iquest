@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { fetchTriviaAPI } from '../actions/actions';
+import './Quiz.css';
+
 
 const QuizBoard = () => {
   const dispatch = useDispatch();
@@ -9,8 +12,8 @@ const QuizBoard = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [score, setScore] = useState(0);
+  const navigate = useNavigate();
 
-  // On page load, this useEffect fetches trivia api using a function in '../actions/actions'. The fetched data is saved in redux state as state.game.triviaData.
   useEffect(() => {
     dispatch(fetchTriviaAPI());
   }, [dispatch]);
@@ -23,49 +26,47 @@ const QuizBoard = () => {
       setScore(score + 1);
     }
   };
+
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setSelectedAnswer(null);
     setIsAnswerCorrect(null);
   };
 
-  // early return for loading
   if (!triviaData) {
     return <p>Loading...</p>;
-  } 
-
-  // early return for fetch errors (todo: need to handle more gracefully)
-  if (triviaData.response_code > 0) {
-    return <p>Error...</p>;
   }
 
-  // early return for quiz over (todo: need to save the results to user database)
+  if (triviaData.response_code > 0) {
+    return (
+      <>
+        <p>Sorry something went wrong loading the quiz. Try again in a few seconds.</p>
+        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+      </>
+    )
+  }
+
   if (currentQuestionIndex >= triviaData.results.length) {
     return (
       <div>
         <h2>Quiz Complete!</h2>
         <p>You scored {score} out of {triviaData.results.length}</p>
+        <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     );
   }
 
-  // setup current question and answers
   const currentQuestion = triviaData.results[currentQuestionIndex];
   let answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
   answers = answers.sort(() => Math.random() - 0.5);
 
-  // main return
   return (
-    <div>
+    <div className="quiz-board">
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
-      <div>
-
-        {/* 'dangerouslySetInnerHTML' is needed to format some special characters in the trivia api data */}
+      <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
-        <div>
-
-          {/* map answers as buttons; set background colors on correct/incorrect */}
+        <div className="answers-container">
           {answers.map((answer, index) => (
             <button
               key={index}
@@ -75,11 +76,9 @@ const QuizBoard = () => {
               dangerouslySetInnerHTML={{ __html: answer }}
             />
           ))}
-
         </div>
-
         {selectedAnswer && (
-          <button onClick={handleNextQuestion}>
+          <button className="next-question" onClick={handleNextQuestion}>
             Next Question
           </button>
         )}
