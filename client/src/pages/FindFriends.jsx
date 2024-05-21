@@ -6,7 +6,7 @@ import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
 import Auth from '../utils/auth';
 import './FindFriends.css';
 
-const FindFriends = ({ currentUserId }) => {
+const FindFriends = () => {
   const navigate = useNavigate();
   const { data, loading, error } = useQuery(QUERY_USERS);
   const [addFriend] = useMutation(ADD_FRIEND);
@@ -15,25 +15,43 @@ const FindFriends = ({ currentUserId }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const myEmail = Auth.getProfile().data.email;
+  const myId = Auth.getProfile().data._id;
 
   // Effect to handle data received from the query
   useEffect(() => {
     if (data) {
+      // Find the current user in the data
+      const myData = data.users.find(user => user.email === myEmail);
+      const myFriendsIds = myData.friends.map(friend => friend._id);
+
+      // Filter out the current user
       const filteredUsers = data.users.filter(user => user.email !== myEmail);
-      setUsers(filteredUsers);
-      setSearchResults(filteredUsers);
+
+      // Add the isFriend tracker
+      const usersWithFriendStatus = filteredUsers.map(user => ({
+        ...user,
+        isFriend: myFriendsIds.includes(user._id)
+      }));
+
+      setUsers(usersWithFriendStatus);
+      setSearchResults(usersWithFriendStatus);
     }
-  }, [data, currentUserId]);
+  }, [data, myEmail, myId]);
 
   // Handle search input changes
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
-    const filtered = users.filter(user =>
-      user.email.toLowerCase().includes(value) ||
-      user.lastName.toLowerCase().includes(value) ||
-      user.firstName.toLowerCase().includes(value)
-    );
+    const filtered = users.filter(user => {
+      const email = user.email || '';
+      const firstName = user.firstName || '';
+      const lastName = user.lastName || '';
+      return (
+        email.toLowerCase().includes(value) ||
+        firstName.toLowerCase().includes(value) ||
+        lastName.toLowerCase().includes(value)
+      );
+    });
     setSearchResults(filtered);
   };
 
@@ -74,7 +92,7 @@ const FindFriends = ({ currentUserId }) => {
         <div className="user-list">
           {searchResults.map((user) => (
             <div key={user._id} className="user-card">
-              <p className="user-list-item">{user.firstName} {user.lastName} - {user.email}</p>
+              <p className="user-list-item">{user.firstName || '-'} {user.lastName || '-'} - {user.email || '-'}</p>
               {user.isFriend ? (
                 <button onClick={() => handleUnFriend(user._id)} className="unfriend-button">Unfriend</button>
               ) : (
@@ -85,7 +103,6 @@ const FindFriends = ({ currentUserId }) => {
         </div>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
-      
     </div>
   );
 };

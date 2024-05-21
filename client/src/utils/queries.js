@@ -31,6 +31,13 @@ export const QUERY_USERS = gql`
       lastName
       profilePictureURL
       profileBio
+      friends {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
+      }
     }
   }
 `;
