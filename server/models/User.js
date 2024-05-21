@@ -32,7 +32,11 @@ const userSchema = new Schema({
   friends: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  iq: {
+    type: Number,
+    default: 120,
+  }
 });
 
 // set up pre-save middleware to create password
