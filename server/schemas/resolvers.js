@@ -1,19 +1,17 @@
-const { User } = require('../models');
+const bcrypt = require('bcrypt');
 const { signToken, AuthenticationError } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+const { User } = require('../models'); 
 
 const resolvers = {
   Query: {
     users: async () => {
       return await User.find();
     },
-    user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id)
-        return user;
-      }
-      throw AuthenticationError;
-    }
+    user: async (parent, { _id }) => {
+      return await User.findById(_id);
+    },
   },
 
   Mutation: {
@@ -42,11 +40,23 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    updateUser: async (parent, args, context) => {
+    updateUser: async (parent, { _id, password, firstName, lastName, email, profilePictureURL, profileBio, iq }, context) => {
       if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+        const updateData = { firstName, lastName, email, profilePictureURL, profileBio, iq };
+        
+        if (password) {
+          const saltRounds = 10;
+          updateData.password = await bcrypt.hash(password, saltRounds);
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+          _id,
+          updateData,
+          { new: true }
+        );
+        return updatedUser;
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('Not authenticated');
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });

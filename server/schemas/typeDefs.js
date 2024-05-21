@@ -25,12 +25,13 @@ const typeDefs = `
     unFriend(friendId: ID!): User
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     updateUser(
-      password: String, 
-      firstName: String, 
-      lastName: String, 
-      email: String, 
-      profilePictureURL: String,
-      profileBio: String,
+      _id: ID!
+      password: String
+      firstName: String
+      lastName: String
+      email: String
+      profilePictureURL: String
+      profileBio: String
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
