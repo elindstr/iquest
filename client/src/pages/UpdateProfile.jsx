@@ -1,10 +1,12 @@
+// This file is buggy. Need to troubleshoot. There are some issues with the Apollo server caching.
+
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_USER } from '../utils/mutations';
 import { QUERY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
-import './UpdateProfile.css'; // Assuming you have a CSS file for styles
+import './UpdateProfile.css';
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -67,6 +69,7 @@ const UpdateProfile = () => {
     setEditableFields({ ...editableFields, [field]: false });
   };
 
+  // We'll clean this up for the production version. But this is the only way I could think to wire it up so that both dev and render deployment work right now.
   const handleUpload = async () => {
     if (profilePicture) {
       const formData = new FormData();
@@ -86,6 +89,7 @@ const UpdateProfile = () => {
         const result = await response.json();
         if (result.success) {
           setProfilePictureURL(result.filePath);
+          setProfilePicture(null);
           console.log('File uploaded successfully:', result.filePath);
         }
       } catch (error) {
@@ -103,6 +107,7 @@ const UpdateProfile = () => {
           const result = await response.json();
           if (result.success) {
             setProfilePictureURL(result.filePath);
+            setProfilePicture(null);
             console.log('File uploaded successfully to backup URL:', result.filePath);
           }
         } catch (backupError) {
@@ -125,7 +130,7 @@ const UpdateProfile = () => {
   if (error) return <p>Error loading user data!</p>;
 
   return (
-    <div className="update-profile-page">
+    <div className="dashboard-page">
       <div className="card">
         <h1>Update Profile</h1>
         <p className="note">Double-click a field to edit</p>
