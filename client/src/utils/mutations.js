@@ -44,6 +44,7 @@ export const UPDATE_USER = gql`
     $iq: Float
   ) {
     updateUser(
+      _id: $_id
       password: $password
       email: $email
       firstName: $firstName
