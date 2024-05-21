@@ -7,7 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import App from './App';
 import reducers from './reducers';
 
-// Configure GraphQL HTTP Link
+// Configure GraphQL
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -23,10 +23,35 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Custom cache config to suppress apollo err msg
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        users: {
+          merge(existing = [], incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
+    User: {
+      keyFields: ["_id"],
+      fields: {
+        friends: {
+          merge(existing = [], incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
+  },
+});
+
 // Configure Apollo Client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache,
 });
 
 // Configure Redux Store

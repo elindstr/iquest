@@ -9,8 +9,12 @@ import './FindFriends.css';
 const FindFriends = () => {
   const navigate = useNavigate();
   const { data, loading, error } = useQuery(QUERY_USERS);
-  const [addFriend] = useMutation(ADD_FRIEND);
-  const [unFriend] = useMutation(UN_FRIEND);
+  const [addFriend] = useMutation(ADD_FRIEND, {
+    refetchQueries: [{ query: QUERY_USERS }],
+  });
+  const [unFriend] = useMutation(UN_FRIEND, {
+    refetchQueries: [{ query: QUERY_USERS }],
+  });
   const [users, setUsers] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -92,7 +96,7 @@ const FindFriends = () => {
         <div className="user-list">
           {searchResults.map((user) => (
             <div key={user._id} className="user-card">
-              <p className="user-list-item">{user.firstName || '-'} {user.lastName || '-'} - {user.email || '-'}</p>
+              <p className="user-list-item" key={user._id}>{user.firstName || '-'} {user.lastName || '-'} - {user.email || '-'}</p>
               {user.isFriend ? (
                 <button onClick={() => handleUnFriend(user._id)} className="unfriend-button">Unfriend</button>
               ) : (
