@@ -10,6 +10,7 @@ export const LOGIN = gql`
     }
   }
 `;
+
 export const ADD_USER = gql`
   mutation addUser(
     $firstName: String!
@@ -26,6 +27,47 @@ export const ADD_USER = gql`
       token
       user {
         _id
+      }
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation addFriend($friendId: ID!) {
+    addFriend(friendId: $friendId) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      friends {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
+      }
+    }
+  }
+`;
+
+// Mutation for removing a friend
+export const UN_FRIEND = gql`
+  mutation unFriend($friendId: ID!) {
+    unFriend(friendId: $friendId) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      friends {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
       }
     }
   }
