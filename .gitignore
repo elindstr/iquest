@@ -13,7 +13,7 @@ dist-ssr
 *.local
 .env
 package-lock.json
-client/public/images/*
+client/public/uploads/*
 
 # Editor directories and files
 .vscode/*
