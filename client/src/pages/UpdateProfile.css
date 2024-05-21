@@ -1,6 +1,5 @@
 /* TO FIX: top of page is cut off and not scrollable */
-
-.dashboard-page {
+.update-profile-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +7,7 @@
   height: 100%;
 }
 
-.card {
+.update-profile-page .card {
   background: #1e1e1e;
   padding: 2rem;
   border-radius: 8px;
@@ -19,48 +18,49 @@
   width: 100%;
 }
 
-.card h1 {
+.update-profile-page .card h1 {
   margin-bottom: 1.5rem;
 }
 
-.note {
+.update-profile-page .note {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: #888;
 }
 
-.readonly {
+.update-profile-page .readonly {
   background-color: #2e2e2e;
   color: #888;
 }
 
-.button-group {
+.update-profile-page .button-group {
   display: flex;
   justify-content: space-between;
 }
 
-.profile-picture {
+.update-profile-page .profile-picture {
   position: relative;
   margin-bottom: 1rem;
 }
 
-.profile-picture img {
+.update-profile-page .profile-picture img {
   max-width: 100%;
   border-radius: 50%;
 }
 
-.delete-button {
+.update-profile-page .delete-button {
   position: absolute;
   top: 0;
-  right: 0;
-  background: rgba(255, 0, 0, 0.8);
+  right: 90px;
+  /* background: rgba(255, 0, 0, 0.8); */
   border: none;
   color: #fff;
   padding: 0.5rem;
   border-radius: 50%;
   cursor: pointer;
+  width: 5px;
 }
 
-.delete-button:hover {
-  background: rgba(255, 0, 0, 1);
+.update-profile-page .delete-button:hover {
+  /* background: rgba(255, 0, 0, 1); */
 }
