@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UPDATE_USER } from '../utils/mutations';
 import { QUERY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
-import './UpdateProfile.css';
+import './UpdateProfile.css'; // Assuming you have a CSS file for styles
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const UpdateProfile = () => {
       formData.append('userId', userId);
 
       try {
-        const response = await fetch('http://localhost:3001/upload', { // Note the port 3001
+        const response = await fetch('/upload', {
           method: 'POST',
           body: formData,
         });
@@ -89,7 +89,25 @@ const UpdateProfile = () => {
           console.log('File uploaded successfully:', result.filePath);
         }
       } catch (error) {
-        console.error('Error uploading profile picture:', error);
+        console.error('Error uploading profile picture, trying backup URL:', error);
+        try {
+          const response = await fetch('http://localhost:3001/upload', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to upload image to backup URL');
+          }
+
+          const result = await response.json();
+          if (result.success) {
+            setProfilePictureURL(result.filePath);
+            console.log('File uploaded successfully to backup URL:', result.filePath);
+          }
+        } catch (backupError) {
+          console.error('Error uploading profile picture to backup URL:', backupError);
+        }
       }
     }
   };
@@ -107,7 +125,7 @@ const UpdateProfile = () => {
   if (error) return <p>Error loading user data!</p>;
 
   return (
-    <div className="dashboard-page">
+    <div className="update-profile-page">
       <div className="card">
         <h1>Update Profile</h1>
         <p className="note">Double-click a field to edit</p>
