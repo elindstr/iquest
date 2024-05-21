@@ -29,6 +29,7 @@ function App() {
         <Route path="/find-friends" element={<PrivateRoute element={<FindFriends />} />} />
         <Route path="/update-profile" element={<PrivateRoute element={<UpdateProfile />} />} />
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
+        <Route path="/messaging" element={<PrivateRoute element={<div>Messaging</div>} />} />
 
         <Route path="*" element={<NotFoundRedirect />} />
       </Routes>

@@ -7,6 +7,7 @@ import './Login.css';
 
 const Landing = () => {
   const [isSignup, setIsSignup] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formState, setFormState] = useState({
     email: '',
     password: '',
@@ -52,6 +53,10 @@ const Landing = () => {
     }
   };
 
+  const toggleShowPassword = () => { // New function to toggle password visibility
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="landing-page">
       <div className="card">
@@ -85,14 +90,24 @@ const Landing = () => {
             onChange={handleInputChange}
             required
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formState.password}
-            onChange={handleInputChange}
-            required
-          />
+            <div className="input-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="Password"
+                value={formState.password}
+                onChange={handleInputChange}
+                required
+              />
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={toggleShowPassword}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
           {loginError || signupError ? (
             <div>
               <p className="error-text">The provided credentials are incorrect</p>
