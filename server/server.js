@@ -4,6 +4,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const imageUploadRoute = require('./utils/imageUploadRoute');
+const cors = require('cors'); // Import CORS middleware
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -22,6 +23,9 @@ const startApolloServer = async () => {
   // Middleware for JSON, URL encoding, etc.
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+
+  // Enable CORS
+  app.use(cors()); // Use CORS middleware
 
   // Use the upload route
   app.use(imageUploadRoute);
