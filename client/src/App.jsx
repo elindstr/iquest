@@ -6,11 +6,11 @@ import UpdateProfile from './pages/UpdateProfile';
 import Quiz from './pages/Quiz';
 import Auth from './utils/auth';
 
-const PrivateRoute = ({ element, ...rest }) => {
+const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
 };
 
-const PublicRoute = ({ element, ...rest }) => {
+const PublicRoute = ({ element }) => {
   return Auth.loggedIn() ? <Navigate to="/" /> : element;
 };
 
