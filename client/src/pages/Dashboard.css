@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-  background: #1e1e1e;
+  background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -25,6 +25,12 @@ body {
   color: #fff;
   max-width: 400px;
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .card h1 {
@@ -40,9 +46,9 @@ body {
   color: #fff;
   cursor: pointer;
   width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .card button:hover {
   background-color: #3700b3;
 }
-  
