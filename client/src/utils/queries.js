@@ -10,12 +10,15 @@ export const QUERY_USER = gql`
       lastName
       profilePictureURL
       profileBio
+      iq
       friends {
         _id
         email
         firstName
         lastName
         profilePictureURL
+        profileBio
+        iq
       }
     }
   }
@@ -31,12 +34,15 @@ export const QUERY_USERS = gql`
       lastName
       profilePictureURL
       profileBio
+      iq
       friends {
         _id
         email
         firstName
         lastName
         profilePictureURL
+        profileBio
+        iq
       }
     }
   }

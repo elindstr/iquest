@@ -32,6 +32,37 @@ export const ADD_USER = gql`
   }
 `;
 
+export const UPDATE_USER = gql`
+  mutation updateUser(
+    $_id: ID!
+    $password: String
+    $email: String
+    $firstName: String
+    $lastName: String
+    $profilePictureURL: String
+    $profileBio: String
+    $iq: Float
+  ) {
+    updateUser(
+      password: $password
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      profilePictureURL: $profilePictureURL
+      profileBio: $profileBio
+      iq: $iq
+    ) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      iq
+    }
+  }
+`;
+
 export const ADD_FRIEND = gql`
   mutation addFriend($friendId: ID!) {
     addFriend(friendId: $friendId) {
@@ -52,7 +83,6 @@ export const ADD_FRIEND = gql`
   }
 `;
 
-// Mutation for removing a friend
 export const UN_FRIEND = gql`
   mutation unFriend($friendId: ID!) {
     unFriend(friendId: $friendId) {
