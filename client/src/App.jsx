@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Auth from './utils/auth';
+
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import FindFriends from './pages/FindFriends';
 import UpdateProfile from './pages/UpdateProfile';
 import Quiz from './pages/Quiz';
-import Auth from './utils/auth';
 
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
@@ -24,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<PublicRoute element={<Login />} />} />
         <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="/find-friends" element={<PrivateRoute element={<FindFriends />} />} />
         <Route path="/update-profile" element={<PrivateRoute element={<UpdateProfile />} />} />
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
 

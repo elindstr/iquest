@@ -4,6 +4,9 @@ const typeDefs = `
     firstName: String
     lastName: String
     email: String
+    profilePictureURL: String
+    profileBio: String
+    friends: [User]
   }
   type Auth {
     token: ID
@@ -14,8 +17,8 @@ const typeDefs = `
     user(_id: ID!): User
   }
   type Mutation {
-    addFriend(userId: ID!, friendId: ID!): Auth
-    unFriend(userId: ID!, friendId: ID!): Auth
+    addFriend(friendId: ID!): User
+    unFriend(friendId: ID!): User
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
