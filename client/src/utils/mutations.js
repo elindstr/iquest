@@ -105,15 +105,17 @@ export const UN_FRIEND = gql`
 `;
 
 export const ADD_QUIZ = gql`
-  mutation addUser(
+  mutation addQuiz(
     $user: User
     $apiLink: String
     $difficulty: String
+    $percentCorrect: Float
   ) {
-    addUser(
+    addQuiz(
       user: $user
       apiLink: $apiLink
       difficulty: $difficulty
+      percentCorrect: $percentCorrect
     ) {
       quiz {
         _id

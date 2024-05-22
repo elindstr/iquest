@@ -47,7 +47,8 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     recordQuiz(user: User
               apiLink: String
-              difficulty: String): Quiz
+              difficulty: String
+              percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, percentCorrect: Float): Quiz
   }
 `;

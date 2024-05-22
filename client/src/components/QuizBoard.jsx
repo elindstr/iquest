@@ -9,7 +9,7 @@ import Timer from './Timer';
 
 const QuizBoard = () => {
   const dispatch = useDispatch();
-  const { triviaData } = useSelector((state) => state.game);
+  const { apiInputs, triviaData } = useSelector((state) => state.game);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
@@ -51,6 +51,7 @@ const QuizBoard = () => {
     return <p>Loading...</p>;
   }
 
+  // quiz error code
   if (triviaData.response_code > 0) {
     return (
       <>
@@ -60,7 +61,16 @@ const QuizBoard = () => {
     )
   }
 
+
+  // quiz ended: record results to db and render results component
   if (currentQuestionIndex >= triviaData.results.length) {
+
+    const user = User
+    const difficulty = apiInputs.difficulty
+    // const apiLink  // $apiLink: String
+    const percentCorrect = score / triviaData.results.length
+
+
     return (
       <div>
         <h2>Quiz Complete!</h2>
@@ -70,10 +80,12 @@ const QuizBoard = () => {
     );
   }
 
+  // get next question and answers
   const currentQuestion = triviaData.results[currentQuestionIndex];
   let answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
   answers = answers.sort(() => Math.random() - 0.5);
 
+  // main quiz return
   return (
     <div className="quiz-board">
       <h2>Quiz Board</h2>
