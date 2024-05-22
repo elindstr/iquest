@@ -1,20 +1,71 @@
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const bcrypt = require('bcrypt');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { User, Quiz } = require('../models');
 
-const { User } = require('../models'); 
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Custom scalar type for Date',
+  serialize(value) {
+    return value instanceof Date ? value.toISOString() : null;
+  },
+  parseValue(value) {
+    return new Date(value);
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.STRING) {
+      return new Date(ast.value);
+    }
+    return null;
+  },
+});
 
 const resolvers = {
+  Date: dateScalar,
+
   Query: {
-    users: async () => {
-      return await User.find();
+    users: async (parent, args, context) => {
+      if (context.user) {
+        return await User.find();
+      }
+      throw new AuthenticationError('Not authenticated');
     },
-    user: async (parent, { _id }) => {
-      return await User.findById(_id);
+    user: async (parent, { _id }, context) => {
+      if (context.user) {
+        return await User.findById(_id);
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+    quizes: async (parent, args, context) => {
+      if (context.user) {
+        return await Quiz.find();
+      }
+      throw new AuthenticationError('Not authenticated');
     },
   },
 
   Mutation: {
+    addQuiz: async (parent, args, context) => {
+      if (context.user) {
+        const quiz = await Quiz.create(args);
+        return quiz;
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+    scoreQuiz: async (parent, { _id, percentCorrect }, context) => {
+      if (context.user) {
+        const updateData = { percentCorrect };
+
+        const updatedQuiz = await Quiz.findByIdAndUpdate(
+          _id,
+          updateData,
+          { new: true }
+        );
+        return updatedQuiz;
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
     addFriend: async (parent, { friendId }, context) => {
       if (context.user) {
         return await User.findByIdAndUpdate(
@@ -43,7 +94,7 @@ const resolvers = {
     updateUser: async (parent, { _id, password, firstName, lastName, email, profilePictureURL, profileBio, iq }, context) => {
       if (context.user) {
         const updateData = { firstName, lastName, email, profilePictureURL, profileBio, iq };
-        
+
         if (password) {
           const saltRounds = 10;
           updateData.password = await bcrypt.hash(password, saltRounds);
@@ -61,11 +112,11 @@ const resolvers = {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError('Incorrect credentials');
       }
       const token = signToken(user);
 

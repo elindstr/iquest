@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const Timer = ({ initialTime, onTimerEnd }) => {
+const Timer = ({ initialTime, onTimerEnd, isRunning }) => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
+    if (!isRunning) {
+      return;
+    }
+
     const countdown = setInterval(() => {
-      if (timeLeft > 0) {
-        setTimeLeft(timeLeft - 1);
-      } else {
-        clearInterval(countdown);
-        onTimerEnd(); // Call a function when the timer ends
-      }
+      setTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft > 0) {
+          return prevTimeLeft - 1;
+        } else {
+          clearInterval(countdown);
+          onTimerEnd();
+          return 0;
+        }
+      });
     }, 1000);
 
-    return () => clearInterval(countdown); // Clear the interval when the component unmounts
-  }, [timeLeft, onTimerEnd]);
+    return () => clearInterval(countdown); // clean up on dismount
+  }, [isRunning, onTimerEnd]);
+
+  useEffect(() => {
+    setTimeLeft(initialTime);
+  }, [initialTime]);
 
   return (
     <div>
