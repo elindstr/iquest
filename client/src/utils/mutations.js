@@ -10,6 +10,7 @@ export const LOGIN = gql`
     }
   }
 `;
+
 export const ADD_USER = gql`
   mutation addUser(
     $firstName: String!
@@ -26,6 +27,78 @@ export const ADD_USER = gql`
       token
       user {
         _id
+      }
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation updateUser(
+    $_id: ID!
+    $password: String
+    $email: String
+    $firstName: String
+    $lastName: String
+    $profilePictureURL: String
+    $profileBio: String
+    $iq: Float
+  ) {
+    updateUser(
+      _id: $_id
+      password: $password
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      profilePictureURL: $profilePictureURL
+      profileBio: $profileBio
+      iq: $iq
+    ) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      iq
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation addFriend($friendId: ID!) {
+    addFriend(friendId: $friendId) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      friends {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
+      }
+    }
+  }
+`;
+
+export const UN_FRIEND = gql`
+  mutation unFriend($friendId: ID!) {
+    unFriend(friendId: $friendId) {
+      _id
+      email
+      firstName
+      lastName
+      profilePictureURL
+      profileBio
+      friends {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
       }
     }
   }
