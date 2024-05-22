@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchTriviaAPI } from '../actions/actions';
 import './Quiz.css';
+import { Score } from './Score';
 
 
 const QuizBoard = () => {
