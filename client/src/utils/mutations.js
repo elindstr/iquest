@@ -106,7 +106,7 @@ export const UN_FRIEND = gql`
 
 export const ADD_QUIZ = gql`
   mutation addQuiz(
-    $user: User
+    $user: ID!
     $apiLink: String
     $difficulty: String
     $percentCorrect: Float
@@ -117,9 +117,7 @@ export const ADD_QUIZ = gql`
       difficulty: $difficulty
       percentCorrect: $percentCorrect
     ) {
-      quiz {
-        _id
-      }
+      _id
     }
   }
 `;
@@ -127,12 +125,14 @@ export const ADD_QUIZ = gql`
 export const SCORE_QUIZ = gql`
   mutation scoreQuiz(
     $_id: ID!
-    percentCorrect: Float
+    $percentCorrect: Float!
   ) {
     scoreQuiz(
       _id: $_id
       percentCorrect: $percentCorrect
     ) {
+      _id
+      percentCorrect
     }
   }
 `;

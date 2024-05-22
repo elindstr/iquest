@@ -69,7 +69,6 @@ export const QUERY_QUIZES = gql`
       apiLink
       difficulty
       percentCorrect
-      }
     }
   }
 `;
