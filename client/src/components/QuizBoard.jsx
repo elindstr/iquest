@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchTriviaAPI } from '../actions/actions';
 import './Quiz.css';
+import Score from './Score';
+import Timer from './Timer';
 
 
 const QuizBoard = () => {
@@ -13,6 +15,7 @@ const QuizBoard = () => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const navigate = useNavigate();
+  const [questionTimer, setQuestionTimer] = useState(10);
 
   useEffect(() => {
     dispatch(fetchTriviaAPI());
@@ -31,7 +34,18 @@ const QuizBoard = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setSelectedAnswer(null);
     setIsAnswerCorrect(null);
+    setQuestionTimer(10);
   };
+
+  const handleTimerEnd = () => {
+    const currentQuestion = triviaData.results[currentQuestionIndex];
+    const correctAnswer = currentQuestion.correct_answer;
+    const incorrectAnswers = currentQuestion.incorrect_answers;
+    const randomIncorrectAnswer = incorrectAnswers.find(answer => answer !== correctAnswer);
+
+    setSelectedAnswer(randomIncorrectAnswer);
+    setIsAnswerCorrect(false);
+  }
 
   if (!triviaData) {
     return <p>Loading...</p>;
@@ -64,6 +78,8 @@ const QuizBoard = () => {
     <div className="quiz-board">
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
+      <Score score={score} totalQuestions={triviaData.results.length} />
+      <Timer key={currentQuestionIndex} initialTime={questionTimer} onTimerEnd={handleTimerEnd} />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
