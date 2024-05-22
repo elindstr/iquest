@@ -47,3 +47,29 @@ export const QUERY_USERS = gql`
     }
   }
 `;
+
+// Query for fetching all quizes
+export const QUERY_QUIZES = gql`
+  query quizes {
+    quizes {
+      _id
+      date
+      user {
+        _id
+        email
+        firstName
+        lastName
+        profilePictureURL
+        profileBio
+        iq
+        friends {
+          _id
+        }
+      }
+      apiLink
+      difficulty
+      percentCorrect
+      }
+    }
+  }
+`;
