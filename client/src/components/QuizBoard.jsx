@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchTriviaAPI } from '../actions/actions';
 import './Quiz.css';
 import Score from './Score';
+import Timer from './Timer';
 
 
 const QuizBoard = () => {
@@ -14,6 +15,7 @@ const QuizBoard = () => {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
   const [score, setScore] = useState(0);
   const navigate = useNavigate();
+  const [questionTimer, setQuestionTimer] = useState(10);
 
   useEffect(() => {
     dispatch(fetchTriviaAPI());
@@ -32,7 +34,12 @@ const QuizBoard = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setSelectedAnswer(null);
     setIsAnswerCorrect(null);
+    setQuestionTimer(10);
   };
+
+  const handleTimerEnd = () => {
+    
+  }
 
   if (!triviaData) {
     return <p>Loading...</p>;
@@ -66,6 +73,7 @@ const QuizBoard = () => {
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
       <Score score={score} totalQuestions={triviaData.results.length} />
+      <Timer initialTime={questionTimer} onTimerEnd={handleTimerEnd} />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
