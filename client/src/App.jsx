@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import FindFriends from './pages/FindFriends';
 import UpdateProfile from './pages/UpdateProfile';
+import Profile from './pages/Profile';
 import Quiz from './pages/Quiz';
 
 const PrivateRoute = ({ element }) => {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
         <Route path="/find-friends" element={<PrivateRoute element={<FindFriends />} />} />
         <Route path="/update-profile" element={<PrivateRoute element={<UpdateProfile />} />} />
+        <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
         <Route path="/messaging" element={<PrivateRoute element={<div>Messaging</div>} />} />
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import { QUERY_USERS } from '../utils/queries';
 import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
 import Auth from '../utils/auth';
@@ -95,8 +96,19 @@ const FindFriends = () => {
         />
         <div className="user-list">
           {searchResults.map((user) => (
-            <div key={user._id} className="user-card">
-              <p className="user-list-item" key={user._id}>{user.firstName || '-'} {user.lastName || '-'} - {user.email || '-'}</p>
+            <div key={user._id} className="user-card"> 
+
+              <Link className="user-list-item-link" to={`/profile/${user._id}`}>
+              <p className="user-list-item" key={user._id}>
+
+              {user.profilePictureURL && (<img src={user.profilePictureURL} alt={`${user.firstName} ${user.lastName}`} className="profile-image" />)}
+
+                {user.firstName || '-'}&nbsp;
+                {user.lastName || '-'} - 
+                {user.email || '-'} -
+                {user.iq || '-'}
+              </p></Link>
+
               {user.isFriend ? (
                 <button onClick={() => handleUnFriend(user._id)} className="unfriend-button">Unfriend</button>
               ) : (
