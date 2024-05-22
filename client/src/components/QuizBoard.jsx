@@ -65,7 +65,7 @@ const QuizBoard = () => {
     <div className="quiz-board">
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
-      <Score />
+      <Score score={score} totalQuestions={triviaData.results.length} />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
