@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchTriviaAPI } from '../actions/actions';
 import './Quiz.css';
-import { Score } from './Score';
+import Score from './Score';
 
 
 const QuizBoard = () => {
@@ -65,6 +65,7 @@ const QuizBoard = () => {
     <div className="quiz-board">
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
+      <Score />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
