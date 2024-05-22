@@ -46,7 +46,7 @@ const resolvers = {
   },
 
   Mutation: {
-    recordQuiz: async (parent, args, context) => {
+    addQuiz: async (parent, args, context) => {
       if (context.user) {
         const quiz = await Quiz.create(args);
         return quiz;

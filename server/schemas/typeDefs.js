@@ -47,10 +47,9 @@ const typeDefs = `
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
-    recordQuiz(user: ID!, apiLink: String, difficulty: String, percentCorrect: Float): Quiz
+    addQuiz(user: ID!, apiLink: String, difficulty: String, percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, percentCorrect: Float): Quiz
   }
 `;
 
 module.exports = typeDefs;
-
