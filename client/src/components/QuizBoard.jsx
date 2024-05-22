@@ -38,7 +38,13 @@ const QuizBoard = () => {
   };
 
   const handleTimerEnd = () => {
-    
+    const currentQuestion = triviaData.results[currentQuestionIndex];
+    const correctAnswer = currentQuestion.correct_answer;
+    const incorrectAnswers = currentQuestion.incorrect_answers;
+    const randomIncorrectAnswer = incorrectAnswers.find(answer => answer !== correctAnswer);
+
+    setSelectedAnswer(randomIncorrectAnswer);
+    setIsAnswerCorrect(false);
   }
 
   if (!triviaData) {
@@ -73,7 +79,7 @@ const QuizBoard = () => {
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {triviaData.results.length}</p>
       <Score score={score} totalQuestions={triviaData.results.length} />
-      <Timer initialTime={questionTimer} onTimerEnd={handleTimerEnd} />
+      <Timer key={currentQuestionIndex} initialTime={questionTimer} onTimerEnd={handleTimerEnd} />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
