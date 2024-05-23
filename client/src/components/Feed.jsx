@@ -36,7 +36,7 @@ const QuizFeed = () => {
   };
 
   return (
-    <div className={styles.quizFeed}>
+    <div className={styles.feedPage}>
       {quizzes.map((quiz) => (
         <div key={quiz._id} className={styles.quizItem}>
           <div className={styles.quizUserInfo}>
