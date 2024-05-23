@@ -22,4 +22,4 @@ function Donate(props) {
 };
 
 
-export default function Donate;
+export default Donate;
