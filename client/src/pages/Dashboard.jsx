@@ -18,6 +18,7 @@ const Dashboard = () => {
         <button onClick={() => navigate('/update-profile')}>Update Profile</button>
         <button onClick={() => navigate('/quiz')}>New Quiz</button>
         <button onClick={() => navigate('/messaging')}>Messaging</button>
+        <button onClick={() => navigate('/donate')}>Donate</button>
         <button onClick={handleLogout}>Sign Out</button>
       </div>
     </div>
