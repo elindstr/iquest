@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './App.css';
 import { Provider } from 'react-redux';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
