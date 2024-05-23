@@ -1,4 +1,6 @@
 const typeDefs = `
+  scalar Date
+
   type User {
     _id: ID
     firstName: String
@@ -10,6 +12,16 @@ const typeDefs = `
     iq: Float
   }
 
+  type Quiz {
+    _id: ID
+    date: Date
+    user: User
+    difficulty: String
+    count: Int
+    category: String
+    percentCorrect: Float
+  }
+
   type Auth {
     token: ID
     user: User
@@ -18,6 +30,7 @@ const typeDefs = `
   type Query {
     users: [User]
     user(_id: ID!): User
+    quizes: [Quiz]
   }
 
   type Mutation {
@@ -35,6 +48,8 @@ const typeDefs = `
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
+    addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
+    scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
   }
 `;
 

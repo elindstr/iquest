@@ -103,3 +103,41 @@ export const UN_FRIEND = gql`
     }
   }
 `;
+
+export const ADD_QUIZ = gql`
+  mutation addQuiz(
+    $user: ID!
+    $difficulty: String 
+    $count: Int
+    $category: String, 
+    $percentCorrect: Float
+  ) {
+    addQuiz(
+      user: $user
+      difficulty: $difficulty 
+      count: $count
+      category: $category
+      percentCorrect: $percentCorrect
+    ) {
+      _id
+    }
+  }
+`;
+
+export const SCORE_QUIZ = gql`
+  mutation scoreQuiz(
+    $_id: ID!
+    $count: Int
+    $percentCorrect: Float!
+  ) {
+    scoreQuiz(
+      _id: $_id
+      count: $count
+      percentCorrect: $percentCorrect
+    ) {
+      _id
+      count
+      percentCorrect
+    }
+  }
+`;
