@@ -13,7 +13,7 @@ const QuizBoard = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
-  const [questionTimer, setQuestionTimer] = useState(10);
+  const [questionTimer, setQuestionTimer] = useState(15);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [quizId, setQuizId] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
@@ -102,7 +102,7 @@ const QuizBoard = () => {
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setSelectedAnswer(null);
-    setQuestionTimer(10);
+    setQuestionTimer(15);
     setIsTimerRunning(true);
   };
 
