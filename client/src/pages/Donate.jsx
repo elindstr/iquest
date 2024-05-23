@@ -5,7 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 const publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
 
-function Payment(props) {
+function Donate(props) {
     const [stripePromise, setStripePromise] = useState(null);
 
     
@@ -22,4 +22,4 @@ function Payment(props) {
 };
 
 
-export default Donate;
+export default function Donate;
