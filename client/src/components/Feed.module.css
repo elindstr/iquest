@@ -1,5 +1,5 @@
 .quizFeed {
-  display: flex;
+  display: block;
   flex-direction: column;
   gap: 15px;
   padding: 20px;
