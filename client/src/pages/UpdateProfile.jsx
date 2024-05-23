@@ -69,13 +69,6 @@ const UpdateProfile = () => {
     }
   };
 
-  const handleCancelEdit = () => {
-    setFormState({ ...initialFormState });
-  
-    setEditableFields({});
-    setEditMode(false);
-  };
-
   // We'll clean this up for the production version. But this is the only way I could think to wire it up so that both dev and render deployment work right now.
   const handleUpload = async () => {
     if (profilePicture) {
@@ -144,7 +137,6 @@ const UpdateProfile = () => {
     <div className="dashboard-page">
       <div className="card">
         <h1>Update Profile</h1>
-        <p className="note">Double-click a field to edit</p>
         <form>
           {profilePictureURL && (
             <div className="profile-picture">
