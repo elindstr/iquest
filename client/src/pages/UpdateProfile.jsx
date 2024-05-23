@@ -1,5 +1,3 @@
-// This file is buggy. Need to troubleshoot. There are some issues with the Apollo server caching.
-
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +23,7 @@ const UpdateProfile = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [updateUser] = useMutation(UPDATE_USER);
   const [profilePictureURL, setProfilePictureURL] = useState('');
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -50,23 +49,31 @@ const UpdateProfile = () => {
     setProfilePicture(event.target.files[0]);
   };
 
-  const handleFieldDoubleClick = (field) => {
-    setEditableFields({ ...editableFields, [field]: true });
-  };
-
-  const handleFieldSave = async (field) => {
+  const handleSaveProfile = async () => {
     try {
-      await updateUser({ variables: { _id: userId, [field]: formState[field] } });
-      setEditableFields({ ...editableFields, [field]: false });
-      setInitialFormState({ ...initialFormState, [field]: formState[field] });
+      await updateUser({
+        variables: {
+          _id: userId,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          email: formState.email,
+          profileBio: formState.profileBio,
+          password: formState.password,
+        }
+      });
+      setEditableFields({});
+      setInitialFormState({ ...formState });
+      setEditMode(false);
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   };
 
-  const handleFieldCancel = (field) => {
-    setFormState({ ...formState, [field]: initialFormState[field] });
-    setEditableFields({ ...editableFields, [field]: false });
+  const handleCancelEdit = () => {
+    setFormState({ ...initialFormState });
+  
+    setEditableFields({});
+    setEditMode(false);
   };
 
   // We'll clean this up for the production version. But this is the only way I could think to wire it up so that both dev and render deployment work right now.
@@ -126,6 +133,10 @@ const UpdateProfile = () => {
     }
   };
 
+  const handleEditProfile = () => {
+    setEditMode(!editMode);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading user data!</p>;
 
@@ -150,20 +161,9 @@ const UpdateProfile = () => {
               name="firstName"
               value={formState.firstName}
               onChange={handleChange}
-              readOnly={!editableFields.firstName}
-              className={!editableFields.firstName ? 'readonly' : ''}
-              onDoubleClick={() => handleFieldDoubleClick('firstName')}
+              readOnly={!editMode}
+              className={!editMode ? 'readonly' : ''}
             />
-            {editableFields.firstName && (
-              <div className="button-group">
-                <button type="button" onClick={() => handleFieldSave('firstName')}>
-                  Save
-                </button>
-                <button type="button" onClick={() => handleFieldCancel('firstName')}>
-                  Cancel
-                </button>
-              </div>
-            )}
           </div>
           <div>
             <label>Last Name</label>
@@ -172,20 +172,9 @@ const UpdateProfile = () => {
               name="lastName"
               value={formState.lastName}
               onChange={handleChange}
-              readOnly={!editableFields.lastName}
-              className={!editableFields.lastName ? 'readonly' : ''}
-              onDoubleClick={() => handleFieldDoubleClick('lastName')}
+              readOnly={!editMode}
+              className={!editMode ? 'readonly' : ''}
             />
-            {editableFields.lastName && (
-              <div className="button-group">
-                <button type="button" onClick={() => handleFieldSave('lastName')}>
-                  Save
-                </button>
-                <button type="button" onClick={() => handleFieldCancel('lastName')}>
-                  Cancel
-                </button>
-              </div>
-            )}
           </div>
           <div>
             <label>Email</label>
@@ -194,20 +183,9 @@ const UpdateProfile = () => {
               name="email"
               value={formState.email}
               onChange={handleChange}
-              readOnly={!editableFields.email}
-              className={!editableFields.email ? 'readonly' : ''}
-              onDoubleClick={() => handleFieldDoubleClick('email')}
+              readOnly={!editMode}
+              className={!editMode ? 'readonly' : ''}
             />
-            {editableFields.email && (
-              <div className="button-group">
-                <button type="button" onClick={() => handleFieldSave('email')}>
-                  Save
-                </button>
-                <button type="button" onClick={() => handleFieldCancel('email')}>
-                  Cancel
-                </button>
-              </div>
-            )}
           </div>
           <div>
             <label>Profile Bio</label>
@@ -215,20 +193,9 @@ const UpdateProfile = () => {
               name="profileBio"
               value={formState.profileBio}
               onChange={handleChange}
-              readOnly={!editableFields.profileBio}
-              className={!editableFields.profileBio ? 'readonly' : ''}
-              onDoubleClick={() => handleFieldDoubleClick('profileBio')}
+              readOnly={!editMode}
+              className={!editMode ? 'readonly' : ''}
             />
-            {editableFields.profileBio && (
-              <div className="button-group">
-                <button type="button" onClick={() => handleFieldSave('profileBio')}>
-                  Save
-                </button>
-                <button type="button" onClick={() => handleFieldCancel('profileBio')}>
-                  Cancel
-                </button>
-              </div>
-            )}
           </div>
           <div>
             <label>Password</label>
@@ -237,20 +204,9 @@ const UpdateProfile = () => {
               name="password"
               value={formState.password}
               onChange={handleChange}
-              readOnly={!editableFields.password}
-              className={!editableFields.password ? 'readonly' : ''}
-              onDoubleClick={() => handleFieldDoubleClick('password')}
+              readOnly={!editMode}
+              className={!editMode ? 'readonly' : ''}
             />
-            {editableFields.password && (
-              <div className="button-group">
-                <button type="button" onClick={() => handleFieldSave('password')}>
-                  Save
-                </button>
-                <button type="button" onClick={() => handleFieldCancel('password')}>
-                  Cancel
-                </button>
-              </div>
-            )}
           </div>
           <div>
             <label>Profile Picture</label>
@@ -266,7 +222,17 @@ const UpdateProfile = () => {
               </div>
             )}
           </div>
+          {editMode && (
+            <div className="button-group">
+              <button type="button" onClick={handleSaveProfile}>
+                Save
+              </button>
+            </div>
+          )}
         </form>
+        <button type="button" onClick={handleEditProfile}>
+          {editMode ? 'Cancel Edit' : 'Edit Profile'}
+        </button>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>
