@@ -22,17 +22,13 @@ const FindFriends = () => {
   const myEmail = Auth.getProfile().data.email;
   const myId = Auth.getProfile().data._id;
 
-  // Effect to handle data received from the query
   useEffect(() => {
     if (data) {
-      // Find the current user in the data
       const myData = data.users.find(user => user.email === myEmail);
       const myFriendsIds = myData.friends.map(friend => friend._id);
 
-      // Filter out the current user
       const filteredUsers = data.users.filter(user => user.email !== myEmail);
 
-      // Add the isFriend tracker
       const usersWithFriendStatus = filteredUsers.map(user => ({
         ...user,
         isFriend: myFriendsIds.includes(user._id)
@@ -43,7 +39,6 @@ const FindFriends = () => {
     }
   }, [data, myEmail, myId]);
 
-  // Handle search input changes
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -98,7 +93,7 @@ const FindFriends = () => {
           {searchResults.map((user) => (
             <div key={user._id} className={styles.userCard}>
               <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
-                <p className={styles.userListItem} key={user._id}>
+                <div className={styles.userListItem}>
                   {user.profilePictureURL && (
                     <img
                       src={user.profilePictureURL}
@@ -106,11 +101,10 @@ const FindFriends = () => {
                       className={styles.profileImage}
                     />
                   )}
-                  {user.firstName || '-'}&nbsp;
-                  {user.lastName || '-'} - 
-                  {user.email || '-'} -
-                  {user.iq || '-'}
-                </p>
+                  <p>{user.firstName} {user.lastName}</p>
+                  <p>{user.email}</p>
+                  <p>IQ: {user.iq}</p>
+                </div>
               </Link>
 
               {user.isFriend ? (

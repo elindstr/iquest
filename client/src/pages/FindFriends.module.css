@@ -1,14 +1,5 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.dashboard-page {
+/* FindFriends.module.css */
+.dashboardPage {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +19,7 @@ body {
     0 0 40px rgba(98, 0, 234, 0.2);
   text-align: center;
   color: #fff;
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -47,7 +38,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.search-input {
+.searchInput {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -57,95 +48,71 @@ body {
   color: #fff;
 }
 
-.user-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.user-card {
-  padding: 15px;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background-color: #2e2e2e;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-}
-
-.user-list-item {
-  padding: 0 15px 0 0;
-}
-
-.user-list-item .profile-image {
-  width: 40px;
-  border-radius: 50%;
-}
-
-.addfriend-button, .unfriend-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #fff;
-}
-
-.addfriend-button {
-  background-color: #6200ea;
-}
-
-.unfriend-button {
-  background-color: #f44336;
-}
-
-.addfriend-button:hover {
-  background-color: #3700b3;
-}
-
-.unfriend-button:hover {
-  background-color: #d32f2f;
-}
-
-.user-list {
+.userList {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
 
-.user-card {
+.userCard {
   background: #1e1e1e;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   color: #fff;
-  max-width: 200px;
+  max-width: 250px;
   width: 100%;
-}
-
-.user-list-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
 }
 
-.profile-image {
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
+.userListItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.user-list-item-link {
+.userListItemLink {
   color: white;
   text-decoration: none;
-  cursor: pointer;
 }
 
-.user-list-item-link:hover {
-  color: white;
+.userListItemLink:hover {
   text-decoration: underline;
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.addfriendButton, .unfriendButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.addfriendButton {
+  background-color: #6200ea;
+}
+
+.unfriendButton {
+  background-color: #f44336;
+}
+
+.addfriendButton:hover {
+  background-color: #3700b3;
+}
+
+.unfriendButton:hover {
+  background-color: #d32f2f;
 }
