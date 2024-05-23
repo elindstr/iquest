@@ -1,27 +1,30 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Timer = ({ initialTime, onTimerEnd, isRunning }) => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
+  const savedCallback = useRef();
 
   useEffect(() => {
-    if (!isRunning) {
-      return;
-    }
+    savedCallback.current = onTimerEnd;
+  }, [onTimerEnd]);
+
+  useEffect(() => {
+    if (!isRunning) return;
 
     const countdown = setInterval(() => {
       setTimeLeft((prevTimeLeft) => {
-        if (prevTimeLeft > 0) {
+        if (prevTimeLeft > 1) {
           return prevTimeLeft - 1;
         } else {
           clearInterval(countdown);
-          onTimerEnd();
+          if (savedCallback.current) savedCallback.current();
           return 0;
         }
       });
     }, 1000);
 
-    return () => clearInterval(countdown); // clean up on dismount
-  }, [isRunning, onTimerEnd]);
+    return () => clearInterval(countdown);
+  }, [isRunning]);
 
   useEffect(() => {
     setTimeLeft(initialTime);

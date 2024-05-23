@@ -1,6 +1,3 @@
-// TODO: fix error msg:
-// Warning: Cannot update a component (`QuizBoard`) while rendering a different component (`Timer`). To locate the bad setState() call inside `Timer`, follow the stack trace as described in 
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -19,6 +16,7 @@ const QuizBoard = () => {
   const [questionTimer, setQuestionTimer] = useState(10);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [quizId, setQuizId] = useState(null);
+  const [shuffledAnswers, setShuffledAnswers] = useState([]);
 
   const [addQuiz] = useMutation(ADD_QUIZ);
   const [scoreQuiz] = useMutation(SCORE_QUIZ);
@@ -63,16 +61,24 @@ const QuizBoard = () => {
   }, [addQuiz, userId]);
 
   useEffect(() => {
-    if (currentQuestionIndex >= quizData?.results?.length && quizId) {
+    if (currentQuestionIndex > 0 && quizId) {
       const saveResults = async () => {
         const percentCorrect = score / quizData.results.length;
-        const scoreQuizMutationResponse = await scoreQuiz({ variables: { _id: quizId, percentCorrect } });
-        //console.log(scoreQuizMutationResponse);
+        const scoreQuizMutationResponse = await scoreQuiz({ variables: { _id: quizId, count: currentQuestionIndex, percentCorrect } });
+        console.log("scored quiz:", scoreQuizMutationResponse);
       };
 
       saveResults();
     }
   }, [currentQuestionIndex, quizData, score, scoreQuiz, quizId]);
+
+  useEffect(() => {
+    if (quizData && quizData.results[currentQuestionIndex]) {
+      const currentQuestion = quizData.results[currentQuestionIndex];
+      const answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
+      setShuffledAnswers(answers.sort(() => Math.random() - 0.5));
+    }
+  }, [currentQuestionIndex, quizData]);
 
   const handleAnswerClick = (answer) => {
     setSelectedAnswer(answer);
@@ -86,7 +92,11 @@ const QuizBoard = () => {
   const handleTimerEnd = () => {
     setSelectedAnswer("TIME_UP");
     setIsTimerRunning(false);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setTimeout(() => {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setSelectedAnswer(null);
+      setIsTimerRunning(true);
+    }, 1000);
   };
 
   const handleNextQuestion = () => {
@@ -125,8 +135,6 @@ const QuizBoard = () => {
   }
 
   const currentQuestion = quizData.results[currentQuestionIndex];
-  let answers = [...currentQuestion.incorrect_answers, currentQuestion.correct_answer];
-  answers = answers.sort(() => Math.random() - 0.5);
 
   return (
     <div className="quiz-board">
@@ -137,7 +145,7 @@ const QuizBoard = () => {
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
-          {answers.map((answer, index) => (
+          {shuffledAnswers.map((answer, index) => (
             <button
               key={index}
               onClick={() => handleAnswerClick(answer)}

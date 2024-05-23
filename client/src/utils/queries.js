@@ -66,8 +66,9 @@ export const QUERY_QUIZES = gql`
           _id
         }
       }
-      apiLink
-      difficulty
+      difficulty 
+      count
+      category
       percentCorrect
     }
   }
