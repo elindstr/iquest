@@ -4,7 +4,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { QUERY_USERS } from '../utils/queries';
 import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
-import Auth from '../utils/auth';
+import Auth from '../utils.auth';
 import styles from './FindFriends.module.css';
 
 const FindFriends = () => {
@@ -26,14 +26,11 @@ const FindFriends = () => {
     if (data) {
       const myData = data.users.find(user => user.email === myEmail);
       const myFriendsIds = myData.friends.map(friend => friend._id);
-
       const filteredUsers = data.users.filter(user => user.email !== myEmail);
-
       const usersWithFriendStatus = filteredUsers.map(user => ({
         ...user,
         isFriend: myFriendsIds.includes(user._id)
       }));
-
       setUsers(usersWithFriendStatus);
       setSearchResults(usersWithFriendStatus);
     }
@@ -79,7 +76,7 @@ const FindFriends = () => {
   if (error) return <p>Error! {error.message}</p>;
 
   return (
-    <div className={styles.dashboardPage}>
+    <div className={styles.findFriendsPage}>
       <div className={styles.card}>
         <h1>Search Users</h1>
         <input
@@ -93,7 +90,7 @@ const FindFriends = () => {
           {searchResults.map((user) => (
             <div key={user._id} className={styles.userCard}>
               <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
-                <div className={styles.userListItem}>
+                <p className={styles.userListItem} key={user._id}>
                   {user.profilePictureURL && (
                     <img
                       src={user.profilePictureURL}
@@ -101,12 +98,12 @@ const FindFriends = () => {
                       className={styles.profileImage}
                     />
                   )}
-                  <p>{user.firstName} {user.lastName}</p>
-                  <p>{user.email}</p>
-                  <p>IQ: {user.iq}</p>
-                </div>
+                  {user.firstName || '-'}&nbsp;
+                  {user.lastName || '-'} - 
+                  {user.email || '-'} -
+                  {user.iq || '-'}
+                </p>
               </Link>
-
               {user.isFriend ? (
                 <button
                   onClick={() => handleUnFriend(user._id)}
