@@ -5,9 +5,7 @@ import styles from '../components/Quiz.module.css';
 const Quiz = () => {
   return (
     <div className={styles.quizPage}>
-      <div className={styles.card}>
         <QuizBoard />
-      </div>
     </div>
   );
 };

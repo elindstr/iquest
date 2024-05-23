@@ -1,11 +1,9 @@
-// Feed.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_QUIZES } from '../utils/queries';
 import { ADD_QUIZ_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth';
-
-import './Feed.css';
+import styles from './Feed.module.css';
 
 const QuizFeed = () => {
   const currentUser = Auth.getProfile().data._id;
@@ -38,33 +36,33 @@ const QuizFeed = () => {
   };
 
   return (
-    <div className="quiz-feed">
+    <div className={styles.quizFeed}>
       {quizzes.map((quiz) => (
-        <div key={quiz._id} className="quiz-item">
-          <div className="quiz-user-info">
+        <div key={quiz._id} className={styles.quizItem}>
+          <div className={styles.quizUserInfo}>
             <img src={quiz.user.profilePictureURL || 'default-profile.png'} alt={`${quiz.user.firstName} ${quiz.user.lastName}`} />
             <div>
               <h3>{`${quiz.user.firstName} ${quiz.user.lastName}`}</h3>
             </div>
           </div>
-          <div className="quiz-details">
-            <p>Date: {new Date(quiz.date).toLocaleDateString()}</p>
-            <p>Difficulty: {quiz.difficulty}</p>
-            <p>Category: {quiz.category}</p>
-            <p>Count: {quiz.count}</p>
-            <p>Success Rate: {quiz.percentCorrect * 100}%</p>
+          <div className={styles.quizDetails}>
+            <p><strong>Date:</strong> {new Date(quiz.date).toLocaleDateString()}</p>
+            <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
+            <p><strong>Category:</strong> {quiz.category}</p>
+            <p><strong>Count:</strong> {quiz.count}</p>
+            <p><strong>Success Rate:</strong> {quiz.percentCorrect * 100}%</p>
           </div>
-          <div className="quiz-comments">
+          <div className={styles.quizComments}>
             {quiz.comments && quiz.comments.length > 0 && quiz.comments.map((comment) => (
-              <div key={comment._id} className="comment">
+              <div key={comment._id} className={styles.comment}>
                 <img src={comment.user.profilePictureURL || 'default-profile.png'} alt={`${comment.user.firstName} ${comment.user.lastName}`} />
                 <div>
                   <p><strong>{comment.user.firstName} {comment.user.lastName}:</strong> {comment.commentText}</p>
-                  <p className="comment-date">{new Date(comment.createdAt).toLocaleDateString()}</p>
+                  <p className={styles.commentDate}>{new Date(comment.createdAt).toLocaleDateString()}</p>
                 </div>
               </div>
             ))}
-            <div className="add-comment">
+            <div className={styles.addComment}>
               <textarea
                 value={selectedQuiz === quiz._id ? commentText : ''}
                 onChange={(e) => setCommentText(e.target.value)}
