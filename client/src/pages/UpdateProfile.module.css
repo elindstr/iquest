@@ -1,0 +1,69 @@
+/* TO FIX: top of page is cut off and not scrollable */
+.update-profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* Changed from center to flex-start to start content from the top */
+  width: 100%;
+  min-height: 100vh;  /* Changed height to min-height */
+  overflow: auto;  /* Added overflow auto to allow scrolling */
+  padding-top: 2rem;  /* Optional padding to prevent content from touching the top */
+  box-sizing: border-box;  /* Ensure padding does not affect the width */
+}
+
+.update-profile-page .card {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  width: 100%;
+}
+
+.update-profile-page .card h1 {
+  margin-bottom: 1.5rem;
+}
+
+.update-profile-page .note {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.update-profile-page .readonly {
+  background-color: #2e2e2e;
+  color: #888;
+}
+
+.update-profile-page .button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-profile-page .profile-picture {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.update-profile-page .profile-picture img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.update-profile-page .delete-button {
+  position: absolute;
+  top: 0;
+  right: 90px;
+  /* background: rgba(255, 0, 0, 0.8); */
+  border: none;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 5px;
+}
+
+.update-profile-page .delete-button:hover {
+   background: rgba(255, 0, 0, 1); 
+}

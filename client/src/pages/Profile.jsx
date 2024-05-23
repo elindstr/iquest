@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import '../pages/Profile.css';
+import '../pages/Profile.module.css';
 
 const Profile = () => {
     const navigate = useNavigate();
