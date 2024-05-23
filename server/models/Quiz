@@ -10,10 +10,13 @@ const quizSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  apiLink: {
+  difficulty: {
     type: String
   },
-  difficulty: {
+  count: {
+    type: Number
+  },
+  category: {
     type: String
   },
   percentCorrect: {

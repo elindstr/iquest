@@ -53,9 +53,9 @@ const resolvers = {
       }
       throw new AuthenticationError('Not authenticated');
     },
-    scoreQuiz: async (parent, { _id, percentCorrect }, context) => {
+    scoreQuiz: async (parent, { _id, count, percentCorrect }, context) => {
       if (context.user) {
-        const updateData = { percentCorrect };
+        const updateData = { count, percentCorrect };
 
         const updatedQuiz = await Quiz.findByIdAndUpdate(
           _id,

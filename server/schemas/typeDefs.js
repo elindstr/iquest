@@ -16,8 +16,9 @@ const typeDefs = `
     _id: ID
     date: Date
     user: User
-    apiLink: String
     difficulty: String
+    count: Int
+    category: String
     percentCorrect: Float
   }
 
@@ -47,8 +48,8 @@ const typeDefs = `
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
-    addQuiz(user: ID!, apiLink: String, difficulty: String, percentCorrect: Float): Quiz
-    scoreQuiz(_id: ID!, percentCorrect: Float): Quiz
+    addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
+    scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
   }
 `;
 
