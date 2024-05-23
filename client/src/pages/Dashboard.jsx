@@ -17,7 +17,8 @@ const Dashboard = () => {
         <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
         <button className={styles.button} onClick={() => navigate('/update-profile')}>Update Profile</button>
         <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
-        <button className={styles.button} onClick={() => navigate('/messaging')}>Messaging</button>
+        <button className={styles.button} onClick={() => navigate('/donate')}>Donate</button>
+        <button className={styles.button} onClick={() => navigate('/feed')}>Feed (demo/development)</button>
         <button className={styles.button} onClick={handleLogout}>Sign Out</button>
       </div>
     </div>

@@ -50,26 +50,31 @@ export const QUERY_USERS = gql`
 
 // Query for fetching all quizes
 export const QUERY_QUIZES = gql`
-  query quizes {
+  query getQuizes {
     quizes {
       _id
       date
       user {
         _id
-        email
         firstName
         lastName
         profilePictureURL
-        profileBio
-        iq
-        friends {
-          _id
-        }
       }
-      difficulty 
+      difficulty
       count
       category
       percentCorrect
+      comments {
+        _id
+        user {
+          _id
+          firstName
+          lastName
+          profilePictureURL
+        }
+        commentText
+        createdAt
+      }
     }
   }
 `;

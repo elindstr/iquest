@@ -1,5 +1,20 @@
+// server/models/Quiz.js
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+
+const commentSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  commentText: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
 const quizSchema = new Schema({
   date: {
@@ -8,20 +23,21 @@ const quizSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   difficulty: {
-    type: String
+    type: String,
   },
   count: {
-    type: Number
+    type: Number,
   },
   category: {
-    type: String
+    type: String,
   },
   percentCorrect: {
-    type: Number
-  }
+    type: Number,
+  },
+  comments: [commentSchema]
 });
 
 const Quiz = mongoose.model('Quiz', quizSchema);

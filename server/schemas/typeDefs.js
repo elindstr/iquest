@@ -12,6 +12,13 @@ const typeDefs = `
     iq: Float
   }
 
+  type Comment {
+    _id: ID
+    user: User
+    commentText: String
+    createdAt: Date
+  }
+
   type Quiz {
     _id: ID
     date: Date
@@ -20,6 +27,7 @@ const typeDefs = `
     count: Int
     category: String
     percentCorrect: Float
+    comments: [Comment]
   }
 
   type Auth {
@@ -50,6 +58,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
+    addQuizComment(_id: ID!, userId: ID!, commentText: String!): Quiz
   }
 `;
 
