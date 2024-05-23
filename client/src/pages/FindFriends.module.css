@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.dashboard-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(98, 0, 234, 0.8), 
+    0 0 20px rgba(98, 0, 234, 0.6), 
+    0 0 30px rgba(98, 0, 234, 0.4), 
+    0 0 40px rgba(98, 0, 234, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(98, 0, 234, 0.9),
+    0 0 25px rgba(98, 0, 234, 0.7),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.card h1 {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-card {
+  padding: 15px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #2e2e2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.user-list-item {
+  padding: 0 15px 0 0;
+}
+
+.user-list-item .profile-image {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.addfriend-button, .unfriend-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.addfriend-button {
+  background-color: #6200ea;
+}
+
+.unfriend-button {
+  background-color: #f44336;
+}
+
+.addfriend-button:hover {
+  background-color: #3700b3;
+}
+
+.unfriend-button:hover {
+  background-color: #d32f2f;
+}
+
+.user-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.user-card {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 200px;
+  width: 100%;
+}
+
+.user-list-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-image {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.user-list-item-link {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-list-item-link:hover {
+  color: white;
+  text-decoration: underline;
+}

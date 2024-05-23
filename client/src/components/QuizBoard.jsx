@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_QUIZ, SCORE_QUIZ } from '../utils/mutations';
 import Auth from '../utils/auth';
-import './Quiz.css';
+import './Quiz.module.css';
 import Score from './Score';
 import Timer from './Timer';
 
@@ -13,7 +13,7 @@ const QuizBoard = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
-  const [questionTimer, setQuestionTimer] = useState(15);
+  const [questionTimer, setQuestionTimer] = useState(10);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [quizId, setQuizId] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
@@ -102,7 +102,7 @@ const QuizBoard = () => {
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setSelectedAnswer(null);
-    setQuestionTimer(15);
+    setQuestionTimer(10);
     setIsTimerRunning(true);
   };
 
