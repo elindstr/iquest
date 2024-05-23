@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { QUERY_USERS } from '../utils/queries';
 import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
 import Auth from '../utils/auth';
-import './FindFriends.css';
+import styles from './FindFriends.module.css';
 
 const FindFriends = () => {
   const navigate = useNavigate();
@@ -84,35 +84,49 @@ const FindFriends = () => {
   if (error) return <p>Error! {error.message}</p>;
 
   return (
-    <div className="dashboard-page">
-      <div className="card">
+    <div className={styles.dashboardPage}>
+      <div className={styles.card}>
         <h1>Search Users</h1>
         <input
           type="text"
           value={searchTerm}
           onChange={handleSearch}
           placeholder="Search users..."
-          className="search-input"
+          className={styles.searchInput}
         />
-        <div className="user-list">
+        <div className={styles.userList}>
           {searchResults.map((user) => (
-            <div key={user._id} className="user-card"> 
-
-              <Link className="user-list-item-link" to={`/profile/${user._id}`}>
-              <p className="user-list-item" key={user._id}>
-
-              {user.profilePictureURL && (<img src={user.profilePictureURL} alt={`${user.firstName} ${user.lastName}`} className="profile-image" />)}
-
-                {user.firstName || '-'}&nbsp;
-                {user.lastName || '-'} - 
-                {user.email || '-'} -
-                {user.iq || '-'}
-              </p></Link>
+            <div key={user._id} className={styles.userCard}>
+              <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
+                <p className={styles.userListItem} key={user._id}>
+                  {user.profilePictureURL && (
+                    <img
+                      src={user.profilePictureURL}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className={styles.profileImage}
+                    />
+                  )}
+                  {user.firstName || '-'}&nbsp;
+                  {user.lastName || '-'} - 
+                  {user.email || '-'} -
+                  {user.iq || '-'}
+                </p>
+              </Link>
 
               {user.isFriend ? (
-                <button onClick={() => handleUnFriend(user._id)} className="unfriend-button">Unfriend</button>
+                <button
+                  onClick={() => handleUnFriend(user._id)}
+                  className={styles.unfriendButton}
+                >
+                  Unfriend
+                </button>
               ) : (
-                <button onClick={() => handleAddFriend(user._id)} className="addfriend-button">Add Friend</button>
+                <button
+                  onClick={() => handleAddFriend(user._id)}
+                  className={styles.addfriendButton}
+                >
+                  Add Friend
+                </button>
               )}
             </div>
           ))}

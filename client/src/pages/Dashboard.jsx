@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
-import './Dashboard.css';
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,15 +11,14 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-page">
-      <div className="card">
-        <h1>Dashboard</h1>
-        <button onClick={() => navigate('/find-friends')}>Find Friends</button>
-        <button onClick={() => navigate('/update-profile')}>View/Update Profile</button>
-        <button onClick={() => navigate('/quiz')}>New Quiz</button>
-        <button onClick={() => navigate('/messaging')}>Messaging</button>
-        <button onClick={() => navigate('/donate')}>Donate</button>
-        <button onClick={handleLogout}>Sign Out</button>
+    <div className={styles.dashboardPage}>
+      <div className={styles.card}>
+        <h1 className={styles.h1}>Dashboard</h1>
+        <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
+        <button className={styles.button} onClick={() => navigate('/update-profile')}>Update Profile</button>
+        <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
+        <button className={styles.button} onClick={() => navigate('/messaging')}>Messaging</button>
+        <button className={styles.button} onClick={handleLogout}>Sign Out</button>
       </div>
     </div>
   );

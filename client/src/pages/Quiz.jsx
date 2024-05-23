@@ -1,11 +1,11 @@
 import React from 'react';
 import QuizBoard from '../components/QuizBoard';
-import '../components/Quiz.css';
+import styles from '../components/Quiz.module.css';
 
 const Quiz = () => {
   return (
-    <div className="quiz-page">
-      <div className="card">
+    <div className={styles.quizPage}>
+      <div className={styles.card}>
         <QuizBoard />
       </div>
     </div>
