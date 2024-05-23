@@ -6,11 +6,9 @@ const commentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
   },
   commentText: {
     type: String,
-    required: true
   },
   createdAt: {
     type: Date,
@@ -26,23 +24,18 @@ const quizSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
   },
   difficulty: {
     type: String,
-    required: true
   },
   count: {
     type: Number,
-    required: true
   },
   category: {
     type: String,
-    required: true
   },
   percentCorrect: {
     type: Number,
-    required: true
   },
   comments: [commentSchema]
 });
