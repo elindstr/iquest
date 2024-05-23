@@ -1,0 +1,76 @@
+/* Feed.css */
+.quiz-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quiz-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.quiz-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quiz-user-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.quiz-details {
+  margin-top: 10px;
+}
+
+.quiz-comments {
+  margin-top: 20px;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.add-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.add-comment textarea {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: none;
+}
+
+.add-comment button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-comment button:hover {
+  background-color: #0056b3;
+}

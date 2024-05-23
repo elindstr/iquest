@@ -47,7 +47,7 @@ const QuizBoard = () => {
       }
       setQuizData(triviaAPIData);
 
-      const addQuizMutationResponse = await addQuiz({ variables: { user: userId, apiLink: apiUrl, difficulty: quizDifficulty, percentCorrect: 0 } });
+      const addQuizMutationResponse = await addQuiz({ variables: { user: userId, category: quizCategory, difficulty: quizDifficulty, percentCorrect: 0 } });
       setQuizId(addQuizMutationResponse.data.addQuiz._id);
 
     } catch (err) {
