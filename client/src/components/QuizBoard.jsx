@@ -17,46 +17,46 @@ const QuizBoard = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [quizId, setQuizId] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
+  const [loadingError, setLoadingError] = useState(false);
 
   const [addQuiz] = useMutation(ADD_QUIZ);
   const [scoreQuiz] = useMutation(SCORE_QUIZ);
   const userId = Auth.getProfile().data._id;
 
+  const fetchQuizData = async () => {
+    const quizAmount = 10;        // Hard-coded here
+    const quizDifficulty = "any"; // Hard-coded here
+    const quizCategory = "any";   // Hard-coded here
+
+    let difficultyParam = "";
+    if (quizDifficulty !== "any") {
+      difficultyParam = `&difficulty=${quizDifficulty}`;
+    }
+    let categoryParam = "";
+    if (quizCategory !== "any") {
+      categoryParam = `&category=${quizCategory}`;
+    }
+    const apiUrl = `https://opentdb.com/api.php?amount=${quizAmount}${difficultyParam}${categoryParam}`;
+    
+    try {
+      const response = await fetch(apiUrl);
+      const triviaAPIData = await response.json();
+
+      if (triviaAPIData?.response_code !== 0) {
+        throw new Error(`API error: ${triviaAPIData.response_code}`);
+      }
+      setQuizData(triviaAPIData);
+
+      const addQuizMutationResponse = await addQuiz({ variables: { user: userId, apiLink: apiUrl, difficulty: quizDifficulty, percentCorrect: 0 } });
+      setQuizId(addQuizMutationResponse.data.addQuiz._id);
+
+    } catch (err) {
+      console.log('Error fetching quiz data:', err);
+      setLoadingError(true);
+    }
+  };
+
   useEffect(() => {
-    const fetchQuizData = async () => {
-      const quizAmount = 10;        // Hard-coded here
-      const quizDifficulty = "any"; // Hard-coded here
-      const quizCategory = "any";   // Hard-coded here
-
-      let difficultyParam = "";
-      if (quizDifficulty !== "any") {
-        difficultyParam = `&difficulty=${quizDifficulty}`;
-      }
-      let categoryParam = "";
-      if (quizCategory !== "any") {
-        categoryParam = `&category=${quizCategory}`;
-      }
-      const apiUrl = `https://opentdb.com/api.php?amount=${quizAmount}${difficultyParam}${categoryParam}`;
-      //console.log("API:", apiUrl);
-      
-      try {
-        const response = await fetch(apiUrl);
-        const triviaAPIData = await response.json();
-
-        if (triviaAPIData?.response_code !== 0) {
-          throw new Error(`API error: ${triviaAPIData.response_code}`);
-        }
-        setQuizData(triviaAPIData);
-
-        const addQuizMutationResponse = await addQuiz({ variables: { user: userId, apiLink: apiUrl, difficulty: quizDifficulty, percentCorrect: 0 } });
-        setQuizId(addQuizMutationResponse.data.addQuiz._id);
-        //console.log(addQuizMutationResponse);
-
-      } catch (err) {
-        console.log('Error fetching quiz data:', err);
-      }
-    };
-
     fetchQuizData();
   }, [addQuiz, userId]);
 
@@ -64,8 +64,7 @@ const QuizBoard = () => {
     if (currentQuestionIndex > 0 && quizId) {
       const saveResults = async () => {
         const percentCorrect = score / quizData.results.length;
-        const scoreQuizMutationResponse = await scoreQuiz({ variables: { _id: quizId, count: currentQuestionIndex, percentCorrect } });
-        console.log("scored quiz:", scoreQuizMutationResponse);
+        await scoreQuiz({ variables: { _id: quizId, count: currentQuestionIndex, percentCorrect } });
       };
 
       saveResults();
@@ -92,11 +91,6 @@ const QuizBoard = () => {
   const handleTimerEnd = () => {
     setSelectedAnswer("TIME_UP");
     setIsTimerRunning(false);
-    setTimeout(() => {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedAnswer(null);
-      setIsTimerRunning(true);
-    }, 1000);
   };
 
   const handleNextQuestion = () => {
@@ -106,16 +100,25 @@ const QuizBoard = () => {
     setIsTimerRunning(true);
   };
 
+  useEffect(() => {
+    if (loadingError) {
+      const timer = setTimeout(() => {
+        setLoadingError(false);
+        fetchQuizData();
+      }, 5100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadingError]);
+
   if (!quizData) {
     return <p>Loading...</p>;
   }
 
-  if (quizData.response_code > 0) {
-    console.log(`Sorry, something went wrong loading the quiz. Try again in a few seconds. Error code: ${quizData.response_code}`);
-
+  if (quizData.response_code > 0 || loadingError) {
     return (
       <>
-        <p>Sorry, something went wrong loading the quiz. Try again in a few seconds.</p>
+        <p>Sorry, something went wrong loading the quiz. Retrying in a few seconds...</p>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </>
     );
@@ -128,7 +131,6 @@ const QuizBoard = () => {
       <div>
         <h2>Quiz Complete!</h2>
         <p>You scored {score} out of {quizData.results.length}: {percentCorrect.toFixed(2)}%</p>
-        <p>Adjusted IQ: [TODO].</p>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     );
@@ -141,7 +143,7 @@ const QuizBoard = () => {
       <h2>Quiz Board</h2>
       <p>Question {currentQuestionIndex + 1} of {quizData.results.length}</p>
       <Score score={score} totalQuestions={quizData.results.length} />
-      <Timer key={currentQuestionIndex} initialTime={questionTimer} onTimerEnd={handleTimerEnd} isRunning={isTimerRunning} />
+      <Timer key={currentQuestionIndex} initialTime={15} onTimerEnd={handleTimerEnd} isRunning={isTimerRunning} />
       <div className="question-container">
         <h3 dangerouslySetInnerHTML={{ __html: currentQuestion.question }} />
         <div className="answers-container">
@@ -155,17 +157,20 @@ const QuizBoard = () => {
             />
           ))}
         </div>
-        {selectedAnswer && (
+        {selectedAnswer && selectedAnswer !== "TIME_UP" && (
           <button className="next-question" onClick={handleNextQuestion}>
             Next
           </button>
         )}
+        {selectedAnswer === "TIME_UP" && (
+          <div className="correct-answer">
+            <p>The correct answer was: <strong dangerouslySetInnerHTML={{ __html: currentQuestion.correct_answer }} /></p>
+            <button className="next-question" onClick={handleNextQuestion}>
+              Next
+            </button>
+          </div>
+        )}
       </div>
-      {selectedAnswer === "TIME_UP" && (
-        <div className="correct-answer">
-          <p>The correct answer was: <strong>{currentQuestion.correct_answer}</strong></p>
-        </div>
-      )}
     </div>
   );
 };
