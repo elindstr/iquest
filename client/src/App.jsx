@@ -8,6 +8,7 @@ import FindFriends from './pages/FindFriends';
 import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
 import Quiz from './pages/Quiz';
+import Donate from './pages/Donate'
 
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
@@ -32,6 +33,7 @@ function App() {
         <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
         <Route path="/messaging" element={<PrivateRoute element={<div>Messaging</div>} />} />
+        <Route path="/donate" element={<PrivateRoute element={<Donate />} />} />
 
         <Route path="*" element={<NotFoundRedirect />} />
       </Routes>
