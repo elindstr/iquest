@@ -26,7 +26,7 @@ db.once('open', async () => {
         profileBio: "Hi!",
         profilePictureURL: "/seeds-uploads/braden.jpg",
         iq: 200,
-        password: "password",
+        password: password,
         friends: []
       },
       {
@@ -36,7 +36,7 @@ db.once('open', async () => {
         profileBio: "Hi!",
         profilePictureURL: "/seeds-uploads/jacob.jpg",
         iq: 160,
-        password: "password",
+        password: password,
         friends: []
       },
       {
@@ -46,7 +46,7 @@ db.once('open', async () => {
         profileBio: "Hi!",
         profilePictureURL: "/seeds-uploads/beavis.png",
         iq: 40,
-        password: "password",
+        password: password,
         friends: []
       },
       {
@@ -56,7 +56,7 @@ db.once('open', async () => {
         profileBio: "Hi!",
         profilePictureURL: "/seeds-uploads/butthead.png",
         iq: 100,
-        password: "password",
+        password: password,
         friends: []
       }
     ];
