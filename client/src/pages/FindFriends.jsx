@@ -20,21 +20,24 @@ const FindFriends = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const myEmail = Auth.getProfile().data.email;
-  const myId = Auth.getProfile().data._id;
 
   useEffect(() => {
-    if (data) {
+    if (data && data.users) {
       const myData = data.users.find(user => user.email === myEmail);
-      const myFriendsIds = myData.friends.map(friend => friend._id);
-      const filteredUsers = data.users.filter(user => user.email !== myEmail);
-      const usersWithFriendStatus = filteredUsers.map(user => ({
-        ...user,
-        isFriend: myFriendsIds.includes(user._id)
-      }));
-      setUsers(usersWithFriendStatus);
-      setSearchResults(usersWithFriendStatus);
+
+      if (myData) {
+        const myFriendsIds = myData.friends.map(friend => friend._id);
+        const filteredUsers = data.users.filter(user => user.email !== myEmail);
+        const usersWithFriendStatus = filteredUsers.map(user => ({
+          ...user,
+          isFriend: myFriendsIds.includes(user._id)
+        }));
+
+        setUsers(usersWithFriendStatus);
+        setSearchResults(usersWithFriendStatus);
+      }
     }
-  }, [data, myEmail, myId]);
+  }, [data, myEmail]);
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
@@ -90,7 +93,7 @@ const FindFriends = () => {
           {searchResults.map((user) => (
             <div key={user._id} className={styles.userCard}>
               <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
-                <p className={styles.userListItem} key={user._id}>
+                <p className={styles.userListItem}>
                   {user.profilePictureURL && (
                     <img
                       src={user.profilePictureURL}
