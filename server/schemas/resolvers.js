@@ -39,10 +39,13 @@ const resolvers = {
     },
     quizes: async (parent, args, context) => {
       if (context.user) {
-        return await Quiz.find();
+        return await Quiz.find().populate('user').populate({
+          path: 'comments.user',
+          select: 'firstName lastName profilePictureURL'
+        });
       }
       throw new AuthenticationError('Not authenticated');
-    },
+    }
   },
 
   Mutation: {
@@ -121,6 +124,18 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    addQuizComment: async (parent, { _id, userId, commentText }, context) => {
+      if (context.user) {
+        const quiz = await Quiz.findById(_id);
+        if (!quiz) {
+          throw new Error('Quiz not found');
+        }
+        quiz.comments.push({ user: userId, commentText, createdAt: new Date() });
+        await quiz.save();
+        return quiz.populate('comments.user');
+      }
+      throw new AuthenticationError('Not authenticated');
     }
   }
 };

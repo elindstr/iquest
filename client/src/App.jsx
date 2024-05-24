@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Auth from './utils/auth';
-
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import FindFriends from './pages/FindFriends';
 import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
 import Quiz from './pages/Quiz';
+import './App.css'
+import Donate from './pages/Donate'
+import MainFeed from './pages/MainFeed';
 
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
@@ -31,7 +33,8 @@ function App() {
         <Route path="/update-profile" element={<PrivateRoute element={<UpdateProfile />} />} />
         <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
-        <Route path="/messaging" element={<PrivateRoute element={<div>Messaging</div>} />} />
+        <Route path="/feed" element={<PrivateRoute element={<MainFeed />} />} />
+        <Route path="/donate" element={<PrivateRoute element={<Donate />} />} />
 
         <Route path="*" element={<NotFoundRedirect />} />
       </Routes>

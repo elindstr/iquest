@@ -1,3 +1,6 @@
+// I disconnected this to fix the console error. -Eric
+
+
 import React, { useState, useEffect, useRef } from 'react';
 
 const Timer = ({ initialTime, onTimerEnd, isRunning }) => {

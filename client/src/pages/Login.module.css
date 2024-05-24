@@ -1,4 +1,6 @@
-body {
+/* Login.module.css */
+
+.landingPage {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #121212;
@@ -6,15 +8,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-.landing-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(145deg, #121212, #1f1f1f);
 }
 
 .card {
@@ -34,30 +27,22 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.card h1 {
+.h1 {
   margin-bottom: 1.5rem;
 }
 
-.card form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  min-height: 200px;
-  justify-content: center;
-}
-
-.card input {
+.input {
   padding: 0.75rem;
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
-.card input:hover {
+.input:hover {
   background-color: #333;
 }
 
-.card button {
+.button {
   padding: 0.75rem;
   border: none;
   border-radius: 4px;
@@ -67,11 +52,11 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.card button:hover {
+.button:hover {
   background-color: #3700b3;
 }
 
-.toggle-button {
+.toggleButton {
   background-color: transparent;
   color: #6200ea;
   border: 1px solid #6200ea;
@@ -82,20 +67,20 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.toggle-button:hover {
+.toggleButton:hover {
   background-color: #6200ea;
   color: #fff;
 }
 
-/* Logic for show/hide password */
-.input-container {
+.errorMessage {
+  color: red;
+  margin-top: 1rem;
+}
+
+.inputContainer {
   position: relative;
   display: flex;
   align-items: center;
-}
-
-.input-container input {
-  padding-right: 2.5rem; 
 }
 
 .switch {
@@ -119,7 +104,7 @@ body {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -130,7 +115,7 @@ body {
   left: 2px;
   bottom: 2px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {

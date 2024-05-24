@@ -15,5 +15,8 @@
   "license": "",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^2.7.1"
   }
 }

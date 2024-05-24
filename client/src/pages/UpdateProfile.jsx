@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UPDATE_USER } from '../utils/mutations';
 import { QUERY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
-import './UpdateProfile.css';
+import styles from './UpdateProfile.module.css';
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ const UpdateProfile = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [updateUser] = useMutation(UPDATE_USER);
   const [profilePictureURL, setProfilePictureURL] = useState('');
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -49,21 +48,15 @@ const UpdateProfile = () => {
     setProfilePicture(event.target.files[0]);
   };
 
-  const handleSaveProfile = async () => {
+  const handleFieldDoubleClick = (field) => {
+    setEditableFields({ ...editableFields, [field]: true });
+  };
+
+  const handleFieldSave = async (field) => {
     try {
-      await updateUser({
-        variables: {
-          _id: userId,
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          email: formState.email,
-          profileBio: formState.profileBio,
-          password: formState.password,
-        }
-      });
-      setEditableFields({});
-      setInitialFormState({ ...formState });
-      setEditMode(false);
+      await updateUser({ variables: { _id: userId, [field]: formState[field] } });
+      setEditableFields({ ...editableFields, [field]: false });
+      setInitialFormState({ ...initialFormState, [field]: formState[field] });
     } catch (error) {
       console.error('Error updating profile:', error);
     }
@@ -126,22 +119,19 @@ const UpdateProfile = () => {
     }
   };
 
-  const handleEditProfile = () => {
-    setEditMode(!editMode);
-  };
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading user data!</p>;
 
   return (
-    <div className="dashboard-page">
-      <div className="card">
+    <div className={styles.dashboardPage}>
+      <div className={styles.card}>
         <h1>Update Profile</h1>
+        <p className={styles.note}>Double-click a field to edit</p>
         <form>
           {profilePictureURL && (
-            <div className="profile-picture">
+            <div className={styles.profilePicture}>
               <img src={profilePictureURL} alt="Profile" />
-              <button type="button" className="delete-button" onClick={handleDeleteProfilePicture}>
+              <button type="button" className={styles.deleteButton} onClick={handleDeleteProfilePicture}>
                 &times;
               </button>
             </div>
@@ -153,9 +143,20 @@ const UpdateProfile = () => {
               name="firstName"
               value={formState.firstName}
               onChange={handleChange}
-              readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              readOnly={!editableFields.firstName}
+              className={!editableFields.firstName ? styles.readonly : ''}
+              onDoubleClick={() => handleFieldDoubleClick('firstName')}
             />
+            {editableFields.firstName && (
+              <div className={styles.buttonGroup}>
+                <button type="button" onClick={() => handleFieldSave('firstName')}>
+                  Save
+                </button>
+                <button type="button" onClick={() => handleFieldCancel('firstName')}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <div>
             <label>Last Name</label>
@@ -164,9 +165,20 @@ const UpdateProfile = () => {
               name="lastName"
               value={formState.lastName}
               onChange={handleChange}
-              readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              readOnly={!editableFields.lastName}
+              className={!editableFields.lastName ? styles.readonly : ''}
+              onDoubleClick={() => handleFieldDoubleClick('lastName')}
             />
+            {editableFields.lastName && (
+              <div className={styles.buttonGroup}>
+                <button type="button" onClick={() => handleFieldSave('lastName')}>
+                  Save
+                </button>
+                <button type="button" onClick={() => handleFieldCancel('lastName')}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <div>
             <label>Email</label>
@@ -175,9 +187,20 @@ const UpdateProfile = () => {
               name="email"
               value={formState.email}
               onChange={handleChange}
-              readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              readOnly={!editableFields.email}
+              className={!editableFields.email ? styles.readonly : ''}
+              onDoubleClick={() => handleFieldDoubleClick('email')}
             />
+            {editableFields.email && (
+              <div className={styles.buttonGroup}>
+                <button type="button" onClick={() => handleFieldSave('email')}>
+                  Save
+                </button>
+                <button type="button" onClick={() => handleFieldCancel('email')}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <div>
             <label>Profile Bio</label>
@@ -185,9 +208,20 @@ const UpdateProfile = () => {
               name="profileBio"
               value={formState.profileBio}
               onChange={handleChange}
-              readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              readOnly={!editableFields.profileBio}
+              className={!editableFields.profileBio ? styles.readonly : ''}
+              onDoubleClick={() => handleFieldDoubleClick('profileBio')}
             />
+            {editableFields.profileBio && (
+              <div className={styles.buttonGroup}>
+                <button type="button" onClick={() => handleFieldSave('profileBio')}>
+                  Save
+                </button>
+                <button type="button" onClick={() => handleFieldCancel('profileBio')}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <div>
             <label>Password</label>
@@ -196,15 +230,26 @@ const UpdateProfile = () => {
               name="password"
               value={formState.password}
               onChange={handleChange}
-              readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              readOnly={!editableFields.password}
+              className={!editableFields.password ? styles.readonly : ''}
+              onDoubleClick={() => handleFieldDoubleClick('password')}
             />
+            {editableFields.password && (
+              <div className={styles.buttonGroup}>
+                <button type="button" onClick={() => handleFieldSave('password')}>
+                  Save
+                </button>
+                <button type="button" onClick={() => handleFieldCancel('password')}>
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
           <div>
             <label>Profile Picture</label>
             <input type="file" onChange={handleFileChange} />
             {profilePicture && (
-              <div className="button-group">
+              <div className={styles.buttonGroup}>
                 <button type="button" onClick={handleUpload}>
                   Upload
                 </button>
@@ -214,17 +259,7 @@ const UpdateProfile = () => {
               </div>
             )}
           </div>
-          {editMode && (
-            <div className="button-group">
-              <button type="button" onClick={handleSaveProfile}>
-                Save
-              </button>
-            </div>
-          )}
         </form>
-        <button type="button" onClick={handleEditProfile}>
-          {editMode ? 'Cancel Edit' : 'Edit Profile'}
-        </button>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>

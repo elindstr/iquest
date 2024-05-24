@@ -1,3 +1,4 @@
+// client...mutations.js
 import { gql } from '@apollo/client';
 
 export const LOGIN = gql`
@@ -138,6 +139,32 @@ export const SCORE_QUIZ = gql`
       _id
       count
       percentCorrect
+    }
+  }
+`;
+
+export const ADD_QUIZ_COMMENT = gql`
+  mutation addQuizComment(
+    $_id: ID!
+    $userId: ID!
+    $commentText: String!
+  ) {
+    addQuizComment(
+      _id: $_id
+      userId: $userId
+      commentText: $commentText
+    ) {
+      _id
+      comments {
+        _id
+        user {
+          _id
+          firstName
+          lastName
+        }
+        commentText
+        createdAt
+      }
     }
   }
 `;
