@@ -1,6 +1,11 @@
 const typeDefs = `
   scalar Date
 
+  type DailyLogin {
+    _id: ID
+    date: Date
+  }
+
   type User {
     _id: ID
     firstName: String
@@ -10,6 +15,7 @@ const typeDefs = `
     profileBio: String
     friends: [User]
     iq: Float
+    dailyLogins: [DailyLogin]
   }
 
   type Comment {
@@ -59,6 +65,7 @@ const typeDefs = `
     addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
     addQuizComment(_id: ID!, userId: ID!, commentText: String!): Quiz
+    recordLogin(userId: ID!): User
   }
 `;
 
