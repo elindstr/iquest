@@ -17,7 +17,7 @@ const QuizFeed = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   const quizzes = data.quizes.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
-  console.log(quizzes)
+  //console.log(quizzes)
 
   const handleCommentSubmit = async (quizId) => {
     try {

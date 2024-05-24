@@ -136,6 +136,26 @@ const resolvers = {
         return quiz.populate('comments.user');
       }
       throw new AuthenticationError('Not authenticated');
+    },
+    recordLogin: async (parent, { userId }, context) => {
+      if (context.user) {
+        const user = await User.findById(userId);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        const lastLogin = user.dailyLogins.length > 0
+          ? new Date(user.dailyLogins[user.dailyLogins.length - 1].date).setHours(0, 0, 0, 0)
+          : null;
+
+        if (lastLogin === today) {
+          return user;
+        }
+
+        user.dailyLogins.push({ date: new Date() });
+
+        await user.save();
+        return user;
+      }
+      throw new AuthenticationError('Not authenticated');
     }
   }
 };

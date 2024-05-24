@@ -20,6 +20,9 @@ export const QUERY_USER = gql`
         profileBio
         iq
       }
+      dailyLogins {
+        date
+      }
     }
   }
 `;
@@ -43,6 +46,9 @@ export const QUERY_USERS = gql`
         profilePictureURL
         profileBio
         iq
+      }
+      dailyLogins {
+        date
       }
     }
   }
@@ -74,6 +80,18 @@ export const QUERY_QUIZES = gql`
         }
         commentText
         createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_USER_DAILY_LOGINS = gql`
+  query getUserDailyLogins($id: ID!) {
+    user(_id: $id) {
+      _id
+      dailyLogins {
+        _id
+        date
       }
     }
   }

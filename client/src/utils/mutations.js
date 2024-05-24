@@ -168,3 +168,15 @@ export const ADD_QUIZ_COMMENT = gql`
     }
   }
 `;
+
+export const RECORD_LOGIN = gql`
+  mutation recordLogin($userId: ID!) {
+    recordLogin(userId: $userId) {
+      _id
+      dailyLogins {
+        _id
+        date
+      }
+    }
+  }
+`;
