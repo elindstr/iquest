@@ -186,7 +186,7 @@ const QuizBoard = () => {
         <div className={styles.card}>
           <h2>Quiz Complete!</h2>
           <p>You scored {score} out of {quizData.results.length}: {percentCorrectDisplay}%</p>
-          <p>New IQ: {newIQ ? newIQ.toFixed(2) : null}</p>
+          <p>New IQ: {newIQ ? newIQ.toFixed(0) : null}</p>
           <br/>
           <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </div>
