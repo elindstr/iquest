@@ -1,48 +1,97 @@
 .leaderBoardPage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-  }
-  
-  .card {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 20px 0;
-  }
-  
-  h1 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .userList {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .userCard {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-  }
-  
-  .userListItem {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .profileImage {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+.toggleLabel {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggleInput {
+  display: none;
+}
+
+.toggleSlider {
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 15px;
+  margin-left: 10px;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.toggleInput:checked + .toggleSlider {
+  background-color: #3700b3;
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggleInput:checked + .toggleSlider::before {
+  transform: translateX(25px);
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userCard {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.userRank {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.userListItem {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
