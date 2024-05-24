@@ -85,7 +85,7 @@ const Dashboard = () => {
         <div className={styles.containerButton}>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
-          <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leader Board</button>
+          <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leaderboard</button>
           <button className={styles.button} onClick={() => navigate('/update-profile')}>Profile</button>
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
           <button className={styles.button} onClick={() => navigate('/donate')}>Support Us</button>
