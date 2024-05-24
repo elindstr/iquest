@@ -5,6 +5,10 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const imageUploadRoute = require('./utils/imageUploadRoute');
 const cors = require('cors'); // Import CORS middleware
+const env = require('dotenv').config({ path: './.env'});
+const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2022-08-01',
+})
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -45,6 +49,33 @@ const startApolloServer = async () => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   }
+
+  // Get stripe API key from .env and send to front end
+  app.get('/api/config', (req, res) => {
+    res.send({
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    });
+  });
+
+  // post payment requests from stripe
+  app.post('/api/create-payment-intent', async (req, res) => {
+    try {
+      const paymentIntent = await Stripe.paymentIntents.create({
+        currency: 'usd',
+        amount: 1999,
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      res.send({ clientSecret: paymentIntent.client_secret });
+    } catch (e) {
+      return res.status(400).send({
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  });
 
   // Start the server
   db.once('open', () => {

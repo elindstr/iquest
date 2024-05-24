@@ -5,6 +5,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 export default function CheckoutForm() {
     const stripe = useStripe();
     const elements = useElements();
+
     const [message, setMessage] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -16,6 +17,24 @@ export default function CheckoutForm() {
         }
 
         setIsProcessing(true);
+
+        const {error, paymentIntent} = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: `${window.location.origin}/donate`
+            },
+            redirect: 'if_required',
+        });
+
+        if (error) {
+            setMessage(error.message);
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+            setMessage("Payment status: " + paymentIntent.status);
+        } else {
+            setMessage('Unexpected state');
+        }
+
+        setIsProcessing(false);
     };
 
     return (
@@ -26,7 +45,8 @@ export default function CheckoutForm() {
                     {isProcessing ? 'Processing ...' : 'Pay now'}
                 </span>
             </button>
+            {message && <div id="payment-message">{message} </div>}
+            <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </form>
-
     )
-}
+};
