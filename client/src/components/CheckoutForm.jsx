@@ -48,6 +48,8 @@ export default function CheckoutForm() {
                 </span>
             </button>
             {message && <div id="payment-message">{message} </div>}
+
+            <br/><br/>
             <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </form>
     )

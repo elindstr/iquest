@@ -29,7 +29,9 @@ function Donate(props) {
 
     return (
         <>
-            <h1> Please give us money</h1>
+            <h1> Donate </h1>
+            <p> This project was made with ❤️ by indie developers. Please consider supporting us. </p><br/>
+
             {stripePromise && clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <CheckoutForm />

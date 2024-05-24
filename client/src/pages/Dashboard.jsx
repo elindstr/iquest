@@ -88,7 +88,7 @@ const Dashboard = () => {
           <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leader Board</button>
           <button className={styles.button} onClick={() => navigate('/update-profile')}>Profile</button>
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
-          <button className={styles.button} onClick={() => navigate('/donate')}>Support this project</button>
+          <button className={styles.button} onClick={() => navigate('/donate')}>Support Us</button>
           <button className={styles.button} onClick={handleLogout}>Sign Out</button>
         </div>
       </div>
