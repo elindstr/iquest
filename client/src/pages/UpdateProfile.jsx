@@ -62,11 +62,7 @@ const UpdateProfile = () => {
     }
   };
 
-  const handleFieldCancel = (field) => {
-    setFormState({ ...formState, [field]: initialFormState[field] });
-    setEditableFields({ ...editableFields, [field]: false });
-  };
-
+  // We'll clean this up for the production version. But this is the only way I could think to wire it up so that both dev and render deployment work right now.
   const handleUpload = async () => {
     if (profilePicture) {
       const formData = new FormData();

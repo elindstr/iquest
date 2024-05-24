@@ -21,12 +21,14 @@ const Dashboard = () => {
       <div className={styles.card}>
         <span>{userData? userData.user.firstName: null}: {userData? userData.user.iq.toFixed(2): null} IQ</span>
         <h1 className={styles.h1}>Dashboard</h1>
-        <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
-        <button className={styles.button} onClick={() => navigate('/update-profile')}>Update Profile</button>
-        <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
-        <button className={styles.button} onClick={() => navigate('/donate')}>Donate</button>
-        <button className={styles.button} onClick={() => navigate('/feed')}>Feed (demo/development)</button>
-        <button className={styles.button} onClick={handleLogout}>Sign Out</button>
+        <div className={styles.containerButton}>
+          <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
+          <button className={styles.button} onClick={() => navigate('/update-profile')}>Update Profile</button>
+          <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
+          <button className={styles.button} onClick={() => navigate('/donate')}>Donate</button>
+          <button className={styles.button} onClick={() => navigate('/feed')}>Feed (demo/development)</button>
+          <button className={styles.button} onClick={handleLogout}>Sign Out</button>
+        </div>
       </div>
     </div>
   );
