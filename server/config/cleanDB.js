@@ -1,16 +1,11 @@
-const models = require('../models');
-const db = require('../config/connection');
+const { User, Quiz } = require('../models');
 
-module.exports = async (modelName, collectionName) => {
-  try {
-    let modelExists = await models[modelName].db.db.listCollections({
-      name: collectionName
-    }).toArray()
-
-    if (modelExists.length) {
-      await db.dropCollection(collectionName);
-    }
-  } catch (err) {
-    throw err;
+const cleanDB = async (modelName, collectionName) => {
+  if (modelName === 'User') {
+    await User.deleteMany({});
+  } else if (modelName === 'Quiz') {
+    await Quiz.deleteMany({});
   }
-}
+};
+
+module.exports = cleanDB;

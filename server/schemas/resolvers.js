@@ -27,13 +27,13 @@ const resolvers = {
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
-        return await User.find();
+        return await User.find().populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
     },
     user: async (parent, { _id }, context) => {
       if (context.user) {
-        return await User.findById(_id);
+        return await User.findById(_id).populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
     },

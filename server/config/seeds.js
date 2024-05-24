@@ -1,65 +1,89 @@
 const db = require('./connection');
 const { User, Quiz } = require('../models');
 const cleanDB = require('./cleanDB');
+const bcrypt = require('bcrypt');
 
 db.once('open', async () => {
   try {
-    await cleanDB('User', 'users')
+    await cleanDB('User', 'users');
+    password = await bcrypt.hash("password", 10);
 
-    const ericData = await User.create({
-      email: "elindstr@gmail.com",
-      firstName: "Eric",
-      lastName: "Lindstrom",
-      profileBio: "Hi!",
-      profilePictureURL: "/seeds-uploads/eric.jpg",
-      iq: 120,
-      password: "password",
-      friends: []
-    });
-    const bradenData = await User.create({
-      email: "braden@gmail.com",
-      firstName: "Braden",
-      lastName: "Natali",
-      profileBio: "Hi!",
-      profilePictureURL: "/seeds-uploads/braden.jpg",
-      iq: 200,
-      password: "password",
-      friends: [ericData.id]
-    });
-    const jacobData = await User.create({
-      email: "jacob@gmail.com",
-      firstName: "Jacob",
-      lastName: "Higham",
-      profileBio: "Hi!",
-      profilePictureURL: "/seeds-uploads/jacob.jpeg",
-      iq: 160,
-      password: "password",
-      friends: [bradenData.id, ericData.id]
-    });
-    const beavisData = await User.create({
-      email: "beavis@gmail.com",
-      firstName: "Beavis",
-      lastName: ".",
-      profileBio: "Hi!",
-      profilePictureURL: "/seeds-uploads/beavis.png",
-      iq: 40,
-      password: "password",
-      friends: [bradenData.id, jacobData.id, ericData.id]
-    });
-    const buttheadData = await User.create({
-      email: "butthead@gmail.com",
-      firstName: "Butthead",
-      lastName: ".",
-      profileBio: "Hi!",
-      profilePictureURL: "/seeds-uploads/butthead.png",
-      iq: 100,
-      password: "password",
-      friends: [beavisData.id, bradenData.id, ericData.id, jacobData.id]
-    });
+    const users = [
+      {
+        email: "elindstr@gmail.com",
+        firstName: "Eric",
+        lastName: "Lindstrom",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/eric.jpg",
+        iq: 120,
+        password: password,
+        friends: []
+      },
+      {
+        email: "braden@gmail.com",
+        firstName: "Braden",
+        lastName: "Natali",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/braden.jpg",
+        iq: 200,
+        password: "password",
+        friends: []
+      },
+      {
+        email: "jacob@gmail.com",
+        firstName: "Jacob",
+        lastName: "Higham",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/jacob.jpg",
+        iq: 160,
+        password: "password",
+        friends: []
+      },
+      {
+        email: "beavis@gmail.com",
+        firstName: "Beavis",
+        lastName: ".",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/beavis.png",
+        iq: 40,
+        password: "password",
+        friends: []
+      },
+      {
+        email: "butthead@gmail.com",
+        firstName: "Butthead",
+        lastName: ".",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/butthead.png",
+        iq: 100,
+        password: "password",
+        friends: []
+      }
+    ];
+
+    const createdUsers = await User.insertMany(users);
     console.log('user data seeded');
 
-    //console.log("test:", ericData)
+    // Create friends relationships
+    const [ericData, bradenData, jacobData, beavisData, buttheadData] = createdUsers;
+
+    ericData.friends = [bradenData._id];
+    await ericData.save();
+
+    bradenData.friends = [ericData._id];
+    await bradenData.save();
+
+    jacobData.friends = [bradenData._id, ericData._id];
+    await jacobData.save();
+
+    beavisData.friends = [bradenData._id, jacobData._id, ericData._id];
+    await beavisData.save();
+
+    buttheadData.friends = [beavisData._id, bradenData._id, ericData._id, jacobData._id];
+    await buttheadData.save();
+
     await cleanDB('Quiz', 'quiz');
+
     const quizzes = [
       {
         user: ericData._id,
@@ -97,9 +121,9 @@ db.once('open', async () => {
         percentCorrect: 0.6
       }
     ];
-    const quizData = await Quiz.insertMany(quizzes);
+
+    await Quiz.insertMany(quizzes);
     console.log('quiz data seeded');
-    // console.log(quizData)
 
     process.exit();
   } catch (error) {
