@@ -225,7 +225,7 @@ const UpdateProfile = () => {
         <button type="button" onClick={handleEditProfile}>
           {editMode ? 'Cancel Edit' : 'Edit Profile'}
         </button>
-        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button onClick={() => navigate('/')} >Back to Dashboard</button>
       </div>
     </div>
   );
