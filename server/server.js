@@ -43,13 +43,6 @@ const startApolloServer = async () => {
     context: authMiddleware,
   }));
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
-  }
-
   // Get stripe API key from .env and send to front end
   app.get('/api/config', (req, res) => {
     res.send({
@@ -76,6 +69,13 @@ const startApolloServer = async () => {
       });
     }
   });
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    });
+  }
 
   // Start the server
   db.once('open', () => {
