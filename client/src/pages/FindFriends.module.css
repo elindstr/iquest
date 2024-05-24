@@ -2,12 +2,12 @@
 
 .findFriendsPage {
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align items at the top */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
-  min-height: 100vh; /* Ensure container takes full viewport height */
-  overflow-y: auto; /* Allow vertical scrolling */
-  padding: 20px;
+  min-height: 100vh;
+  padding: 20px 0; /* Add padding to prevent cutting off at the top */
 }
 
 .card {
@@ -56,7 +56,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  width: 100%; /* Ensure the user list container takes full width */
+  width: 100%; /* Should make sure the user list container takes full width */
 }
 
 .userCard {

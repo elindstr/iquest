@@ -15,6 +15,14 @@ body {
   line-height: 1.6;
 }
 
+/* Ensure #root takes full viewport height */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 20px; /* Prevent content from touching the top */
+}
+
 /* Global link styles */
 a {
   color: #6200ea;
