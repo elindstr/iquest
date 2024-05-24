@@ -136,7 +136,7 @@ const UpdateProfile = () => {
   return (
     <div className="dashboard-page">
       <div className="card">
-        <h1>Update Profile</h1>
+        <h1>My Profile</h1>
         <form>
           {profilePictureURL && (
             <div className="profile-picture">
