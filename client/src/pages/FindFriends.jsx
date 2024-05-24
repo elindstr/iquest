@@ -4,7 +4,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { QUERY_USERS } from '../utils/queries';
 import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
-import Auth from '../utils.auth';
+import Auth from '../utils/auth';
 import styles from './FindFriends.module.css';
 
 const FindFriends = () => {
