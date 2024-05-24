@@ -6,6 +6,30 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_USER_DAILY_LOGINS } from '../utils/queries';
 import { RECORD_LOGIN } from '../utils/mutations';
 
+// util functions for daily tracking
+const getDaysDifference = (date1, date2) => {
+  const timeDifference = date2 - date1;
+  return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+};
+const calculateConsecutiveDays = (dailyLogins) => {
+  if (dailyLogins.length === 0) return 0;
+
+  let consecutiveDays = 1;
+  for (let i = 1; i < dailyLogins.length; i++) {
+    const previousDate = new Date(dailyLogins[i - 1].date);
+    const currentDate = new Date(dailyLogins[i].date);
+    const difference = getDaysDifference(previousDate, currentDate);
+
+    if (difference === 1) {
+      consecutiveDays++;
+    } else {
+      break;
+    }
+  }
+  return consecutiveDays;
+};
+
+// main component function
 const Dashboard = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
@@ -29,16 +53,7 @@ const Dashboard = () => {
         recordLogin({ variables: { userId } });
         console.log('This is your first login today.');
 
-        const consecutiveDaysCount = dailyLogins.reduce((acc, login, index, array) => {
-          if (index === 0) return 1;
-          const previousDate = new Date(array[index - 1].date);
-          const currentDate = new Date(login.date);
-
-          const difference = Math.floor((currentDate - previousDate) / (1000 * 60 * 60 * 24));
-          if (difference === 1) return acc + 1;
-          return acc;
-        }, 1);
-
+        const consecutiveDaysCount = calculateConsecutiveDays(dailyLogins);
         setConsecutiveDays(consecutiveDaysCount);
       }
 
@@ -53,6 +68,7 @@ const Dashboard = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! {error.message}</p>;
 
+  // main return
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.card}>
@@ -64,7 +80,7 @@ const Dashboard = () => {
           <button className={styles.button} onClick={() => navigate('/update-profile')}>View Profile</button>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
           <button className={styles.button} onClick={() => navigate('/donate')}>Donate</button>
-          <button className={styles.button} onClick={() => navigate('/feed')}>Feed (demo/development)</button>
+          <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
           <button className={styles.button} onClick={handleLogout}>Sign Out</button>
         </div>
       </div>
