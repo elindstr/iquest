@@ -10,6 +10,8 @@ import Quiz from './pages/Quiz';
 import './App.css'
 import Donate from './pages/Donate'
 import MainFeed from './pages/MainFeed';
+import LeaderBoard from './components/LeaderBoard'
+
 
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
@@ -35,6 +37,7 @@ function App() {
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
         <Route path="/feed" element={<PrivateRoute element={<MainFeed />} />} />
         <Route path="/donate" element={<PrivateRoute element={<Donate />} />} />
+        <Route path="/leaderboard" element={<PrivateRoute element={<LeaderBoard />} />} />
 
         <Route path="*" element={<NotFoundRedirect />} />
       </Routes>
