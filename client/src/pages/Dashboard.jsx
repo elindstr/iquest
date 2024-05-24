@@ -79,8 +79,9 @@ const Dashboard = () => {
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
           <button className={styles.button} onClick={() => navigate('/update-profile')}>View Profile</button>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
-          <button className={styles.button} onClick={() => navigate('/donate')}>Donate</button>
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
+
+          <button className={styles.button} onClick={() => navigate('/donate')}>Support this project</button>
           <button className={styles.button} onClick={handleLogout}>Sign Out</button>
         </div>
       </div>
