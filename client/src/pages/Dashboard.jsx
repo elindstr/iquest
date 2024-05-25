@@ -76,11 +76,11 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.card}>
-        
+
+        <h1 className={styles.h1}>IQUEST</h1>
+
         <span>{userData ? userData.user.firstName : null}: {userData ? userData.user.iq.toFixed(0) : null} IQ</span>&emsp;
         <span>Login Streak: {consecutiveDays}</span>
-
-        <h1 className={styles.h1}>Dashboard</h1>
 
         <div className={styles.containerButton}>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
