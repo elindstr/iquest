@@ -36,7 +36,13 @@ const userSchema = new Schema({
   iq: {
     type: Number,
     default: 120,
-  }
+  },
+  dailyLogins: [{
+    date: {
+      type: Date,
+      default: Date.now
+    }
+  }]
 });
 
 // set up pre-save middleware to create password

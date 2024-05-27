@@ -27,13 +27,13 @@ const resolvers = {
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
-        return await User.find();
+        return await User.find().populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
     },
     user: async (parent, { _id }, context) => {
       if (context.user) {
-        return await User.findById(_id);
+        return await User.findById(_id).populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
     },
@@ -134,6 +134,26 @@ const resolvers = {
         quiz.comments.push({ user: userId, commentText, createdAt: new Date() });
         await quiz.save();
         return quiz.populate('comments.user');
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+    recordLogin: async (parent, { userId }, context) => {
+      if (context.user) {
+        const user = await User.findById(userId);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        const lastLogin = user.dailyLogins.length > 0
+          ? new Date(user.dailyLogins[user.dailyLogins.length - 1].date).setHours(0, 0, 0, 0)
+          : null;
+
+        if (lastLogin === today) {
+          return user;
+        }
+
+        user.dailyLogins.push({ date: new Date() });
+
+        await user.save();
+        return user;
       }
       throw new AuthenticationError('Not authenticated');
     }

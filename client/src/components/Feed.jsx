@@ -17,6 +17,7 @@ const QuizFeed = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   const quizzes = data.quizes.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+  //console.log(quizzes)
 
   const handleCommentSubmit = async (quizId) => {
     try {
@@ -40,7 +41,7 @@ const QuizFeed = () => {
       {quizzes.map((quiz) => (
         <div key={quiz._id} className={styles.quizItem}>
           <div className={styles.quizUserInfo}>
-            <img src={quiz.user.profilePictureURL || 'default-profile.png'} alt={`${quiz.user.firstName} ${quiz.user.lastName}`} />
+            <img src={quiz.user.profilePictureURL} alt={`${quiz.user.firstName} ${quiz.user.lastName}`} />
             <div>
               <h3>{`${quiz.user.firstName} ${quiz.user.lastName}`}</h3>
             </div>
