@@ -1,5 +1,4 @@
-/* TO FIX: top of page is cut off and not scrollable */
-.update-profile-page {
+.dashboardPage {
   display: flex;
   justify-content: center;
   align-items: flex-start;  /* Changed from center to flex-start to start content from the top */
@@ -10,7 +9,7 @@
   box-sizing: border-box;  /* Ensure padding does not affect the width */
 }
 
-.update-profile-page .card {
+.card {
   background: #1e1e1e;
   padding: 2rem;
   border-radius: 8px;
@@ -21,49 +20,81 @@
   width: 100%;
 }
 
-.update-profile-page .card h1 {
+.card:hover {
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.card h1 {
   margin-bottom: 1.5rem;
 }
 
-.update-profile-page .note {
+.note {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   color: #888;
 }
 
-.update-profile-page .readonly {
+.readonly {
   background-color: #2e2e2e;
   color: #888;
 }
 
-.update-profile-page .button-group {
+.containerButton {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
-.update-profile-page .profile-picture {
+.button {
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  margin-top: 10px;
+  background-color: #6200ea;
+}
+
+.button:hover {
+  background-color: #3700b3;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.profilePicture {
   position: relative;
   margin-bottom: 1rem;
 }
 
-.update-profile-page .profile-picture img {
+.profilePicture img {
   max-width: 100%;
   border-radius: 50%;
 }
 
-.update-profile-page .delete-button {
-  position: absolute;
+.deleteButton {
   top: 0;
   right: 90px;
-  /* background: rgba(255, 0, 0, 0.8); */
   border: none;
   color: #fff;
   padding: 0.5rem;
   border-radius: 50%;
   cursor: pointer;
-  width: 5px;
+  width: 23px;
 }
 
-.update-profile-page .delete-button:hover {
-   background: rgba(255, 0, 0, 1); 
+.deleteButton:hover {
+   background: rgba(255, 0, 0, 1);
+   box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
 }
