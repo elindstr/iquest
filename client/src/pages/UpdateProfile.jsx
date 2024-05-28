@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { UPDATE_USER } from '../utils/mutations';
 import { QUERY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
-import './UpdateProfile.css';
+import styles from './UpdateProfile.module.css';
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -134,14 +134,14 @@ const UpdateProfile = () => {
   if (error) return <p>Error loading user data!</p>;
 
   return (
-    <div className="dashboard-page">
-      <div className="card">
+    <div className={styles.dashboardPage}>
+      <div className={styles.card}>
         <h1>My Profile</h1>
         <form>
           {profilePictureURL && (
-            <div className="profile-picture">
+            <div className={styles.profilePicture}>
               <img src={profilePictureURL} alt="Profile" />
-              <button type="button" className="delete-button" onClick={handleDeleteProfilePicture}>
+              <button type="button" className={styles.deleteButton} onClick={handleDeleteProfilePicture}>
                 &times;
               </button>
             </div>
@@ -154,7 +154,7 @@ const UpdateProfile = () => {
               value={formState.firstName}
               onChange={handleChange}
               readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
           <div>
@@ -165,7 +165,7 @@ const UpdateProfile = () => {
               value={formState.lastName}
               onChange={handleChange}
               readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
           <div>
@@ -176,7 +176,7 @@ const UpdateProfile = () => {
               value={formState.email}
               onChange={handleChange}
               readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
           <div>
@@ -186,7 +186,7 @@ const UpdateProfile = () => {
               value={formState.profileBio}
               onChange={handleChange}
               readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
           <div>
@@ -197,35 +197,37 @@ const UpdateProfile = () => {
               value={formState.password}
               onChange={handleChange}
               readOnly={!editMode}
-              className={!editMode ? 'readonly' : ''}
+              className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
           <div>
             <label>Profile Picture</label>
             <input type="file" onChange={handleFileChange} />
             {profilePicture && (
-              <div className="button-group">
-                <button type="button" onClick={handleUpload}>
+              <div className={styles.containerButton}>
+                <button className={styles.button} type="button" onClick={handleUpload}>
                   Upload
                 </button>
-                <button type="button" onClick={() => setProfilePicture(null)}>
+                <button className={styles.button} type="button" onClick={() => setProfilePicture(null)}>
                   Cancel
                 </button>
               </div>
             )}
           </div>
           {editMode && (
-            <div className="button-group">
-              <button type="button" onClick={handleSaveProfile}>
+            <div>
+              <button className={styles.button} type="button" onClick={handleSaveProfile}>
                 Save
               </button>
             </div>
           )}
         </form>
-        <button type="button" onClick={handleEditProfile}>
-          {editMode ? 'Cancel Edit' : 'Edit Profile'}
-        </button>
-        <button onClick={() => navigate('/')} >Back to Dashboard</button>
+        <div className={styles.containerButton}>
+          <button className={styles.button}type="button" onClick={handleEditProfile}>
+            {editMode ? 'Cancel Edit' : 'Edit Profile'}
+          </button>
+          <button className={styles.button} onClick={() => navigate('/')} >Back to Dashboard</button>
+        </div>
       </div>
     </div>
   );
