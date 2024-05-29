@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import styles from './Profile.module.css';
+import '../pages/Profile.module.css';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -13,16 +13,15 @@ const Profile = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error loading user data!</p>;
     return (
-    <div className={styles.profilePage}>
-        <div className={styles.card}>
-            {data.user.profilePictureURL && (<img src={data.user.profilePictureURL} alt={`${data.user.firstName} ${data.user.lastName}`} className={styles.profileImage} />)}
+    <div className="quiz-page">
+        <div className="card">
+            {data.user.profilePictureURL && (<img src={data.user.profilePictureURL} alt={`${data.user.firstName} ${data.user.lastName}`} className="profile-image" />)}
 
-            <h3>{data.user.firstName} {data.user.lastName} </h3>
-            <h5 className={styles.iqTag}>IQ {data.user.iq.toFixed(0)}</h5>
+            <p>{data.user.firstName} {data.user.lastName} <span className="iq-tag">IQ {data.user.iq}</span></p>
             <p>{data.user.email}</p>
             <p>{data.user.profileBio}</p>
 
-            <button className={styles.navButton} onClick={() => navigate('/')}>Back to Dashboard</button>
+            <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </div>
     </div>
     );

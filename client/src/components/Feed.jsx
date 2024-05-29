@@ -51,7 +51,7 @@ const QuizFeed = () => {
             <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
             <p><strong>Category:</strong> {quiz.category}</p>
             <p><strong>Count:</strong> {quiz.count}</p>
-            <p><strong>Success Rate:</strong> {quiz.percentCorrect * 100}%</p>
+            <p><strong>Success Rate:</strong> {(quiz.percentCorrect * 100).toFixed(0)}%</p>
           </div>
           <div className={styles.quizComments}>
             {quiz.comments && quiz.comments.length > 0 && quiz.comments.map((comment) => (

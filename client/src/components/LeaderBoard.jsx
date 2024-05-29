@@ -72,7 +72,7 @@ const LeaderBoard = () => {
                 )}
                 {user.firstName || '-'}&nbsp;
                 {user.lastName || '-'}:&nbsp;
-                {user.iq} IQ
+                {user.iq.toFixed(0)} IQ
               </p>
             </div>
           ))}

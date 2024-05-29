@@ -76,17 +76,20 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.card}>
-        
+
+        <h1 className={styles.h1}>IQUEST</h1>
+
         <span>{userData ? userData.user.firstName : null}: {userData ? userData.user.iq.toFixed(0) : null} IQ</span>&emsp;
         <span>Login Streak: {consecutiveDays}</span>
-
-        <h1 className={styles.h1}>Dashboard</h1>
 
         <div className={styles.containerButton}>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
           <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leaderboard</button>
-          <button className={styles.button} onClick={() => navigate('/update-profile')}>Profile</button>
+          
+          <button className={styles.button} onClick={() => navigate(`/profile/${userData.user._id}`)}>Profile</button>
+          <button className={styles.button} onClick={() => navigate('/update-profile')}>Edit Profile</button>
+
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
           <button className={styles.button} onClick={() => navigate('/donate')}>Support Us</button>
           <button className={styles.button} onClick={handleLogout}>Sign Out</button>
