@@ -40,6 +40,16 @@ db.once('open', async () => {
         friends: []
       },
       {
+        email: "tcampbell_93@hotmail.com",
+        firstName: "Tyler",
+        lastName: "Campbell",
+        profileBio: "Hi!",
+        profilePictureURL: "/seeds-uploads/tyler.jpg",
+        iq: 140,
+        password: password,
+        friends: []
+      },
+      {
         email: "beavis@gmail.com",
         firstName: "Beavis",
         lastName: ".",
@@ -65,7 +75,7 @@ db.once('open', async () => {
     console.log('user data seeded');
 
     // Create friends relationships
-    const [ericData, bradenData, jacobData, beavisData, buttheadData] = createdUsers;
+    const [ericData, bradenData, jacobData, tylerData, beavisData, buttheadData] = createdUsers;
 
     ericData.friends = [bradenData._id];
     await ericData.save();
@@ -75,6 +85,9 @@ db.once('open', async () => {
 
     jacobData.friends = [bradenData._id, ericData._id];
     await jacobData.save();
+
+    tylerData.friends = [ericData._id, bradenData._id, jacobData._id];
+    await tylerData.save();
 
     beavisData.friends = [bradenData._id, jacobData._id, ericData._id];
     await beavisData.save();
@@ -105,6 +118,13 @@ db.once('open', async () => {
         count: 20,
         category: "history",
         percentCorrect: 0.7
+      },
+      {
+        user: tylerData._id,
+        difficulty: "medium",
+        count: 15,
+        category: "science",
+        percentCorrect: 0.8
       },
       {
         user: beavisData._id,
