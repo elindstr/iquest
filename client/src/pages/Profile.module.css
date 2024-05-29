@@ -47,3 +47,21 @@
     padding: 5px;
     border-radius: 50px;
 }
+
+.iqTag:hover {
+    box-shadow: 
+        0 4px 8px rgb(251, 255, 0),
+        0 0 10px rgb(200, 214, 0), 
+        0 0 20px rgb(157, 168, 0), 
+        0 0 30px rgba(98, 0, 234, 0.4), 
+        0 0 40px rgba(98, 0, 234, 0.2);
+}
+
+.navButton:hover {
+    box-shadow: 
+        0 4px 8px rgb(251, 255, 0),
+        0 0 10px rgb(200, 214, 0), 
+        0 0 20px rgb(157, 168, 0), 
+        0 0 30px rgba(98, 0, 234, 0.4), 
+        0 0 40px rgba(98, 0, 234, 0.2);
+}
