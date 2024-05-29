@@ -125,7 +125,7 @@ const FindFriends = () => {
             </div>
           ))}
         </div>
-        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className={styles.navButton} onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>
   );
