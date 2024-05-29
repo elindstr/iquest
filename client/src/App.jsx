@@ -32,8 +32,10 @@ function App() {
         <Route path="/login" element={<PublicRoute element={<Login />} />} />
         <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
         <Route path="/find-friends" element={<PrivateRoute element={<FindFriends />} />} />
+        
         <Route path="/update-profile" element={<PrivateRoute element={<UpdateProfile />} />} />
         <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
+        
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
         <Route path="/feed" element={<PrivateRoute element={<MainFeed />} />} />
         <Route path="/donate" element={<PrivateRoute element={<Donate />} />} />
