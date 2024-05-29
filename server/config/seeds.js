@@ -1,6 +1,6 @@
-const db = require('./connection');
-const { User, Quiz } = require('../models');
-const cleanDB = require('./cleanDB');
+const db = require('./connection.js');
+const { User, Quiz } = require('../models/index.js');
+const cleanDB = require('./cleanDB.js');
 const bcrypt = require('bcrypt');
 
 (async () => {
