@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../components/Quiz.module.css';
+import { useMutation, useQuery } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries';
+import { ADD_QUIZ } from '../utils/mutations';
 
+import styles from '../components/Quiz.module.css';
+import Auth from '../utils/auth';
 import bootcampTrivia from '../trivia_data/index' 
 
 const NewQuiz = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState('99');
+  const [categoryName, setCategoryName] = useState('Fullstack Web Dev Bootcamp');
+  const [addQuiz] = useMutation(ADD_QUIZ);
 
+  // preload user data
+  const userId = Auth.getProfile().data._id;
+  const { data: userData } = useQuery(QUERY_USER, { variables: { _id: userId } });
+
+  // handle button
   const handleStartQuiz = async () => {
-    
     const quizAmount = 10; // Hard-coded here
     const quizDifficulty = ''; // Hard-coded here (easy, medium, hard)
     const quizType = 'multiple';
@@ -39,13 +49,36 @@ const NewQuiz = () => {
       }
     }
 
-    navigate('/quiz', { state: { triviaData: triviaAPIData } });
+    // Save quiz data to the database
+    const response = await addQuiz({
+      variables: {
+        user: userId,
+        category: categoryName || 'any',
+        difficulty: quizDifficulty || 'any',
+        count: quizAmount,
+        percentCorrect: 0,
+      },
+    });
+    const quizId = response.data.addQuiz._id
+
+    // redirect with triviaData passed as state
+    navigate('/quiz', { state: { 
+      triviaData: triviaAPIData,
+      quizId: quizId,
+      userId,
+      userData
+    } });
   };
 
   return (
     <div className={styles.newQuizPage}>
       <h2>Select Quiz Category</h2>
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      <select value={category} onChange={
+        (e) => {
+          setCategory(e.target.value);
+          setCategoryName(e.target)
+          }
+        }>
         <option value="99">Fullstack Web Dev Bootcamp</option>
         <option value="any">Any Trivia</option>
         <option value="27">Animals</option>

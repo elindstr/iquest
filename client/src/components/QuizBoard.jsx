@@ -1,54 +1,36 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ADD_QUIZ, SCORE_QUIZ, UPDATE_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
-import styles from './Quiz.module.css';
-
-import { useMutation, useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { SCORE_QUIZ, UPDATE_USER } from '../utils/mutations';
 
 import getNewIQ from './getNewIQ';
 import Score from './Score';
+import styles from './Quiz.module.css';
 
-const QuizBoard = ({ triviaData }) => {
+// for displaying raw html in some quiz answers 
+const escapeHTML = (html) => {
+  const div = document.createElement('div');
+  div.innerText = html;
+  return div.innerHTML;
+};
+
+// main component function
+const QuizBoard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { triviaData, quizId, userId, userData } = location.state; // get values passed from NewQuiz page
 
-  const [quizId, setQuizId] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-
   const [score, setScore] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const [newIQ, setNewIQ] = useState(null);
   const [timeLeft, setTimeLeft] = useState(15);
-
-  const [addQuiz] = useMutation(ADD_QUIZ);
   const [scoreQuiz] = useMutation(SCORE_QUIZ);
   const [updateUser] = useMutation(UPDATE_USER);
-
-  // get User ID and query user data
-  const userId = Auth.getProfile().data._id;
-  const { data: userData, loading, error } = useQuery(QUERY_USER, { variables: { _id: userId } });
-
-  // Save quiz data to the database
-  useEffect(() => {
-    const saveQuizToDb = async () => {
-      const response = await addQuiz({
-        variables: {
-          user: userId,
-          category: triviaData.category || 'any',
-          difficulty: triviaData.difficulty || 'easy',
-          count: triviaData.results.length,
-          percentCorrect: 0,
-        },
-      });
-      setQuizId(response.data.addQuiz._id);
-    };
-    saveQuizToDb();
-  }, [triviaData, addQuiz, userId]);
 
   // Timer effect
   useEffect(() => {
@@ -108,20 +90,26 @@ const QuizBoard = ({ triviaData }) => {
     if (isQuizComplete) {
       const percentCorrect = score / triviaData.results.length;
 
-      // Save to db
       const saveResults = async () => {
-        await scoreQuiz({ variables: { _id: quizId, count: currentQuestionIndex, percentCorrect } });
+        try {          
+          await scoreQuiz({ variables: { _id: quizId, count: currentQuestionIndex, percentCorrect } });
+        } catch (error) {
+          console.error('Error saving quiz results:', error);
+        }
       };
       saveResults();
 
-      // Update IQ
       const updateIQ = async () => {
         if (!userData) return;
         let userIQ = userData.user.iq;
         if (!userIQ || userIQ === 0) userIQ = 120; // Handle null IQ
         const newIQ = getNewIQ(userIQ, percentCorrect);
-        await updateUser({ variables: { _id: userId, iq: newIQ } });
-        setNewIQ(newIQ);
+        try {
+          await updateUser({ variables: { _id: userId, iq: newIQ } });
+          setNewIQ(newIQ);
+        } catch (error) {
+          console.error('Error updating IQ:', error);
+        }
       };
       updateIQ();
     }
@@ -156,8 +144,7 @@ const QuizBoard = ({ triviaData }) => {
           </p>
           <p>New IQ: {newIQ ? newIQ.toFixed(0) : null}</p>
           <br />
-
-          <button onClick={() => navigate('/new-quiz')}>New Quiz</button> <br/>
+          <button onClick={() => navigate('/new-quiz')}>New Quiz</button> <br />
           <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </div>
       </div>
@@ -199,7 +186,7 @@ const QuizBoard = ({ triviaData }) => {
                         : '',
                     }}
                     disabled={!!selectedAnswer}
-                    dangerouslySetInnerHTML={{ __html: answer }}
+                    dangerouslySetInnerHTML={{ __html: escapeHTML(answer) }}
                   />
                 ))}
               </div>
@@ -211,7 +198,7 @@ const QuizBoard = ({ triviaData }) => {
               {selectedAnswer === 'TIME_UP' && (
                 <div className={styles.correctAnswer}>
                   <p>
-                    The correct answer was: <strong dangerouslySetInnerHTML={{ __html: currentQuestion.correct_answer }} />
+                    The correct answer was: <strong dangerouslySetInnerHTML={{ __html: escapeHTML(currentQuestion.correct_answer) }} />
                   </p>
                   <button className={styles.nextQuestionButton} onClick={handleNextQuestion}>
                     Next
