@@ -49,7 +49,7 @@ const QuizFeed = () => {
             </div>
             <div className={styles.quizDetails}>
               <p><strong>Date:</strong> {new Date(quiz.date).toLocaleDateString()}</p>
-              <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
+              {/* <p><strong>Difficulty:</strong> {quiz.difficulty}</p> */}
               <p><strong>Category:</strong> {quiz.category}</p>
               <p><strong>Count:</strong> {quiz.count}</p>
               <p><strong>Success Rate:</strong> {quiz.percentCorrect * 100}%</p>

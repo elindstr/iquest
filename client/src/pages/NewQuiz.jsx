@@ -73,7 +73,9 @@ const NewQuiz = () => {
         <option value="28">Vehicles</option>
         <option value="26">Celebrities</option>
       </select>
-      <button onClick={handleStartQuiz}>Start Quiz</button>
+
+      <button onClick={handleStartQuiz}>Start Quiz</button> <br />
+      <button onClick={() => navigate('/')}>Back to Dashboard</button>
     </div>
   );
 };
