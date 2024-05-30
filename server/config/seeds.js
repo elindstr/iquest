@@ -58,7 +58,7 @@ const bcrypt = require('bcrypt');
             firstName: "Gavin",
             lastName: "Todd",
             profileBio: "Hi!",
-            profilePictureURL: "/seeds-uploads/gavin.png",
+            profilePictureURL: "/seeds-uploads/gavin.jpg",
             iq: 120,
             password: password,
             friends: []
