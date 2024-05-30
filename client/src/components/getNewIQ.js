@@ -2,7 +2,7 @@ const getNewIQ = (initialIQ, quizResult) => {
   const exp60 = .1      // at IQ <60, we expect 10%
   const exp120 = .5     // at IQ =120, we expect 50%
   const exp200 = .8     // at IQ >200, we expect 80%
-  const scoreRateChange = .5 // how quickly the IQ can change
+  const scoreRateChange = .3 // how quickly the IQ can change
 
   function expectedPerformance(iq) {
     if (iq <= 60) return exp60;    

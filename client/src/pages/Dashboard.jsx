@@ -35,6 +35,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
   const { data: userData, loading: userLoading, error: userError } = useQuery(QUERY_USER, { variables: { _id: userId } });
+  console.log(userId)
+  console.log(userData)
 
   // track daily logins
   const { data: dailyLoginData, loading: dailyLoginLoading, error: dailyLoginError } = useQuery(QUERY_USER_DAILY_LOGINS, { variables: { id: userId } });
@@ -71,22 +73,26 @@ const Dashboard = () => {
   if (userLoading || dailyLoginLoading) return <p>Loading...</p>;
   if (userError) return <p>Error! {userError.message}</p>;
   if (dailyLoginError) return <p>Error! {dailyLoginError.message}</p>;
+  if (!userData) return Auth.logout();
 
   // main return
   return (
     <div className={styles.dashboardPage}>
       <div className={styles.card}>
-        
+
+        <h1 className={styles.h1}>IQUEST</h1>
+
         <span>{userData ? userData.user.firstName : null}: {userData ? userData.user.iq.toFixed(0) : null} IQ</span>&emsp;
         <span>Login Streak: {consecutiveDays}</span>
-
-        <h1 className={styles.h1}>Dashboard</h1>
 
         <div className={styles.containerButton}>
           <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
           <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leaderboard</button>
-          <button className={styles.button} onClick={() => navigate('/update-profile')}>Profile</button>
+          
+          <button className={styles.button} onClick={() => navigate(`/profile/${userData.user._id}`)}>Profile</button>
+          <button className={styles.button} onClick={() => navigate('/update-profile')}>Edit Profile</button>
+
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
           <button className={styles.button} onClick={() => navigate('/donate')}>Support Us</button>
           <button className={styles.button} onClick={handleLogout}>Sign Out</button>

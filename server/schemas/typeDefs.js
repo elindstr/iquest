@@ -18,6 +18,19 @@ const typeDefs = `
     dailyLogins: [DailyLogin]
   }
 
+  type UserPs {
+    _id: ID
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    profilePictureURL: String
+    profileBio: String
+    friends: [User]
+    iq: Float
+    dailyLogins: [DailyLogin]
+  }
+
   type Comment {
     _id: ID
     user: User
@@ -41,10 +54,15 @@ const typeDefs = `
     user: User
   }
 
+  type Message {
+    message: String
+  }
+
   type Query {
     users: [User]
     user(_id: ID!): User
     quizes: [Quiz]
+    userPs: UserPs
   }
 
   type Mutation {
@@ -62,6 +80,8 @@ const typeDefs = `
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
+    requestPasswordReset(email: String!): Message
+    resetPassword(token: String!, newPassword: String!): Message
     addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
     addQuizComment(_id: ID!, userId: ID!, commentText: String!): Quiz

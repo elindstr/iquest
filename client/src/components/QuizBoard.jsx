@@ -51,8 +51,11 @@ const QuizBoard = () => {
     const response = await fetch(apiUrl);
     const triviaAPIData = await response.json();
 
+    // handle fetch errors
     if (triviaAPIData?.response_code !== 0) {
-      throw new Error(`API error: ${triviaAPIData.response_code}`);
+      console.log(`API load error: ${triviaAPIData.response_code}. Attempting reload in 5 seconds.`)
+      setTimeout(fetchQuizData, 5100);
+      return;
     }
 
     // store quiz data in local state
@@ -162,15 +165,6 @@ const QuizBoard = () => {
         </p>
       </>
     );
-  }
-
-  // handle error code
-  if (quizData.response_code > 0) {
-    const timer = setTimeout(() => {
-      fetchQuizData();
-    }, 5100);
-
-    return () => clearTimeout(timer);
   }
 
   // handle quiz completion

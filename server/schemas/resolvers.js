@@ -1,8 +1,13 @@
+const { User, Quiz } = require('../models');
+const { signToken } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { GraphQLError } = require('graphql');
+const { UserInputError, AuthenticationError } = require('apollo-server-errors');
+const crypto = require('crypto');
+const sendEmail = require('../utils/sendEmail'); // Ensure this utility is implemented
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const bcrypt = require('bcrypt');
-const { signToken, AuthenticationError } = require('../utils/auth');
-const { User, Quiz } = require('../models');
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -43,6 +48,13 @@ const resolvers = {
           path: 'comments.user',
           select: 'firstName lastName profilePictureURL'
         });
+      }
+      throw new AuthenticationError('Not authenticated');
+    },
+    userPs: async (parent, args, context) => {
+      if (context.user) {
+        const userPs = await UserPs.findById(context.user._id)
+        return userPs;
       }
       throw new AuthenticationError('Not authenticated');
     }
@@ -90,9 +102,16 @@ const resolvers = {
       throw new AuthenticationError('Not authenticated');
     },
     addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-      return { token, user };
+      try {
+        const user = await User.create(args);
+        const token = signToken(user);
+        return { token, user };
+      } catch (err) {
+        if (err.code === 11000) {
+          throw new UserInputError('An account with this email already exists.');
+        }
+        throw new Error('An error occurred. Please try again.');
+      }
     },
     updateUser: async (parent, { _id, password, firstName, lastName, email, profilePictureURL, profileBio, iq }, context) => {
       if (context.user) {
@@ -122,36 +141,84 @@ const resolvers = {
         throw new AuthenticationError('Incorrect credentials');
       }
       const token = signToken(user);
-
       return { token, user };
+    },
+    requestPasswordReset: async (_, { email }, context) => {
+      const userPs = await UserPs.findOne({ email });
+      if (!userPs) {
+        throw new UserInputError('User not found', {
+          extensions: { code: 'USER_NOT_FOUND' },
+        });
+      }
+
+      const resetToken = userPs.createPasswordResetToken();
+      console.log(resetToken);
+      await userPs.save();
+
+      const resetURL = `http://localhost:3000/resetPassword/${resetToken}`;
+      try {
+        await sendEmail({
+          to: user.email,
+          subject: 'Password Reset',
+          text: `Reset your password by visiting the following link: ${resetURL}`,
+        });
+
+        // Assuming email sending was successful
+        return { message: 'Password reset email sent' };
+      } catch (error) {
+        // Handle email sending failure
+        console.error(error);
+        throw new ApolloError('Failed to send email', 'EMAIL_SEND_FAILED');
+      }
+    },
+
+    resetPassword: async (_, { token, newPassword }) => {
+      const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+      const userPs = await UserPs.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gt: Date.now() },
+      });
+
+      if (!userPs) {
+        throw new UserInputError('Token is invalid or has expired', {
+          extensions: { code: 'TOKEN_INVALID_OR_EXPIRED' },
+        });
+      }
+
+      user.password = newPassword;
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await userPs.save();
+
+      return { message: 'Password has been reset' };
     },
     addQuizComment: async (parent, { _id, userId, commentText }, context) => {
       if (context.user) {
         const quiz = await Quiz.findById(_id);
         if (!quiz) {
-          throw new Error('Quiz not found');
+          throw new UserInputError('Quiz not found');
         }
-        quiz.comments.push({ user: userId, commentText, createdAt: new Date() });
+        const comment = {
+          user: userId,
+          commentText,
+          createdAt: new Date()
+        };
+        quiz.comments.push(comment);
         await quiz.save();
-        return quiz.populate('comments.user');
+        return quiz;
       }
       throw new AuthenticationError('Not authenticated');
     },
     recordLogin: async (parent, { userId }, context) => {
       if (context.user) {
         const user = await User.findById(userId);
-        const today = new Date().setHours(0, 0, 0, 0);
-
-        const lastLogin = user.dailyLogins.length > 0
-          ? new Date(user.dailyLogins[user.dailyLogins.length - 1].date).setHours(0, 0, 0, 0)
-          : null;
-
-        if (lastLogin === today) {
-          return user;
+        if (!user) {
+          throw new UserInputError('User not found');
         }
-
-        user.dailyLogins.push({ date: new Date() });
-
+        const login = {
+          date: new Date()
+        };
+        user.dailyLogins.push(login);
         await user.save();
         return user;
       }
