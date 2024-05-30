@@ -86,8 +86,11 @@ const Dashboard = () => {
         <span>Login Streak: {consecutiveDays}</span>
 
         <div className={styles.containerButton}>
-          <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button>
+          {/* <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button> */}
+          <button className={styles.button} onClick={() => navigate('/new-quiz')}>New Quiz</button>
+
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
+          
           <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leaderboard</button>
           
           <button className={styles.button} onClick={() => navigate(`/profile/${userData.user._id}`)}>Profile</button>

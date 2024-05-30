@@ -63,13 +63,11 @@ const LeaderBoard = () => {
             <div key={user._id} className={styles.userCard}>
               <span className={styles.userRank}>{index + 1}</span>
               <p className={styles.userListItem}>
-                {user.profilePictureURL && (
-                  <img
-                    src={user.profilePictureURL}
-                    alt={`${user.firstName} ${user.lastName}`}
-                    className={styles.profileImage}
-                  />
-                )}
+                <img
+                  src={user.profilePictureURL || 'placeholder.png'}
+                  alt={`${user.firstName} ${user.lastName}`}
+                  className={styles.profileImage}
+                />
                 {user.firstName || '-'}&nbsp;
                 {user.lastName || '-'}:&nbsp;
                 {user.iq.toFixed(0)} IQ
