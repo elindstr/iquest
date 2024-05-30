@@ -77,7 +77,7 @@ const LeaderBoard = () => {
             </div>
           ))}
         </div>
-        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>
   );
