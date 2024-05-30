@@ -30,17 +30,18 @@ function Donate(props) {
 
     return (
         <div className={styles.donatePage}>
-            <h1> Donate </h1>
-            <p> This project was made with ❤️ by indie developers. Please consider supporting us. </p><br/>
+            <div className={styles.card}>
+                <h1> Donate </h1>
+                <p> This project was made with ❤️ by indie developers. Please consider supporting us. </p><br/>
 
-            <div className={styles.donateForm}>
-                {stripePromise && clientSecret && (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
-                        <CheckoutForm />
-                    </Elements>
-                )}
+                <div className={styles.donateForm}>
+                    {stripePromise && clientSecret && (
+                        <Elements stripe={stripePromise} options={{ clientSecret }}>
+                            <CheckoutForm />
+                        </Elements>
+                    )}
+                </div>
             </div>
-            
         </div>
     );
 };
