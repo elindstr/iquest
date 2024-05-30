@@ -18,10 +18,10 @@ const getNewIQ = (initialIQ, quizResult) => {
   const newIQ = initialIQ * adjustmentFactor;
 
 
-  console.log(  `old iq: ${initialIQ}; 
-                expectedScore: ${expectedScore};
-                actualScore: ${quizResult};
-                new iq: ${newIQ}`)
+  // console.log(  `old iq: ${initialIQ}; 
+  //               expectedScore: ${expectedScore};
+  //               actualScore: ${quizResult};
+  //               new iq: ${newIQ}`)
   return newIQ;
 }
 
