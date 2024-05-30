@@ -35,6 +35,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
   const { data: userData, loading: userLoading, error: userError } = useQuery(QUERY_USER, { variables: { _id: userId } });
+  console.log(userId)
+  console.log(userData)
 
   // track daily logins
   const { data: dailyLoginData, loading: dailyLoginLoading, error: dailyLoginError } = useQuery(QUERY_USER_DAILY_LOGINS, { variables: { id: userId } });
@@ -71,6 +73,7 @@ const Dashboard = () => {
   if (userLoading || dailyLoginLoading) return <p>Loading...</p>;
   if (userError) return <p>Error! {userError.message}</p>;
   if (dailyLoginError) return <p>Error! {dailyLoginError.message}</p>;
+  if (!userData) return Auth.logout();
 
   // main return
   return (
