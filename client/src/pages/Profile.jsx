@@ -18,7 +18,7 @@ const Profile = () => {
             {data.user.profilePictureURL && (<img src={data.user.profilePictureURL} alt={`${data.user.firstName} ${data.user.lastName}`} className={styles.profileImage} />)}
 
             <h3>{data.user.firstName} {data.user.lastName} </h3>
-            <h5 className={styles.iqTag}>IQ {data.user.iq}</h5>
+            <h5 className={styles.iqTag}>IQ {data.user.iq.toFixed(0)}</h5>
             <p>{data.user.email}</p>
             <p>{data.user.profileBio}</p>
 

@@ -102,9 +102,9 @@ const FindFriends = () => {
                     />
                   )}
                   {user.firstName || '-'}&nbsp;
-                  {user.lastName || '-'} - 
-                  {user.email || '-'} -
-                  {user.iq || '-'}
+                  {user.lastName || '-'} -&nbsp; 
+                  {user.email || '-'} -&nbsp;
+                  {user.iq.toFixed(0) || '-'} IQ
                 </p>
               </Link>
               {user.isFriend ? (
