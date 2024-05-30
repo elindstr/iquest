@@ -18,11 +18,22 @@
   max-width: 600px;
   width: 100%;
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(98, 0, 234, 0.8), 
+    0 0 20px rgba(98, 0, 234, 0.6), 
+    0 0 30px rgba(98, 0, 234, 0.4), 
+    0 0 40px rgba(98, 0, 234, 0.2);
 }
 
 .card:hover {
   background-color: #2a2a2a;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(98, 0, 234, 0.8), 
+    0 0 20px rgba(98, 0, 234, 0.6), 
+    0 0 30px rgba(98, 0, 234, 0.4), 
+    0 0 40px rgba(98, 0, 234, 0.2);
 }
 
 .quizBoard {
