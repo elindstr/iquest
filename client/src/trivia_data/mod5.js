@@ -1,4 +1,4 @@
-[
+export const data = [
     {
       "type": "multiple",
       "difficulty": "easy",

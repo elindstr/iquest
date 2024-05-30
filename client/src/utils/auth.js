@@ -3,7 +3,7 @@ import decode from 'jwt-decode';
 class AuthService {
   getProfile() {
     const data = decode(this.getToken())
-    console.log(data)
+    // console.log(data)
     if (data) { 
       return data
 
