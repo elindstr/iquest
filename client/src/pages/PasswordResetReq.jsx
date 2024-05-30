@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import styles from './PasswordResetReq.module.css';
 
 const PASSWORD_RESET_REQUEST = gql`
   mutation PasswordResetRequest($email: String!) {
@@ -51,19 +52,21 @@ function PasswordResetRequest() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit">Send Password Reset Request</button>
-      </form>
-      {message && <p>{message}</p>}
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={handleInputChange}
+            required
+          />
+          <button type="submit">Send Password Reset Request</button>
+        </form>
+        {message && <p>{message}</p>}
+      </div>
     </div>
   );
 }
