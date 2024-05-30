@@ -130,7 +130,7 @@ const Landing = () => {
             </div>
           {loginError || signupError ? (
             <div>
-              <p className={styles.errorMessage}>The provided credentials are incorrect</p>
+              <p className={styles.errorMessage}>{errorMessage}</p>
             </div>
           ) : null}
           <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button><br/>
