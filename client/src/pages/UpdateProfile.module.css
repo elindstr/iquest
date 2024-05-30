@@ -18,6 +18,12 @@
   color: #fff;
   max-width: 400px;
   width: 100%;
+  box-shadow: 
+    0 4px 8px rgba(255, 255, 255, 0),
+    0 0 10px rgba(98, 0, 234, 0.8), 
+    0 0 20px rgba(98, 0, 234, 0.6), 
+    0 0 30px rgba(98, 0, 234, 0.4), 
+    0 0 40px rgba(98, 0, 234, 0.2);
 }
 
 .card:hover {
