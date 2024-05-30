@@ -133,7 +133,10 @@ const Landing = () => {
               <p className={styles.errorMessage}>The provided credentials are incorrect</p>
             </div>
           ) : null}
-          <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button>
+          <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button><br/>
+          <button className={styles.button} onClick={() => navigate('/password-reset-request')}>
+          Forgot my password
+          </button>
         </form>
         <button className={styles.toggleButton} onClick={() => setIsSignup(!isSignup)}>
           {isSignup ? 'Switch to Login' : 'Switch to Sign Up'}
