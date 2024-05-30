@@ -22,6 +22,11 @@ const typeDefs = `
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
+    requestPasswordReset(email: String!): Message
+    resetPassword(token: String!, newPassword: String!): Message
+  }
+  type Message {
+    message: String
   }
 `;
 
