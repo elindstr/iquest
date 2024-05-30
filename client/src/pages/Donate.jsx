@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from '../components/CheckoutForm';
 import { Elements } from '@stripe/react-stripe-js';
+import styles from './DonatePage.module.css';
 
 function Donate(props) {
     const [stripePromise, setStripePromise] = useState(null);
@@ -28,17 +29,19 @@ function Donate(props) {
     }, []);
 
     return (
-        <>
+        <div className={styles.donatePage}>
             <h1> Donate </h1>
             <p> This project was made with ❤️ by indie developers. Please consider supporting us. </p><br/>
 
-            {stripePromise && clientSecret && (
-                <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm />
-                </Elements>
-            )}
+            <div className={styles.donateForm}>
+                {stripePromise && clientSecret && (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                        <CheckoutForm />
+                    </Elements>
+                )}
+            </div>
             
-        </>
+        </div>
     );
 };
 
