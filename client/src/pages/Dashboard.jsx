@@ -35,8 +35,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
   const { data: userData, loading: userLoading, error: userError } = useQuery(QUERY_USER, { variables: { _id: userId } });
-  console.log(userId)
-  console.log(userData)
+  // console.log(userId)
+  // console.log(userData)
 
   // track daily logins
   const { data: dailyLoginData, loading: dailyLoginLoading, error: dailyLoginError } = useQuery(QUERY_USER_DAILY_LOGINS, { variables: { id: userId } });
@@ -86,7 +86,6 @@ const Dashboard = () => {
         <span>Login Streak: {consecutiveDays}</span>
 
         <div className={styles.containerButton}>
-          {/* <button className={styles.button} onClick={() => navigate('/quiz')}>New Quiz</button> */}
           <button className={styles.button} onClick={() => navigate('/new-quiz')}>New Quiz</button>
 
           <button className={styles.button} onClick={() => navigate('/feed')}>Quiz Feed</button>
