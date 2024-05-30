@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import {Link, useNavigate } from 'react-router-dom';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import './Login.css';
+import styles from './Login.module.css';
 
 const Landing = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -74,8 +74,8 @@ const Landing = () => {
   };
 
   return (
-    <div className="landing-page">
-      <div className="card">
+    <div className={styles.landingPage}>
+      <div className={styles.card}>
         <h1>iQuest</h1>
         <form onSubmit={handleFormSubmit}>
           {isSignup && (
@@ -87,6 +87,7 @@ const Landing = () => {
                 value={formState.firstName}
                 onChange={handleInputChange}
                 required
+                className={styles.input}
               />
               <input
                 type="text"
@@ -95,6 +96,7 @@ const Landing = () => {
                 value={formState.lastName}
                 onChange={handleInputChange}
                 required
+                className={styles.input}
               />
             </>
           )}
@@ -105,8 +107,9 @@ const Landing = () => {
             value={formState.email}
             onChange={handleInputChange}
             required
+            className={styles.input}
           />
-            <div className="input-container">
+            <div className={styles.inputContainer}>
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
@@ -114,17 +117,23 @@ const Landing = () => {
                 value={formState.password}
                 onChange={handleInputChange}
                 required
+                className={styles.input}
               />
+<<<<<<< HEAD
 
               <label className="switch">
+=======
+              <label className={styles.switch}>
+>>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
                 <input
                   type="checkbox"
                   checked={showPassword}
                   onChange={toggleShowPassword}
                 />
-                <span className="slider round"></span>
+                <span className={`${styles.slider} ${styles.round}`}></span>
               </label>
             </div>
+<<<<<<< HEAD
             <div className="request">
             <Link to="/password-reset-request">Forgot Password?</Link>
             </div>
@@ -135,6 +144,16 @@ const Landing = () => {
           setIsSignup(!isSignup);
           setErrorMessage(''); // Clear the error message when switching
         }}>
+=======
+          {loginError || signupError ? (
+            <div>
+              <p className={styles.errorMessage}>The provided credentials are incorrect</p>
+            </div>
+          ) : null}
+          <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button>
+        </form>
+        <button className={styles.toggleButton} onClick={() => setIsSignup(!isSignup)}>
+>>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
           {isSignup ? 'Switch to Login' : 'Switch to Sign Up'}
         </button>
       </div>
@@ -143,4 +162,4 @@ const Landing = () => {
   );
 };
 
-export default Landing
+export default Landing;

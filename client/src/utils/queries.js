@@ -2,20 +2,26 @@ import { gql } from '@apollo/client';
 
 // Query for fetching a specific user by ID
 export const QUERY_USER = gql`
-  query user($userId: ID!) {
-    user(_id: $userId) {
+  query user($_id: ID!) {
+    user(_id: $_id) {
       _id
       email
       firstName
       lastName
       profilePictureURL
       profileBio
+      iq
       friends {
         _id
         email
         firstName
         lastName
         profilePictureURL
+        profileBio
+        iq
+      }
+      dailyLogins {
+        date
       }
     }
   }
@@ -31,12 +37,61 @@ export const QUERY_USERS = gql`
       lastName
       profilePictureURL
       profileBio
+      iq
       friends {
         _id
         email
         firstName
         lastName
         profilePictureURL
+        profileBio
+        iq
+      }
+      dailyLogins {
+        date
+      }
+    }
+  }
+`;
+
+// Query for fetching all quizes
+export const QUERY_QUIZES = gql`
+  query getQuizes {
+    quizes {
+      _id
+      date
+      user {
+        _id
+        firstName
+        lastName
+        profilePictureURL
+      }
+      difficulty
+      count
+      category
+      percentCorrect
+      comments {
+        _id
+        user {
+          _id
+          firstName
+          lastName
+          profilePictureURL
+        }
+        commentText
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_USER_DAILY_LOGINS = gql`
+  query getUserDailyLogins($id: ID!) {
+    user(_id: $id) {
+      _id
+      dailyLogins {
+        _id
+        date
       }
     }
   }

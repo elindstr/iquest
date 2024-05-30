@@ -13,6 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.15",
     "@reduxjs/toolkit": "^2.2.5",
+    "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^1.54.0",
     "@testing-library/react": "^14.0.0",
     "axios": "^1.6.8",

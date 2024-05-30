@@ -1,0 +1,100 @@
+.dashboardPage {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* Changed from center to flex-start to start content from the top */
+  width: 100%;
+  min-height: 100vh;  /* Changed height to min-height */
+  overflow: auto;  /* Added overflow auto to allow scrolling */
+  padding-top: 2rem;  /* Optional padding to prevent content from touching the top */
+  box-sizing: border-box;  /* Ensure padding does not affect the width */
+}
+
+.card {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  width: 100%;
+}
+
+.card:hover {
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.card h1 {
+  margin-bottom: 1.5rem;
+}
+
+.note {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.readonly {
+  background-color: #2e2e2e;
+  color: #888;
+}
+
+.containerButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  margin-top: 10px;
+  background-color: #6200ea;
+}
+
+.button:hover {
+  background-color: #3700b3;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.profilePicture {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.profilePicture img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.deleteButton {
+  top: 0;
+  right: 90px;
+  border: none;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 23px;
+}
+
+.deleteButton:hover {
+   background: rgba(255, 0, 0, 1);
+   box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}

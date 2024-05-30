@@ -8,12 +8,16 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
-    "render-build": "cd client && npm install && npm run build && cd ../server && npm install"
+    "render-build": "cd client && npm install && npm run build && cd ../server && npm install && npm run seed",
+    "seed": "cd server && npm run seed"
   },
   "keywords": [],
   "author": "",
   "license": "",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@stripe/react-stripe-js": "^2.7.1"
   }
 }

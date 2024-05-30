@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import { QUERY_USERS } from '../utils/queries';
 import { ADD_FRIEND, UN_FRIEND } from '../utils/mutations';
 import Auth from '../utils/auth';
-import './FindFriends.css';
+import styles from './FindFriends.module.css';
 
 const FindFriends = () => {
   const navigate = useNavigate();
@@ -19,30 +20,25 @@ const FindFriends = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const myEmail = Auth.getProfile().data.email;
-  const myId = Auth.getProfile().data._id;
 
-  // Effect to handle data received from the query
   useEffect(() => {
-    if (data) {
-      // Find the current user in the data
+    if (data && data.users) {
       const myData = data.users.find(user => user.email === myEmail);
-      const myFriendsIds = myData.friends.map(friend => friend._id);
 
-      // Filter out the current user
-      const filteredUsers = data.users.filter(user => user.email !== myEmail);
+      if (myData) {
+        const myFriendsIds = myData.friends.map(friend => friend._id);
+        const filteredUsers = data.users.filter(user => user.email !== myEmail);
+        const usersWithFriendStatus = filteredUsers.map(user => ({
+          ...user,
+          isFriend: myFriendsIds.includes(user._id)
+        }));
 
-      // Add the isFriend tracker
-      const usersWithFriendStatus = filteredUsers.map(user => ({
-        ...user,
-        isFriend: myFriendsIds.includes(user._id)
-      }));
-
-      setUsers(usersWithFriendStatus);
-      setSearchResults(usersWithFriendStatus);
+        setUsers(usersWithFriendStatus);
+        setSearchResults(usersWithFriendStatus);
+      }
     }
-  }, [data, myEmail, myId]);
+  }, [data, myEmail]);
 
-  // Handle search input changes
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -83,29 +79,53 @@ const FindFriends = () => {
   if (error) return <p>Error! {error.message}</p>;
 
   return (
-    <div className="dashboard-page">
-      <div className="card">
+    <div className={styles.findFriendsPage}>
+      <div className={styles.card}>
         <h1>Search Users</h1>
         <input
           type="text"
           value={searchTerm}
           onChange={handleSearch}
           placeholder="Search users..."
-          className="search-input"
+          className={styles.searchInput}
         />
-        <div className="user-list">
+        <div className={styles.userList}>
           {searchResults.map((user) => (
-            <div key={user._id} className="user-card">
-              <p className="user-list-item" key={user._id}>{user.firstName || '-'} {user.lastName || '-'} - {user.email || '-'}</p>
+            <div key={user._id} className={styles.userCard}>
+              <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
+                <p className={styles.userListItem}>
+                  {user.profilePictureURL && (
+                    <img
+                      src={user.profilePictureURL}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className={styles.profileImage}
+                    />
+                  )}
+                  {user.firstName || '-'}&nbsp;
+                  {user.lastName || '-'} -&nbsp; 
+                  {user.email || '-'} -&nbsp;
+                  {user.iq.toFixed(0) || '-'} IQ
+                </p>
+              </Link>
               {user.isFriend ? (
-                <button onClick={() => handleUnFriend(user._id)} className="unfriend-button">Unfriend</button>
+                <button
+                  onClick={() => handleUnFriend(user._id)}
+                  className={styles.unfriendButton}
+                >
+                  Unfriend
+                </button>
               ) : (
-                <button onClick={() => handleAddFriend(user._id)} className="addfriend-button">Add Friend</button>
+                <button
+                  onClick={() => handleAddFriend(user._id)}
+                  className={styles.addfriendButton}
+                >
+                  Add Friend
+                </button>
               )}
             </div>
           ))}
         </div>
-        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className={styles.navButton} onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>
   );
