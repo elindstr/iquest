@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useNavigate } from 'react-router-dom';
+import styles from '../pages/DonatePage.module.css';
 
 export default function CheckoutForm() {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function CheckoutForm() {
     return (
         <form id='payment-form' onSubmit={handleSubmit}>
             <PaymentElement />
-            <button disabled={isProcessing} id='submit'>
+            <button className={styles.button} disabled={isProcessing} id='submit'>
                 <span id='button-text'>
                     {isProcessing ? 'Processing ...' : 'Pay now'}
                 </span>
@@ -50,7 +51,7 @@ export default function CheckoutForm() {
             {message && <div id="payment-message">{message} </div>}
 
             <br/><br/>
-            <button onClick={() => navigate('/')}>Back to Dashboard</button>
+            <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
         </form>
     )
 };

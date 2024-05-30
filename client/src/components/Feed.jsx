@@ -38,43 +38,45 @@ const QuizFeed = () => {
 
   return (
     <div className={styles.feedPage}>
-      {quizzes.map((quiz) => (
-        <div key={quiz._id} className={styles.quizItem}>
-          <div className={styles.quizUserInfo}>
-            <img src={quiz.user.profilePictureURL} alt={`${quiz.user.firstName} ${quiz.user.lastName}`} />
-            <div>
-              <h3>{`${quiz.user.firstName} ${quiz.user.lastName}`}</h3>
-            </div>
-          </div>
-          <div className={styles.quizDetails}>
-            <p><strong>Date:</strong> {new Date(quiz.date).toLocaleDateString()}</p>
-            <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
-            <p><strong>Category:</strong> {quiz.category}</p>
-            <p><strong>Count:</strong> {quiz.count}</p>
-            <p><strong>Success Rate:</strong> {(quiz.percentCorrect * 100).toFixed(0)}%</p>
-          </div>
-          <div className={styles.quizComments}>
-            {quiz.comments && quiz.comments.length > 0 && quiz.comments.map((comment) => (
-              <div key={comment._id} className={styles.comment}>
-                <img src={comment.user.profilePictureURL || 'default-profile.png'} alt={`${comment.user.firstName} ${comment.user.lastName}`} />
-                <div>
-                  <p><strong>{comment.user.firstName} {comment.user.lastName}:</strong> {comment.commentText}</p>
-                  <p className={styles.commentDate}>{new Date(comment.createdAt).toLocaleDateString()}</p>
-                </div>
+      <div className={styles.card}>
+        {quizzes.map((quiz) => (
+          <div key={quiz._id} className={styles.quizItem}>
+            <div className={styles.quizUserInfo}>
+              <img src={quiz.user.profilePictureURL} alt={`${quiz.user.firstName} ${quiz.user.lastName}`} />
+              <div>
+                <h3>{`${quiz.user.firstName} ${quiz.user.lastName}`}</h3>
               </div>
-            ))}
-            <div className={styles.addComment}>
-              <textarea
-                value={selectedQuiz === quiz._id ? commentText : ''}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Add a comment..."
-                onFocus={() => setSelectedQuiz(quiz._id)}
-              />
-              <button onClick={() => handleCommentSubmit(quiz._id)}>Post Comment</button>
+            </div>
+            <div className={styles.quizDetails}>
+              <p><strong>Date:</strong> {new Date(quiz.date).toLocaleDateString()}</p>
+              <p><strong>Difficulty:</strong> {quiz.difficulty}</p>
+              <p><strong>Category:</strong> {quiz.category}</p>
+              <p><strong>Count:</strong> {quiz.count}</p>
+              <p><strong>Success Rate:</strong> {quiz.percentCorrect * 100}%</p>
+            </div>
+            <div className={styles.quizComments}>
+              {quiz.comments && quiz.comments.length > 0 && quiz.comments.map((comment) => (
+                <div key={comment._id} className={styles.comment}>
+                  <img src={comment.user.profilePictureURL || 'default-profile.png'} alt={`${comment.user.firstName} ${comment.user.lastName}`} />
+                  <div>
+                    <p><strong>{comment.user.firstName} {comment.user.lastName}:</strong> {comment.commentText}</p>
+                    <p className={styles.commentDate}>{new Date(comment.createdAt).toLocaleDateString()}</p>
+                  </div>
+                </div>
+              ))}
+              <div className={styles.addComment}>
+                <textarea
+                  value={selectedQuiz === quiz._id ? commentText : ''}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Add a comment..."
+                  onFocus={() => setSelectedQuiz(quiz._id)}
+                />
+                <button onClick={() => handleCommentSubmit(quiz._id)}>Post Comment</button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
