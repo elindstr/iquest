@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import FindFriends from './pages/FindFriends';
 import UpdateProfile from './pages/UpdateProfile';
 import Profile from './pages/Profile';
+import NewQuiz from './pages/NewQuiz'
 import Quiz from './pages/Quiz';
 import PasswordReset from './pages/PasswordReset';
 import PasswordResetRequest from './pages/PasswordResetReq';
@@ -13,6 +14,8 @@ import './App.css';
 import Donate from './pages/Donate';
 import MainFeed from './pages/MainFeed';
 import LeaderBoard from './components/LeaderBoard'
+
+
 
 
 const PrivateRoute = ({ element }) => {
@@ -39,6 +42,8 @@ function App() {
         <Route path="/profile/:id" element={<PrivateRoute element={<Profile />} />} />
         
         <Route path="/quiz" element={<PrivateRoute element={<Quiz />} />} />
+        <Route path="/new-quiz" element={<PrivateRoute element={<NewQuiz />} />} />
+
         <Route path="/messaging" element={<PrivateRoute element={<div>Messaging</div>} />} />
         <Route path="/password-reset" element={<PrivateRoute element={<PasswordReset />} />} />
         <Route path="/password-reset-request" element={<PublicRoute element={<PasswordResetRequest />} />} />

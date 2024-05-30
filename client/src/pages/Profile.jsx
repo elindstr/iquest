@@ -15,7 +15,7 @@ const Profile = () => {
     return (
     <div className={styles.profilePage}>
         <div className={styles.card}>
-            {data.user.profilePictureURL && (<img src={data.user.profilePictureURL} alt={`${data.user.firstName} ${data.user.lastName}`} className={styles.profileImage} />)}
+            {data.user.profilePictureURL && (<img src={data.user.profilePictureURL || 'placeholder.png'} alt={`${data.user.firstName} ${data.user.lastName}`} className={styles.profileImage} />)}
 
             <h3>{data.user.firstName} {data.user.lastName} </h3>
             <h5 className={styles.iqTag}>IQ {data.user.iq.toFixed(0)}</h5>
