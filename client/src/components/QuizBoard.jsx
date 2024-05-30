@@ -182,7 +182,8 @@ const QuizBoard = () => {
           <p>You scored {score} out of {quizData.results.length}: {percentCorrectDisplay}%</p>
           <p>New IQ: {newIQ ? newIQ.toFixed(0) : null}</p>
           <br/>
-          <button onClick={() => navigate('/')}>Back to Dashboard</button>
+          <button onClick={() => navigate('/')}>Back to Dashboard</button><br/>
+          <button onClick={() => location.reload()}>New Quiz</button>
         </div>
       </div>
     );
