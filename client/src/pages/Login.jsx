@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import {Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LOGIN, ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import styles from './Login.module.css';
@@ -16,7 +16,6 @@ const Landing = () => {
   });
 
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState('');
 
   const [login, { error: loginError }] = useMutation(LOGIN);
   const [addUser, { error: signupError }] = useMutation(ADD_USER);
@@ -49,23 +48,8 @@ const Landing = () => {
       }
       console.log("redirecting to dashboard")
       navigate('/'); // Redirect to dashboard
-    } catch (err) {
-      console.log(err.message);
-      let errorMessage = 'An unexpected error occurred.';
-      if (err.message.includes('An account with this email already exists.')) {
-        errorMessage = 'An account with this email already exists.';
-      } else if (err.message.includes('User validation failed')) {
-        errorMessage = 'Invalid user information. Please check your inputs.';
-      } else if (err.message.includes('No user found with this email address')) {
-        errorMessage = 'No user found with this email address.';
-      } else if (err.message.includes('Incorrect credentials')) {
-        errorMessage = 'Incorrect email or password.';
-      } else if (err.networkError) {
-        errorMessage = 'Network error. Please check your internet connection.';
-      } else {
-        errorMessage = 'Server error. Please try again later.';
-      }
-      setErrorMessage(errorMessage);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -119,12 +103,7 @@ const Landing = () => {
                 required
                 className={styles.input}
               />
-<<<<<<< HEAD
-
-              <label className="switch">
-=======
               <label className={styles.switch}>
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
                 <input
                   type="checkbox"
                   checked={showPassword}
@@ -133,18 +112,6 @@ const Landing = () => {
                 <span className={`${styles.slider} ${styles.round}`}></span>
               </label>
             </div>
-<<<<<<< HEAD
-            <div className="request">
-            <Link to="/password-reset-request">Forgot Password?</Link>
-            </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button type="submit">{isSignup ? 'Sign Up' : 'Login'}</button>
-        </form>
-        <button className="toggle-button" onClick={() => {
-          setIsSignup(!isSignup);
-          setErrorMessage(''); // Clear the error message when switching
-        }}>
-=======
           {loginError || signupError ? (
             <div>
               <p className={styles.errorMessage}>The provided credentials are incorrect</p>
@@ -153,11 +120,9 @@ const Landing = () => {
           <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button>
         </form>
         <button className={styles.toggleButton} onClick={() => setIsSignup(!isSignup)}>
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
           {isSignup ? 'Switch to Login' : 'Switch to Sign Up'}
         </button>
       </div>
-
     </div>
   );
 };
