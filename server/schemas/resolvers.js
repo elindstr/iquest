@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -6,7 +5,6 @@ const { GraphQLError, } = require('graphql');
 const { UserInputError, AuthenticationError } = require('apollo-server-errors');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail'); // Ensure this utility is implemented
-=======
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const bcrypt = require('bcrypt');
@@ -29,7 +27,6 @@ const dateScalar = new GraphQLScalarType({
     return null;
   },
 });
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
 
 const resolvers = {
   Date: dateScalar,
@@ -37,12 +34,6 @@ const resolvers = {
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
-<<<<<<< HEAD
-        const user = await User.findById(context.user._id);
-        return user;
-      }
-      throw new AuthenticationError('Not authenticated');
-=======
         return await User.find().populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
@@ -61,7 +52,13 @@ const resolvers = {
         });
       }
       throw new AuthenticationError('Not authenticated');
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
+    },
+    userPs: async (parent, args, context) => {
+      if (context.user) {
+        const userPs = await UserPs.findById(context.user._id);
+        return userPs;
+      }
+      throw new AuthenticationError('Not authenticated');
     }
   },
 
@@ -148,23 +145,22 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-<<<<<<< HEAD
     requestPasswordReset: async (_, { email }, context) => {
-      const user = await User.findOne({ email });
-      if (!user) {
+      const userPs = await UserPs.findOne({ email });
+      if (!userPs) {
         throw new UserInputError('User not found', {
           extensions: { code: 'USER_NOT_FOUND' },
         });
       }
 
-      const resetToken = user.createPasswordResetToken();
+      const resetToken = userPs.createPasswordResetToken();
       console.log(resetToken);
-      await user.save();
+      await userPs.save();
 
       const resetURL = `http://localhost:3000/resetPassword/${resetToken}`;
       try {
         await sendEmail({
-          to: user.email,
+          to: userPs.email,
           subject: 'Password Reset',
           text: `Reset your password by visiting the following link: ${resetURL}`,
         });
@@ -180,26 +176,24 @@ const resolvers = {
 
     resetPassword: async (_, { token, newPassword }) => {
       const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-      const user = await User.findOne({
+      const userPs = await UserPs.findOne({
         passwordResetToken: hashedToken,
         passwordResetExpires: { $gt: Date.now() },
       });
 
-      if (!user) {
+      if (!userPs) {
         throw new UserInputError('Token is invalid or has expired', {
           extensions: { code: 'TOKEN_INVALID_OR_EXPIRED' },
         });
       }
 
-      user.password = newPassword;
-      user.passwordResetToken = undefined;
-      user.passwordResetExpires = undefined;
-      await user.save();
+      userPs.password = newPassword;
+      userPs.passwordResetToken = undefined;
+      userPs.passwordResetExpires = undefined;
+      await userPs.save();
 
       return { message: 'Password has been reset' };
     },
-  },
-=======
     addQuizComment: async (parent, { _id, userId, commentText }, context) => {
       if (context.user) {
         const quiz = await Quiz.findById(_id);
@@ -233,7 +227,6 @@ const resolvers = {
       throw new AuthenticationError('Not authenticated');
     }
   }
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
 };
 
 module.exports = resolvers;

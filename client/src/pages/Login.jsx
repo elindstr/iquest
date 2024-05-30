@@ -119,12 +119,7 @@ const Landing = () => {
                 required
                 className={styles.input}
               />
-<<<<<<< HEAD
-
-              <label className="switch">
-=======
               <label className={styles.switch}>
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
                 <input
                   type="checkbox"
                   checked={showPassword}
@@ -133,18 +128,6 @@ const Landing = () => {
                 <span className={`${styles.slider} ${styles.round}`}></span>
               </label>
             </div>
-<<<<<<< HEAD
-            <div className="request">
-            <Link to="/password-reset-request">Forgot Password?</Link>
-            </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button type="submit">{isSignup ? 'Sign Up' : 'Login'}</button>
-        </form>
-        <button className="toggle-button" onClick={() => {
-          setIsSignup(!isSignup);
-          setErrorMessage(''); // Clear the error message when switching
-        }}>
-=======
           {loginError || signupError ? (
             <div>
               <p className={styles.errorMessage}>The provided credentials are incorrect</p>
@@ -153,7 +136,6 @@ const Landing = () => {
           <button type="submit" className={styles.button}>{isSignup ? 'Sign Up' : 'Login'}</button>
         </form>
         <button className={styles.toggleButton} onClick={() => setIsSignup(!isSignup)}>
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
           {isSignup ? 'Switch to Login' : 'Switch to Sign Up'}
         </button>
       </div>

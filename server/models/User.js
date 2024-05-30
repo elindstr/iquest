@@ -34,10 +34,8 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-<<<<<<< HEAD
   passwordResetToken: String,
   passwordResetExpires: Date,
-=======
   iq: {
     type: Number,
     default: 120,
@@ -48,7 +46,6 @@ const userSchema = new Schema({
       default: Date.now
     }
   }]
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
 });
 
 // set up pre-save middleware to create password

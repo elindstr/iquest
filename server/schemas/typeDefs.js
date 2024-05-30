@@ -62,18 +62,15 @@ const typeDefs = `
       iq: Float
     ): User
     login(email: String!, password: String!): Auth
-<<<<<<< HEAD
     requestPasswordReset(email: String!): Message
     resetPassword(token: String!, newPassword: String!): Message
   }
   type Message {
     message: String
-=======
     addQuiz(user: ID!, difficulty: String, count: Int, category: String, percentCorrect: Float): Quiz
     scoreQuiz(_id: ID!, count: Int, percentCorrect: Float!): Quiz
     addQuizComment(_id: ID!, userId: ID!, commentText: String!): Quiz
     recordLogin(userId: ID!): User
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
   }
 `;
 
