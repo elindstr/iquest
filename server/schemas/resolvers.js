@@ -1,17 +1,13 @@
-<<<<<<< HEAD
-const { User } = require('../models');
+const { User, Quiz } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-const { GraphQLError, } = require('graphql');
+const { GraphQLError } = require('graphql');
 const { UserInputError, AuthenticationError } = require('apollo-server-errors');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail'); // Ensure this utility is implemented
-=======
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const bcrypt = require('bcrypt');
-const { signToken, AuthenticationError } = require('../utils/auth');
-const { User, Quiz } = require('../models');
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -29,7 +25,6 @@ const dateScalar = new GraphQLScalarType({
     return null;
   },
 });
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
 
 const resolvers = {
   Date: dateScalar,
@@ -37,12 +32,6 @@ const resolvers = {
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
-<<<<<<< HEAD
-        const user = await User.findById(context.user._id);
-        return user;
-      }
-      throw new AuthenticationError('Not authenticated');
-=======
         return await User.find().populate('friends');
       }
       throw new AuthenticationError('Not authenticated');
@@ -61,7 +50,13 @@ const resolvers = {
         });
       }
       throw new AuthenticationError('Not authenticated');
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
+    },
+    userPs: async (parent, args, context) => {
+      if (context.user) {
+        const userPs = await UserPs.findById(context.user._id)
+        return userPs;
+      }
+      throw new AuthenticationError('Not authenticated');
     }
   },
 
@@ -148,18 +143,17 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-<<<<<<< HEAD
     requestPasswordReset: async (_, { email }, context) => {
-      const user = await User.findOne({ email });
-      if (!user) {
+      const userPs = await UserPs.findOne({ email });
+      if (!userPs) {
         throw new UserInputError('User not found', {
           extensions: { code: 'USER_NOT_FOUND' },
         });
       }
 
-      const resetToken = user.createPasswordResetToken();
+      const resetToken = userPs.createPasswordResetToken();
       console.log(resetToken);
-      await user.save();
+      await userPs.save();
 
       const resetURL = `http://localhost:3000/resetPassword/${resetToken}`;
       try {
@@ -180,12 +174,12 @@ const resolvers = {
 
     resetPassword: async (_, { token, newPassword }) => {
       const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-      const user = await User.findOne({
+      const userPs = await UserPs.findOne({
         passwordResetToken: hashedToken,
         passwordResetExpires: { $gt: Date.now() },
       });
 
-      if (!user) {
+      if (!userPs) {
         throw new UserInputError('Token is invalid or has expired', {
           extensions: { code: 'TOKEN_INVALID_OR_EXPIRED' },
         });
@@ -194,46 +188,43 @@ const resolvers = {
       user.password = newPassword;
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
-      await user.save();
+      await userPs.save();
 
       return { message: 'Password has been reset' };
     },
-  },
-=======
     addQuizComment: async (parent, { _id, userId, commentText }, context) => {
       if (context.user) {
         const quiz = await Quiz.findById(_id);
         if (!quiz) {
-          throw new Error('Quiz not found');
+          throw new UserInputError('Quiz not found');
         }
-        quiz.comments.push({ user: userId, commentText, createdAt: new Date() });
+        const comment = {
+          user: userId,
+          commentText,
+          createdAt: new Date()
+        };
+        quiz.comments.push(comment);
         await quiz.save();
-        return quiz.populate('comments.user');
+        return quiz;
       }
       throw new AuthenticationError('Not authenticated');
     },
     recordLogin: async (parent, { userId }, context) => {
       if (context.user) {
         const user = await User.findById(userId);
-        const today = new Date().setHours(0, 0, 0, 0);
-
-        const lastLogin = user.dailyLogins.length > 0
-          ? new Date(user.dailyLogins[user.dailyLogins.length - 1].date).setHours(0, 0, 0, 0)
-          : null;
-
-        if (lastLogin === today) {
-          return user;
+        if (!user) {
+          throw new UserInputError('User not found');
         }
-
-        user.dailyLogins.push({ date: new Date() });
-
+        const login = {
+          date: new Date()
+        };
+        user.dailyLogins.push(login);
         await user.save();
         return user;
       }
       throw new AuthenticationError('Not authenticated');
     }
   }
->>>>>>> 99d1bad8881815bfd16b9684f095e8d38a0651f1
 };
 
 module.exports = resolvers;
