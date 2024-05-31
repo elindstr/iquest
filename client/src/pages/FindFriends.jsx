@@ -94,13 +94,11 @@ const FindFriends = () => {
             <div key={user._id} className={styles.userCard}>
               <Link className={styles.userListItemLink} to={`/profile/${user._id}`}>
                 <p className={styles.userListItem}>
-                  {user.profilePictureURL && (
-                    <img
-                      src={user.profilePictureURL}
-                      alt={`${user.firstName} ${user.lastName}`}
-                      className={styles.profileImage}
-                    />
-                  )}
+                  <img
+                    src={user.profilePictureURL || 'placeholder.png'}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    className={styles.profileImage}
+                  />
                   {user.firstName || '-'}&nbsp;
                   {user.lastName || '-'} -&nbsp; 
                   {user.email || '-'} -&nbsp;
