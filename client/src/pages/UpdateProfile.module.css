@@ -104,3 +104,39 @@
     0 0 35px rgba(98, 0, 234, 0.5),
     0 0 45px rgba(98, 0, 234, 0.3);
 }
+
+.userCard {
+  background: #303030;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  margin-left: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userCard:hover {
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 15px rgb(255, 145, 1),
+    0 0 25px rgba(255, 196, 3, 0.753),
+    0 0 35px rgba(98, 0, 234, 0.5),
+    0 0 45px rgba(98, 0, 234, 0.3);
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-left: 60px;
+  margin-right: 50px;
+}
+
+.userListItemLink {
+  color: #fff;
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UPDATE_USER } from '../utils/mutations';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER, QUERY_USERS } from '../utils/queries';
 import Auth from '../utils/auth';
 import styles from './UpdateProfile.module.css';
 
@@ -10,6 +10,8 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
   const { data, loading, error } = useQuery(QUERY_USER, { variables: { _id: userId } });
+  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(QUERY_USERS);
+  const [users, setUsers] = useState([]);
 
   const [formState, setFormState] = useState({
     firstName: '',
@@ -39,6 +41,14 @@ const UpdateProfile = () => {
       setProfilePictureURL(data.user.profilePictureURL || '');
     }
   }, [data]);
+
+  useEffect(() => {
+    if (data && data.user && usersData && usersData.users) {
+      const friendsIds = data.user.friends.map(friend => friend._id);
+      const friends = usersData.users.filter(user => friendsIds.includes(user._id));
+      setUsers(friends);
+    }
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -188,6 +198,23 @@ const UpdateProfile = () => {
               readOnly={!editMode}
               className={!editMode ? 'styles.readonly' : ''}
             />
+          </div>
+          <div className={styles.friends}>
+            <label>Friends List</label>
+            {users.map((user, index) => (
+              <Link key={user._id} className={styles.userCard} to={`/profile/${user._id}`}>
+                <p className={styles.userListItem}>
+                  <img
+                    src={user.profilePictureURL || 'placeholder.png'}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    className={styles.profileImage}
+                  />
+                    {user.firstName || '-'}&nbsp;
+                    {user.lastName || '-'}:&nbsp;
+                    {user.iq.toFixed(0)} IQ
+                </p>
+              </Link>
+            ))}
           </div>
           <div>
             <label>Password</label>
