@@ -20,6 +20,11 @@ const QuizBoard = () => {
   const location = useLocation();
   const { triviaData, quizId, userId, userData } = location.state; // get values passed from NewQuiz page
 
+  console.log(triviaData)
+  console.log(quizId)
+  console.log(userId)
+  console.log(userData)
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);

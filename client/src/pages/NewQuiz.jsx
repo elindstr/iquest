@@ -50,6 +50,11 @@ const NewQuiz = () => {
     }
 
     // Save quiz data to the database
+    console.log(userId)
+    console.log(categoryName) /// not working
+    console.log(quizDifficulty)
+    console.log(quizAmount)
+
     const response = await addQuiz({
       variables: {
         user: userId,
@@ -77,7 +82,8 @@ const NewQuiz = () => {
         <select value={category} onChange={
           (e) => {
             setCategory(e.target.value);
-            setCategoryName(e.target)
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            setCategoryName(selectedOption.text);
             }
           }>
           <option value="99">Fullstack Web Dev Bootcamp</option>
