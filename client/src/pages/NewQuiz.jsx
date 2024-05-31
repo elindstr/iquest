@@ -108,8 +108,8 @@ const NewQuiz = () => {
           <option value="26">Celebrities</option>
         </select>
 
-        <button onClick={handleStartQuiz}>Start Quiz</button> <br />
-        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+        <button className={styles.button} onClick={handleStartQuiz}>Start Quiz</button> <br />
+        <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     </div>
   );
