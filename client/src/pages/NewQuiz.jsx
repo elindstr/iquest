@@ -50,11 +50,6 @@ const NewQuiz = () => {
     }
 
     // Save quiz data to the database
-    console.log(userId)
-    console.log(categoryName) /// not working
-    console.log(quizDifficulty)
-    console.log(quizAmount)
-
     const response = await addQuiz({
       variables: {
         user: userId,
