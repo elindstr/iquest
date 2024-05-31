@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_QUIZES } from '../utils/queries';
 import { ADD_QUIZ_COMMENT } from '../utils/mutations';
+import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 import styles from './Feed.module.css';
 
 const QuizFeed = () => {
+  const navigate = useNavigate();
   const currentUser = Auth.getProfile().data._id;
 
   const { loading, data, error, refetch } = useQuery(QUERY_QUIZES);
@@ -39,6 +41,7 @@ const QuizFeed = () => {
   return (
     <div className={styles.feedPage}>
       <div className={styles.card}>
+      <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
         {quizzes.map((quiz) => (
           <div key={quiz._id} className={styles.quizItem}>
             <div className={styles.quizUserInfo}>

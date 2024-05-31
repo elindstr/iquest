@@ -50,7 +50,7 @@ export default function CheckoutForm() {
             </button>
             {message && <div id="payment-message">{message} </div>}
 
-            <br/><br/>
+            <br/>
             <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
         </form>
     )

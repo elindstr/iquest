@@ -36,6 +36,10 @@
       0 0 45px rgba(98, 0, 234, 0.3);
 }
 
+.button {
+  margin-top: 1rem;
+}
+
 .button:hover {
     box-shadow: 
       0 8px 16px rgba(0, 0, 0, 0.3),
