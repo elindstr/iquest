@@ -92,6 +92,12 @@ button {
 
 button:hover {
   background-color: #3700b3;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 0 10px rgb(0, 162, 255), 
+    0 0 20px rgb(0, 132, 209), 
+    0 0 30px rgba(98, 0, 234, 0.4), 
+    0 0 40px rgba(98, 0, 234, 0.2);
 }
 
 .correctAnswer {
