@@ -92,7 +92,6 @@ const Dashboard = () => {
           
           <button className={styles.button} onClick={() => navigate('/leaderboard')}>Leaderboard</button>
           
-          <button className={styles.button} onClick={() => navigate(`/profile/${userData.user._id}`)}>Profile</button>
           <button className={styles.button} onClick={() => navigate('/update-profile')}>Edit Profile</button>
 
           <button className={styles.button} onClick={() => navigate('/find-friends')}>Find Friends</button>
