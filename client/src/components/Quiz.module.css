@@ -79,7 +79,7 @@
   background-color: #e65100;
 }
 
-button {
+.button {
   margin-top: 1rem;
   padding: 0.75rem;
   border: none;
@@ -90,7 +90,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.button:hover {
   background-color: #3700b3;
   box-shadow: 
     0 4px 8px rgba(0, 0, 0, 0.2),
