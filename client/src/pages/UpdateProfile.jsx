@@ -199,23 +199,6 @@ const UpdateProfile = () => {
               className={!editMode ? 'styles.readonly' : ''}
             />
           </div>
-          <div className={styles.friends}>
-            <label>Friends List</label>
-            {users.map((user, index) => (
-              <Link key={user._id} className={styles.userCard} to={`/profile/${user._id}`}>
-                <p className={styles.userListItem}>
-                  <img
-                    src={user.profilePictureURL || 'placeholder.png'}
-                    alt={`${user.firstName} ${user.lastName}`}
-                    className={styles.profileImage}
-                  />
-                    {user.firstName || '-'}&nbsp;
-                    {user.lastName || '-'}:&nbsp;
-                    {user.iq.toFixed(0)} IQ
-                </p>
-              </Link>
-            ))}
-          </div>
           <div>
             <label>Password</label>
             <input
@@ -255,6 +238,23 @@ const UpdateProfile = () => {
           </button>
           <button className={styles.button} onClick={() => navigate('/')} >Back to Dashboard</button>
         </div>
+        <div className={styles.friends}>
+            <label>Friends List</label>
+            {users.map((user, index) => (
+              <Link key={user._id} className={styles.userCard} to={`/profile/${user._id}`}>
+                <p className={styles.userListItem}>
+                  <img
+                    src={user.profilePictureURL || 'placeholder.png'}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    className={styles.profileImage}
+                  />
+                    {user.firstName || '-'}&nbsp;
+                    {user.lastName || '-'}:&nbsp;
+                    {user.iq.toFixed(0)} IQ
+                </p>
+              </Link>
+            ))}
+          </div>
       </div>
     </div>
   );

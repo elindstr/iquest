@@ -149,7 +149,7 @@ const QuizBoard = () => {
           </p>
           <p>New IQ: {newIQ ? newIQ.toFixed(0) : null}</p>
           <br />
-          <button onClick={() => navigate('/new-quiz')}>New Quiz</button> <br />
+          <button onClick={() => navigate('/new-quiz')}>New Quiz</button> <br /><br />
           <button onClick={() => navigate('/')}>Back to Dashboard</button>
         </div>
       </div>
