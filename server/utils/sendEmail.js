@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const sendEmail = async () => {
+const sendEmail = async ({ from, to, subject, text }) => {
   console.log("sending")
 
   const transporter = nodemailer.createTransport({
@@ -13,11 +13,11 @@ const sendEmail = async () => {
   });
   const emailObject = {
     from: 'iquest <iquest120@gmail.com>',
-    to: "elindstr@gmail.com",
-    subject: 'test subject',
-    text: `test`,
-    html: `<p>test</p>`
-}
+    to: to,
+    subject: 'Password Reset Request',
+    text: 'Please click the link below to reset your password.',
+    html: '<p>Please click the link below to reset your password.</p><a href="http://localhost:3000/reset-password">Reset Password</a>'
+  };
 
   const info = await transporter.sendMail(emailObject);
   console.log('sent email:', info)
