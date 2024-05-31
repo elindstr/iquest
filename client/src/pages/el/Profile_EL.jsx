@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_QUIZES } from '../utils/queries';
-import '../Profile.module.css';
+import styles from '../Profile.module.css';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,18 +19,18 @@ const Profile = () => {
   const iqRank = calculateIqRank(user, user.friends); // Function to calculate IQ rank among friends
 
   return (
-    <div className="profile-page">
-      <div className="profile-header">
+    <div className={styles.profilePage}>
+      <div className={styles.card}>
         {user.profilePictureURL && (
-          <img src={user.profilePictureURL} alt={`${user.firstName} ${user.lastName}`} className="profile-image" />
+          <img src={user.profilePictureURL} alt={`${user.firstName} ${user.lastName}`} className={styles.profileImage} />
         )}
         <div className="profile-info">
-          <h2>{user.firstName} {user.lastName} <span className="iq-tag">IQ {user.iq}</span></h2>
+          <h2>{user.firstName} {user.lastName} <span className={styles.iqTag}>IQ {user.iq}</span></h2>
           <p>{user.email}</p>
           <p>{user.profileBio}</p>
           <p><strong>Quizzes Taken:</strong> {quizCount}</p>
           <p><strong>IQ Rank Among Friends:</strong> {iqRank}</p>
-          <button onClick={() => navigate('/')}>Back to Dashboard</button>
+          <button className={styles.navButton} onClick={() => navigate('/')}>Back to Dashboard</button>
         </div>
       </div>
       <div className="profile-quiz-feed">
