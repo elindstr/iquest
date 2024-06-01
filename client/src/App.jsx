@@ -14,9 +14,6 @@ import Donate from './pages/Donate';
 import MainFeed from './pages/MainFeed';
 import LeaderBoard from './components/LeaderBoard'
 
-
-
-
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;
 };
