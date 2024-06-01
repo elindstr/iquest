@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 import styles from './Dashboard.module.css';
@@ -50,13 +50,12 @@ const Dashboard = () => {
       const lastLogin = dailyLogins.length > 0
         ? new Date(dailyLogins[dailyLogins.length - 1].date).setHours(0, 0, 0, 0)
         : null;
-      
-      console.log('Last login:', lastLogin);
+      // console.log('Last login:', lastLogin);
 
       if (lastLogin !== today) {
         recordLogin({ variables: { userId } })
           .then(() => {
-            console.log('This is your first login today.');
+            // console.log('First login today. Welcome back!');
             setConsecutiveDays(calculateConsecutiveDays([...dailyLogins, { date: new Date().toISOString() }]));
           })
           .catch(error => console.error('Error recording login:', error));

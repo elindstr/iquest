@@ -50,10 +50,10 @@ const NewQuiz = () => {
     }
 
     // Save quiz data to the database
-    console.log(userId)
-    console.log(categoryName) /// not working
-    console.log(quizDifficulty)
-    console.log(quizAmount)
+    // console.log(userId)
+    // console.log(categoryName)
+    // console.log(quizDifficulty)
+    // console.log(quizAmount)
 
     const response = await addQuiz({
       variables: {
@@ -69,7 +69,8 @@ const NewQuiz = () => {
     // redirect with triviaData passed as state
     navigate('/quiz', { state: { 
       triviaData: triviaAPIData,
-      quizId: quizId,
+      triviaCategoryNumber: category,
+      quizId,
       userId,
       userData
     } });

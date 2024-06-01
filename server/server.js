@@ -4,7 +4,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const imageUploadRoute = require('./utils/imageUploadRoute');
-const cors = require('cors'); // Import CORS middleware
+const cors = require('cors');
 const env = require('dotenv').config({ path: './.env'});
 const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-08-01',
@@ -55,10 +55,7 @@ const startApolloServer = async () => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-
       const resetToken = user.createPasswordResetToken();
-
-
       const resetURL = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
         console.log(user)
       await sendEmail({
@@ -66,7 +63,6 @@ const startApolloServer = async () => {
         subject: 'Password Reset',
         text: `Reset your password by visiting the following link: ${resetURL}`,
       });
-
       await user.save();
 
       res.status(200).json({ message: 'Password reset email sent' });
@@ -86,11 +82,9 @@ const startApolloServer = async () => {
         passwordResetToken: hashedToken,
         passwordResetExpires: { $gt: Date.now() },
       });
-
       if (!user) {
         return res.status(400).json({ message: 'Token is invalid or has expired' });
       }
-
       user.password = newPassword;
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;

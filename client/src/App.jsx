@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Auth from './utils/auth';
 import Login from './pages/Login';
@@ -14,9 +13,6 @@ import './App.css';
 import Donate from './pages/Donate';
 import MainFeed from './pages/MainFeed';
 import LeaderBoard from './components/LeaderBoard'
-
-
-
 
 const PrivateRoute = ({ element }) => {
   return Auth.loggedIn() ? element : <Navigate to="/login" />;

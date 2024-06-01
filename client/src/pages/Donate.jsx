@@ -10,8 +10,7 @@ function Donate(props) {
     useEffect(() => {
         fetch('api/config').then(async (r) => {
             const {publishableKey} = await r.json();
-            
-            console.log(publishableKey)
+            // console.log(publishableKey)
             setStripePromise(loadStripe(publishableKey));
         });
     }, []);
@@ -21,9 +20,8 @@ function Donate(props) {
             method: 'POST',
             body: JSON.stringify({}),
         }).then(async (r) => {
-            const { clientSecret } = await r.json();
-            
-            console.log(clientSecret)
+            const { clientSecret } = await r.json();            
+            // console.log(clientSecret)
             setClientSecret(clientSecret);
         });
     }, []);
