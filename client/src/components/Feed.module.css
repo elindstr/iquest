@@ -72,6 +72,9 @@
   align-items: center;
   gap: 10px;
   margin-top: 10px;
+  border-radius: 8px;
+  border: 1px gray dashed;
+  padding: 4px
 }
 
 .comment img {
