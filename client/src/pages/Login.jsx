@@ -76,7 +76,7 @@ const Landing = () => {
   return (
     <div className={styles.landingPage}>
       <div className={styles.card}>
-        <h1>iQuest</h1>
+        <h1 className="logo">IQUEST</h1>
         <form onSubmit={handleFormSubmit}>
           {isSignup && (
             <>
