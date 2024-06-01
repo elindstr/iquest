@@ -79,7 +79,7 @@ const Dashboard = () => {
     <div className={styles.dashboardPage}>
       <div className={styles.card}>
 
-        <h1 className={styles.h1}>IQUEST</h1>
+        <h1 className={"logo"}>IQUEST</h1>
 
         <span>{userData ? userData.user.firstName : null}: {userData ? userData.user.iq.toFixed(0) : null} IQ</span>&emsp;
         <span>Login Streak: {consecutiveDays}</span>
