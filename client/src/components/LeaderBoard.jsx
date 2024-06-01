@@ -13,7 +13,7 @@ const LeaderBoard = () => {
   const [users, setUsers] = useState([]);
   const [showFriends, setShowFriends] = useState(false);
 
-  // Sort and set users when data is fetched
+  // sort users by iq when data is fetched
   useEffect(() => {
     if (usersData && usersData.users) {
       const sortedUsers = [...usersData.users].sort((a, b) => b.iq - a.iq);
@@ -21,34 +21,45 @@ const LeaderBoard = () => {
     }
   }, [usersData]);
 
-  // Update users based on toggle state
+  // update users based on toggle state
   useEffect(() => {
     if (userData && userData.user && usersData && usersData.users) {
       const friendsIds = userData.user.friends.map(friend => friend._id);
       const friends = usersData.users.filter(user => friendsIds.includes(user._id));
       const sortedFriends = [...friends].sort((a, b) => b.iq - a.iq);
-      setUsers(showFriends ? sortedFriends : [...usersData.users].sort((a, b) => b.iq - a.iq));
+
+      // include current user is included in the list
+      const currentUser = usersData.users.find(user => user._id === userId) || userData.user;
+      const sortedUsers = [...usersData.users].sort((a, b) => b.iq - a.iq);
+      if (!sortedFriends.some(user => user._id === userId)) {
+        sortedFriends.push(currentUser);
+        sortedFriends.sort((a, b) => b.iq - a.iq);
+      }
+
+      setUsers(showFriends ? sortedFriends : sortedUsers);
     }
-  }, [showFriends, userData, usersData]);
+  }, [showFriends, userData, usersData, userId]);
+
 
   if (usersLoading || userLoading) return <p>Loading...</p>;
   if (usersError) return <p>Error! {usersError.message}</p>;
   if (userError) return <p>Error! {userError.message}</p>;
 
-  // Toggle function to switch between all users and friends
+  // handle toggle button
   const toggleShowFriends = () => {
     setShowFriends(!showFriends);
   };
 
-  // Main return
+  // main return
   return (
     <div className={styles.leaderBoardPage}>
       <div className={styles.card}>
+        
         <h1>Leaderboard</h1>
         
         <div className={styles.toggleContainer}>
           <label className={styles.toggleLabel}>
-            <span>{showFriends ? 'Showing Friends' : 'Showing All Users'}</span>
+            <span>{showFriends ? 'Friends' : 'Global'}</span>
             <input
               type="checkbox"
               checked={showFriends}
@@ -76,6 +87,7 @@ const LeaderBoard = () => {
           ))}
         </div>
         <button className={styles.button} onClick={() => navigate('/')}>Back to Dashboard</button>
+        
       </div>
     </div>
   );
