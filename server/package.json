@@ -1,7 +1,7 @@
 {
   "name": "iQuest",
   "version": "1.0.0",
-  "description": "",
+  "description": "a social app where friends battle for the highest trivia IQ",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
