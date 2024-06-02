@@ -8,17 +8,30 @@ import Score from './Score';
 import styles from './Quiz.module.css';
 
 // for displaying raw html in some quiz answers 
-const escapeHTML = (html) => {
-  const div = document.createElement('div');
-  div.innerText = html;
-  return div.innerHTML;
+const escapeHTML = (html, triviaCategoryNumber) => {
+
+  // this is needed for our bootcamp trivia 
+  if (triviaCategoryNumber == 99) {
+    const div = document.createElement('div');
+    div.innerText = html;
+    return div.innerHTML;
+  }
+
+  // but it's not needed for the trivia api
+  return html
 };
 
 // main component function
 const QuizBoard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { triviaData, quizId, userId, userData } = location.state; // get values passed from NewQuiz page
+  const { triviaData, triviaCategoryNumber, quizId, userId, userData } = location.state; // get values passed from NewQuiz page
+
+  // console.log(triviaData)
+  // console.log(triviaCategoryNumber)
+  // console.log(quizId)
+  // console.log(userId)
+  // console.log(userData)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -186,7 +199,7 @@ const QuizBoard = () => {
                         : '',
                     }}
                     disabled={!!selectedAnswer}
-                    dangerouslySetInnerHTML={{ __html: escapeHTML(answer) }}
+                    dangerouslySetInnerHTML={{ __html: escapeHTML(answer, triviaCategoryNumber) }}
                   />
                 ))}
               </div>
@@ -198,7 +211,7 @@ const QuizBoard = () => {
               {selectedAnswer === 'TIME_UP' && (
                 <div className={styles.correctAnswer}>
                   <p>
-                    The correct answer was: <strong dangerouslySetInnerHTML={{ __html: escapeHTML(currentQuestion.correct_answer) }} />
+                    The correct answer was: <strong dangerouslySetInnerHTML={{ __html: escapeHTML(currentQuestion.correct_answer, triviaCategoryNumber) }} />
                   </p>
                   <button className={styles.nextQuestionButton} onClick={handleNextQuestion}>
                     Next

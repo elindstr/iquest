@@ -1,11 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import './App.css';
-import { Provider } from 'react-redux';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { configureStore } from '@reduxjs/toolkit';
 import App from './App';
-import reducers from './reducers';
 
 // Configure GraphQL
 const httpLink = createHttpLink({
@@ -23,46 +20,14 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Custom cache config to suppress apollo err msg
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        users: {
-          merge(existing = [], incoming) {
-            return incoming;
-          },
-        },
-      },
-    },
-    User: {
-      keyFields: ["_id"],
-      fields: {
-        friends: {
-          merge(existing = [], incoming) {
-            return incoming;
-          },
-        },
-      },
-    },
-  },
-});
-
 // Configure Apollo Client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache,
-});
-
-// Configure Redux Store
-const store = configureStore({
-  reducer: reducers,
+  cache: new InMemoryCache()
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </Provider>
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
 );
