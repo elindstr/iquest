@@ -46,7 +46,7 @@
 }
 
 .readonly {
-  background-color: #2e2e2e;
+  background-color: #303030;
   color: #888;
 }
 
@@ -113,9 +113,9 @@
   text-align: center;
   color: #fff;
   max-width: 400px;
-  width: 100%;
+  width: 90%;
   margin: 20px;
-  margin-left: 0px;
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -139,4 +139,10 @@
 
 .userListItemLink {
   color: #fff;
+}
+
+.friendsContainer {
+  height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
