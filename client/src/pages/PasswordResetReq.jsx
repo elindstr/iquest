@@ -63,7 +63,8 @@ function PasswordResetRequest() {
             onChange={handleInputChange}
             required
           />
-          <button type="submit">Send Password Reset Request</button>
+          <button className={styles.button} type="submit">Send Password Reset Request</button><br />
+          <button className={styles.button} onClick={() => navigate('/login')}>Back to login</button>
         </form>
         {message && <p>{message}</p>}
       </div>
