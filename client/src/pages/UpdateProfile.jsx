@@ -140,7 +140,7 @@ const UpdateProfile = () => {
     setEditMode(!editMode);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading || usersLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading user data!</p>;
 
   return (

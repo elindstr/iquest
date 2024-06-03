@@ -38,6 +38,7 @@ const QuizFeed = () => {
     }
   };
 
+  if (loading) return <p>Loading...</p>;
   return (
     <div className={styles.feedPage}>
       <div className={styles.card}>
