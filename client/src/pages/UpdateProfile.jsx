@@ -9,8 +9,12 @@ import styles from './UpdateProfile.module.css';
 const UpdateProfile = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
-  const { data, loading, error } = useQuery(QUERY_USER, { variables: { _id: userId } });
-  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(QUERY_USERS);
+  const { data, loading, error } = useQuery(QUERY_USER, { variables: { _id: userId } }, {
+    fetchPolicy: 'cache-and-network'
+  });
+  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(QUERY_USERS, {
+    fetchPolicy: 'cache-and-network'
+  });
   const [users, setUsers] = useState([]);
 
   const [formState, setFormState] = useState({
