@@ -8,8 +8,12 @@ import styles from './LeaderBoard.module.css';
 const LeaderBoard = () => {
   const navigate = useNavigate();
   const userId = Auth.getProfile().data._id;
-  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(QUERY_USERS);
-  const { data: userData, loading: userLoading, error: userError } = useQuery(QUERY_USER, { variables: { _id: userId } });
+  const { data: usersData, loading: usersLoading, error: usersError } = useQuery(QUERY_USERS, {
+    fetchPolicy: 'cache-and-network'
+  });
+  const { data: userData, loading: userLoading, error: userError } = useQuery(QUERY_USER, { variables: { _id: userId } }, {
+    fetchPolicy: 'cache-and-network'
+  });
   const [users, setUsers] = useState([]);
   const [showFriends, setShowFriends] = useState(false);
 

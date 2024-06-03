@@ -10,7 +10,9 @@ const QuizFeed = () => {
   const navigate = useNavigate();
   const currentUser = Auth.getProfile().data._id;
 
-  const { loading, data, error, refetch } = useQuery(QUERY_QUIZES);
+  const { loading, data, error, refetch } = useQuery(QUERY_QUIZES, {
+    fetchPolicy: 'cache-and-network'
+  });
   const [addComment] = useMutation(ADD_QUIZ_COMMENT);
   const [commentText, setCommentText] = useState('');
   const [selectedQuiz, setSelectedQuiz] = useState(null);
@@ -38,6 +40,7 @@ const QuizFeed = () => {
     }
   };
 
+  if (loading) return <p>Loading...</p>;
   return (
     <div className={styles.feedPage}>
       <div className={styles.card}>
