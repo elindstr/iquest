@@ -23,5 +23,5 @@ iQuest leverages the following tech:
 
 ## Screenshots
 
-<img src='/screenshots/IMG_0897.PNG' width="150px" alt="screenshot"> <img src='/screenshots/IMG_0896.PNG' width="150px" alt="screenshot"> <img src='/screenshots/quiz.gif' width="150px" alt="screenshot"><br>
+<img src='/screenshots/IMG_0896.PNG' width="150px" alt="screenshot"> <img src='/screenshots/IMG_0897.PNG' width="150px" alt="screenshot"> <img src='/screenshots/quiz.gif' width="150px" alt="screenshot"><br>
 <img src='/screenshots/IMG_0898.PNG' width="150px" alt="screenshot"> <img src='/screenshots/IMG_0899.PNG' width="150px" alt="screenshot"> <img src='/screenshots/IMG_0904.PNG' width="150px" alt="screenshot"> 
