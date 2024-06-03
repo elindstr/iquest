@@ -168,7 +168,7 @@ const QuizBoard = () => {
   return (
     <div className={styles.quizPage}>
       <div className={styles.card}>
-        <h2>Quiz Board</h2>
+        <h2>Quiz</h2>
 
         <p>
           Question {currentQuestionIndex + 1} of {triviaData.results.length}
