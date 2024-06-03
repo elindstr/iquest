@@ -2,26 +2,11 @@
 
 iQuest is our web dev bootcamp final project---a social app where friends battle for the highest trivia IQ.
 
-iQuest is deployed for demonstration on Render: [iquest.onrender.com](https://iquest.onrender.com). Note that our Render deployment uses a free instance that spins down every 30 minutes without activity; rebooting takes about 30 seconds.    
-
-## Table of Contents
-
-- [Description](#description)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Screenshots](#screenshots)
+iQuest is deployed for demonstration on Render: [iquest.onrender.com](https://iquest.onrender.com). Note that our Render deployment uses a free instance that spins down every 30 minutes without activity. Rebooting takes about 30 seconds.    
 
 ## Description
 
 iQuest is a social web application where friends battle for the highest trivia IQ. Compete for a top spot on the leaderboards and make friends. We have loads of quiz categories, including a category for Full Stack Web Developer Bootcamp students and alumni. 
-
-## Features
-
-- User registration and authentication
-- Browse and take trivia quizzes
-- Save quiz progress and scores
-- User profile with quiz history
-- Responsive design
 
 ## Technologies
 
